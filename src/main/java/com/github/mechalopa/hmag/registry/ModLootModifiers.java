@@ -4,7 +4,6 @@ import com.github.mechalopa.hmag.HMaG;
 import com.github.mechalopa.hmag.world.level.storage.loot.modifiers.AddItemForEntityLootModifier;
 import com.github.mechalopa.hmag.world.level.storage.loot.modifiers.AddTableLootModifier;
 import com.github.mechalopa.hmag.world.level.storage.loot.modifiers.ReplaceItemModifier;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 
 import net.neoforged.common.loot.IGlobalLootModifier;

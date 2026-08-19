@@ -2,7 +2,6 @@ package com.github.mechalopa.hmag.registry;
 
 import com.github.mechalopa.hmag.HMaG;
 import com.github.mechalopa.hmag.world.level.modifiers.ModAddSpawnsBiomeModifier;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 
 import net.neoforged.common.world.BiomeModifier;
