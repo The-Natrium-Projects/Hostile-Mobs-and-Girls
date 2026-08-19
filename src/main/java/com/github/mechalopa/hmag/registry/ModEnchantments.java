@@ -6,21 +6,21 @@ import com.github.mechalopa.hmag.world.item.enchantment.AntiAirEnchantment;
 import com.github.mechalopa.hmag.world.item.enchantment.HealthBoostEnchantment;
 import com.github.mechalopa.hmag.world.item.enchantment.WaterAspectEnchantment;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.neoforged.eventbus.api.IEventBus;
 import net.neoforged.eventbus.api.SubscribeEvent;
-import net.neoforged.registries.DeferredRegister;
-import net.neoforged.registries.ForgeRegistries;
-import net.neoforged.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModEnchantments
 {
-	private static final DeferredRegister<Enchantment> REGISTRY = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, HMaG.MODID);
+	private static final DeferredRegister<Enchantment> REGISTRY = DeferredRegister.create(BuiltInRegistries.ENCHANTMENT, HMaG.MODID);
 
-	public static final RegistryObject<Enchantment> HEALTH_BOOST = REGISTRY.register("health_boost", () -> new HealthBoostEnchantment(Enchantment.Rarity.UNCOMMON, ModUtils.ARMOR_SLOTS));
-	public static final RegistryObject<Enchantment> WATER_ASPECT = REGISTRY.register("water_aspect", () -> new WaterAspectEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
-	public static final RegistryObject<Enchantment> ANTI_AIR = REGISTRY.register("anti_air", () -> new AntiAirEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
+	public static final DeferredHolder<Enchantment, HealthBoostEnchantment> HEALTH_BOOST = REGISTRY.register("health_boost", () -> new HealthBoostEnchantment(Enchantment.Rarity.UNCOMMON, ModUtils.ARMOR_SLOTS));
+	public static final DeferredHolder<Enchantment, WaterAspectEnchantment> WATER_ASPECT = REGISTRY.register("water_aspect", () -> new WaterAspectEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
+	public static final DeferredHolder<Enchantment, AntiAirEnchantment> ANTI_AIR = REGISTRY.register("anti_air", () -> new AntiAirEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
 
 	@SubscribeEvent
 	public static void register(IEventBus eventBus)
