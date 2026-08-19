@@ -14,17 +14,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.neoforged.eventbus.api.IEventBus;
-import net.neoforged.eventbus.api.SubscribeEvent;
-import net.neoforged.registries.DeferredRegister;
-import net.neoforged.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModCreativeModeTabs
 {
 	private static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, HMaG.MODID);
 
-	public static final RegistryObject<CreativeModeTab> TAB = REGISTRY.register("tab", () -> CreativeModeTab.builder().title(Component.translatable("item_group." + HMaG.MODID + ".tab")).icon(() -> new ItemStack(ModItems.EVIL_CRYSTAL.get())).displayItems((features, output) -> {
-		for (RegistryObject<Item> item : ModItems.getItemRegistry().getEntries())
+	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = REGISTRY.register("tab", () -> CreativeModeTab.builder().title(Component.translatable("item_group." + HMaG.MODID + ".tab")).icon(() -> new ItemStack(ModItems.EVIL_CRYSTAL.get())).displayItems((features, output) -> {
+		for (DeferredHolder<Item, ? extends Item> item : ModItems.getItemRegistry().getEntries())
 		{
 			if (item.get() instanceof ILevelItem)
 			{
