@@ -112,15 +112,12 @@ import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.client.event.EntityRenderersEvent;
-import net.neoforged.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.common.MinecraftForge;
-import net.neoforged.eventbus.api.EventPriority;
-import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
-@Mod.EventBusSubscriber(modid = HMaG.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = HMaG.MODID, value = Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)
 public class ModClientEventBusSubscriber
 {
