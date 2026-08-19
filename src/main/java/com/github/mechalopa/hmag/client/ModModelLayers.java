@@ -3,8 +3,8 @@ package com.github.mechalopa.hmag.client;
 import com.github.mechalopa.hmag.util.ModUtils;
 
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ModModelLayers

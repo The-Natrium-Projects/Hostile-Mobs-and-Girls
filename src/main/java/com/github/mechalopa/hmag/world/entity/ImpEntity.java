@@ -45,7 +45,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.network.NetworkHooks;
 
 public class ImpEntity extends Monster
 {

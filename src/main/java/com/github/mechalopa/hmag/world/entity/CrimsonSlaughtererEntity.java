@@ -41,11 +41,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.common.ForgeMod;
+import net.neoforged.common.MinecraftForge;
+import net.neoforged.event.entity.living.MobEffectEvent;
+import net.neoforged.eventbus.api.Event;
+import net.neoforged.network.NetworkHooks;
 
 public class CrimsonSlaughtererEntity extends Monster
 {

@@ -21,10 +21,10 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.common.loot.LootModifierManager;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.common.loot.IGlobalLootModifier;
+import net.neoforged.common.loot.LootModifier;
+import net.neoforged.common.loot.LootModifierManager;
+import net.neoforged.registries.ForgeRegistries;
 
 public class AddItemForEntityLootModifier extends LootModifier
 {

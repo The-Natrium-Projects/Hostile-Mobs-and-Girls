@@ -31,8 +31,8 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.common.ForgeMod;
+import net.neoforged.network.NetworkHooks;
 
 public class NightwalkerEntity extends Monster implements RangedAttackMob
 {

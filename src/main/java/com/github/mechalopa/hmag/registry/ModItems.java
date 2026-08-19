@@ -40,12 +40,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.common.ForgeSpawnEggItem;
+import net.neoforged.eventbus.api.IEventBus;
+import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.registries.DeferredRegister;
+import net.neoforged.registries.ForgeRegistries;
+import net.neoforged.registries.RegistryObject;
 
 public class ModItems
 {

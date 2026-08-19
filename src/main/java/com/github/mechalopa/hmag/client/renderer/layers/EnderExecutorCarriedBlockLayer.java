@@ -13,9 +13,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.data.ModelData;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.client.model.data.ModelData;
 
 @OnlyIn(Dist.CLIENT)
 public class EnderExecutorCarriedBlockLayer extends RenderLayer<EnderExecutorEntity, EnderExecutorModel<EnderExecutorEntity>>

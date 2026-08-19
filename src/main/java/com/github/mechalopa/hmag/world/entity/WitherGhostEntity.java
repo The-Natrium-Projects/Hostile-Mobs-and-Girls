@@ -19,9 +19,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.common.MinecraftForge;
+import net.neoforged.event.entity.living.MobEffectEvent;
+import net.neoforged.eventbus.api.Event;
 
 public class WitherGhostEntity extends GhostEntity
 {

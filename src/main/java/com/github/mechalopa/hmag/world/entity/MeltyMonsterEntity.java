@@ -51,8 +51,8 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.event.ForgeEventFactory;
+import net.neoforged.network.NetworkHooks;
 
 public class MeltyMonsterEntity extends Monster implements RangedAttackMob
 {

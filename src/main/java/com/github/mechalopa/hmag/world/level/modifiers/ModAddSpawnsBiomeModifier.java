@@ -15,9 +15,9 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.MobSpawnSettingsBuilder;
-import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
+import net.neoforged.common.world.BiomeModifier;
+import net.neoforged.common.world.MobSpawnSettingsBuilder;
+import net.neoforged.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
 
 public record ModAddSpawnsBiomeModifier(List<List<ModAddSpawnsBiomeModifier.BiomeProp>> biomePropLists, List<SpawnerData> spawners, double energyBudget, double charge) implements BiomeModifier
 {

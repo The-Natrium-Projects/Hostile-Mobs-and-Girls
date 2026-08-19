@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.brewing.BrewingRecipe;
+import net.neoforged.common.brewing.BrewingRecipe;
 
 public class ModBrewingRecipe extends BrewingRecipe
 {

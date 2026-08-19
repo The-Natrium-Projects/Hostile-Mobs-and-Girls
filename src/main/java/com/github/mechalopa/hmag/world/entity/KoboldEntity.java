@@ -43,7 +43,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.network.NetworkHooks;
 
 public class KoboldEntity extends Monster
 {

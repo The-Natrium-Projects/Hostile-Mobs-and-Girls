@@ -4,11 +4,11 @@ import com.github.mechalopa.hmag.HMaG;
 import com.github.mechalopa.hmag.util.ModUtils;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.eventbus.api.IEventBus;
+import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.registries.DeferredRegister;
+import net.neoforged.registries.ForgeRegistries;
+import net.neoforged.registries.RegistryObject;
 
 public class ModSoundEvents
 {

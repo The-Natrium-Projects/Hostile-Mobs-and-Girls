@@ -39,10 +39,10 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.common.MinecraftForge;
+import net.neoforged.event.entity.living.MobEffectEvent;
+import net.neoforged.eventbus.api.Event;
+import net.neoforged.network.NetworkHooks;
 
 public class AlrauneEntity extends Monster implements RangedAttackMob
 {

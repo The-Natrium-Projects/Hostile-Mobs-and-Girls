@@ -8,7 +8,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.Serializer;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 
 public class ModLoadedCondition implements LootItemCondition
 {

@@ -39,9 +39,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FrostedIceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraftforge.common.util.BlockSnapshot;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.common.util.BlockSnapshot;
+import net.neoforged.event.ForgeEventFactory;
+import net.neoforged.network.NetworkHooks;
 
 public class JackFrostEntity extends Monster implements RangedAttackMob
 {

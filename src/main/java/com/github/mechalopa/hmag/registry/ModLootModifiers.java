@@ -6,12 +6,12 @@ import com.github.mechalopa.hmag.world.level.storage.loot.modifiers.AddTableLoot
 import com.github.mechalopa.hmag.world.level.storage.loot.modifiers.ReplaceItemModifier;
 import com.mojang.serialization.Codec;
 
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.common.loot.IGlobalLootModifier;
+import net.neoforged.eventbus.api.IEventBus;
+import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.registries.DeferredRegister;
+import net.neoforged.registries.ForgeRegistries;
+import net.neoforged.registries.RegistryObject;
 
 public class ModLootModifiers
 {

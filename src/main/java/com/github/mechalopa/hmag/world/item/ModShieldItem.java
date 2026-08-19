@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.client.extensions.common.IClientItemExtensions;
 
 public abstract class ModShieldItem extends ShieldItem
 {

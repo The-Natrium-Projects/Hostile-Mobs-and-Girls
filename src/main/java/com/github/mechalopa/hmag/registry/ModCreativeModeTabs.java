@@ -14,10 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.eventbus.api.IEventBus;
+import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.registries.DeferredRegister;
+import net.neoforged.registries.RegistryObject;
 
 public class ModCreativeModeTabs
 {
