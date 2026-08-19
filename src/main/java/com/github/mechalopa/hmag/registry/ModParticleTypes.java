@@ -2,22 +2,22 @@ package com.github.mechalopa.hmag.registry;
 
 import com.github.mechalopa.hmag.HMaG;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.neoforged.eventbus.api.IEventBus;
 import net.neoforged.eventbus.api.SubscribeEvent;
-import net.neoforged.registries.DeferredRegister;
-import net.neoforged.registries.ForgeRegistries;
-import net.neoforged.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModParticleTypes
 {
-	private static final DeferredRegister<ParticleType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, HMaG.MODID);
+	private static final DeferredRegister<ParticleType<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, HMaG.MODID);
 
-	public static final RegistryObject<SimpleParticleType> ENCHANTMENT_RUNE = REGISTRY.register("enchantment_rune", () -> new SimpleParticleType(false));
-	public static final RegistryObject<SimpleParticleType> NEMESIS_FLAME = REGISTRY.register("nemesis_flame", () -> new SimpleParticleType(false));
-	public static final RegistryObject<SimpleParticleType> NIGHTWALKER = REGISTRY.register("nightwalker", () -> new SimpleParticleType(false));
-	public static final RegistryObject<SimpleParticleType> NIGHTWALKER_BULLET = REGISTRY.register("nightwalker_bullet", () -> new SimpleParticleType(false));
+	public static final DeferredHolder<ParticleType<?>, SimpleParticleType> ENCHANTMENT_RUNE = REGISTRY.register("enchantment_rune", () -> new SimpleParticleType(false));
+	public static final DeferredHolder<ParticleType<?>, SimpleParticleType> NEMESIS_FLAME = REGISTRY.register("nemesis_flame", () -> new SimpleParticleType(false));
+	public static final DeferredHolder<ParticleType<?>, SimpleParticleType> NIGHTWALKER = REGISTRY.register("nightwalker", () -> new SimpleParticleType(false));
+	public static final DeferredHolder<ParticleType<?>, SimpleParticleType> NIGHTWALKER_BULLET = REGISTRY.register("nightwalker_bullet", () -> new SimpleParticleType(false));
 
 	@SubscribeEvent
 	public static void register(IEventBus eventBus)

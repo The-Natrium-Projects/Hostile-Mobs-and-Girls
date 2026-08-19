@@ -3,18 +3,18 @@ package com.github.mechalopa.hmag.registry;
 import com.github.mechalopa.hmag.HMaG;
 import com.github.mechalopa.hmag.util.ModUtils;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
 import net.neoforged.eventbus.api.IEventBus;
 import net.neoforged.eventbus.api.SubscribeEvent;
-import net.neoforged.registries.DeferredRegister;
-import net.neoforged.registries.ForgeRegistries;
-import net.neoforged.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModSoundEvents
 {
-	private static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, HMaG.MODID);
+	private static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, HMaG.MODID);
 
-	public static final RegistryObject<SoundEvent> GIRL_MOB_AMBIENT = createSoundEvent("entity.girls.ambient");
+	public static final DeferredHolder<SoundEvent, SoundEvent> GIRL_MOB_AMBIENT = createSoundEvent("entity.girls.ambient");
 	public static final RegistryObject<SoundEvent> GIRL_MOB_HURT = createSoundEvent("entity.girls.hurt");
 	public static final RegistryObject<SoundEvent> GIRL_MOB_DEATH = createSoundEvent("entity.girls.death");
 	public static final RegistryObject<SoundEvent> GHOST_AMBIENT = createSoundEvent("entity.ghost.ambient");

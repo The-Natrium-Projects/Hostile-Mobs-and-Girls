@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import com.github.mechalopa.hmag.util.ModUtils;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Holder;
@@ -17,7 +18,7 @@ import net.neoforged.common.world.StructureModifier;
 
 public record ModAddSpawnsStructureModifier(HolderSet<Structure> structures, SpawnerData spawner) implements StructureModifier
 {
-	public static final Supplier<Codec<ModAddSpawnsStructureModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(builder -> builder.group(ModUtils.STRUCTURE_LIST_CODEC.fieldOf("structures").forGetter(ModAddSpawnsStructureModifier::structures), SpawnerData.CODEC.fieldOf("spawner").forGetter(ModAddSpawnsStructureModifier::spawner)).apply(builder, ModAddSpawnsStructureModifier::new)));
+	public static final Supplier<MapCodec<ModAddSpawnsStructureModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(builder -> builder.group(ModUtils.STRUCTURE_LIST_CODEC.fieldOf("structures").forGetter(ModAddSpawnsStructureModifier::structures), SpawnerData.CODEC.fieldOf("spawner").forGetter(ModAddSpawnsStructureModifier::spawner)).apply(builder, ModAddSpawnsStructureModifier::new)));
 
 	@Override
 	public void modify(Holder<Structure> structure, Phase phase, Builder builder)
@@ -30,7 +31,7 @@ public record ModAddSpawnsStructureModifier(HolderSet<Structure> structures, Spa
 	}
 
 	@Override
-	public Codec<? extends StructureModifier> codec()
+	public MapCodec<? extends StructureModifier> codec()
 	{
 		return CODEC.get();
 	}

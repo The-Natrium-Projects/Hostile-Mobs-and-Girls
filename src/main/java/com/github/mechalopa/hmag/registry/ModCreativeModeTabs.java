@@ -37,7 +37,7 @@ public class ModCreativeModeTabs
 			}
 		}
 
-		for (RegistryObject<Enchantment> enchantment : ModEnchantments.getEnchantmentRegistry().getEntries())
+		for (DeferredHolder<Enchantment, ? extends Enchantment> enchantment : ModEnchantments.getEnchantmentRegistry().getEntries())
 		{
 			if (enchantment.get().isAllowedOnBooks())
 			{
@@ -47,7 +47,7 @@ public class ModCreativeModeTabs
 
 		for (Item potionItem : ModUtils.POTION_ITEMS)
 		{
-			for (RegistryObject<Potion> potion : ModPotions.getPotionRegistry().getEntries())
+			for (DeferredHolder<Potion, ? extends Potion> potion : ModPotions.getPotionRegistry().getEntries())
 			{
 				output.accept(ModUtils.getPotionStack(potion.get(), potionItem));
 			}
