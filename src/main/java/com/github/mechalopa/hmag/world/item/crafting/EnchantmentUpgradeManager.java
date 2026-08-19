@@ -121,7 +121,7 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 
 	private static Supplier<Item> getItemSupplier(String name)
 	{
-		return BuiltInRegistries.ITEM.getHolder(ModUtils.createRL(name)).orElseThrow();
+		return () -> BuiltInRegistries.ITEM.getHolder(ModUtils.createRL(name)).orElseThrow().value();
 	}
 
 	@Nullable
