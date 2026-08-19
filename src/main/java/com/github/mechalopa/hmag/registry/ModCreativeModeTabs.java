@@ -14,17 +14,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModCreativeModeTabs
 {
 	private static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, HMaG.MODID);
 
-	public static final RegistryObject<CreativeModeTab> TAB = REGISTRY.register("tab", () -> CreativeModeTab.builder().title(Component.translatable("item_group." + HMaG.MODID + ".tab")).icon(() -> new ItemStack(ModItems.EVIL_CRYSTAL.get())).displayItems((features, output) -> {
-		for (RegistryObject<Item> item : ModItems.getItemRegistry().getEntries())
+	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = REGISTRY.register("tab", () -> CreativeModeTab.builder().title(Component.translatable("item_group." + HMaG.MODID + ".tab")).icon(() -> new ItemStack(ModItems.EVIL_CRYSTAL.get())).displayItems((features, output) -> {
+		for (DeferredHolder<Item, ? extends Item> item : ModItems.getItemRegistry().getEntries())
 		{
 			if (item.get() instanceof ILevelItem)
 			{
@@ -39,7 +39,7 @@ public class ModCreativeModeTabs
 			}
 		}
 
-		for (RegistryObject<Enchantment> enchantment : ModEnchantments.getEnchantmentRegistry().getEntries())
+		for (DeferredHolder<Enchantment, ? extends Enchantment> enchantment : ModEnchantments.getEnchantmentRegistry().getEntries())
 		{
 			if (enchantment.get().isAllowedOnBooks())
 			{
@@ -49,7 +49,7 @@ public class ModCreativeModeTabs
 
 		for (Item potionItem : ModUtils.POTION_ITEMS)
 		{
-			for (RegistryObject<Potion> potion : ModPotions.getPotionRegistry().getEntries())
+			for (DeferredHolder<Potion, ? extends Potion> potion : ModPotions.getPotionRegistry().getEntries())
 			{
 				output.accept(ModUtils.getPotionStack(potion.get(), potionItem));
 			}
