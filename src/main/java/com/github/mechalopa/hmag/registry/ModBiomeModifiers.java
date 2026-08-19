@@ -4,9 +4,9 @@ import com.github.mechalopa.hmag.HMaG;
 import com.github.mechalopa.hmag.world.level.modifiers.ModAddSpawnsBiomeModifier;
 import com.mojang.serialization.MapCodec;
 
-import net.neoforged.common.world.BiomeModifier;
-import net.neoforged.eventbus.api.IEventBus;
-import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;

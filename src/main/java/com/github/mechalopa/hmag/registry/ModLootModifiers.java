@@ -6,9 +6,9 @@ import com.github.mechalopa.hmag.world.level.storage.loot.modifiers.AddTableLoot
 import com.github.mechalopa.hmag.world.level.storage.loot.modifiers.ReplaceItemModifier;
 import com.mojang.serialization.MapCodec;
 
-import net.neoforged.common.loot.IGlobalLootModifier;
-import net.neoforged.eventbus.api.IEventBus;
-import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;

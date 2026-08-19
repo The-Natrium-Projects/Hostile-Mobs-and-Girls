@@ -13,8 +13,8 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.neoforged.common.world.ModifiableStructureInfo.StructureInfo.Builder;
-import net.neoforged.common.world.StructureModifier;
+import net.neoforged.neoforge.common.world.ModifiableStructureInfo.StructureInfo.Builder;
+import net.neoforged.neoforge.common.world.StructureModifier;
 
 public record ModAddSpawnsStructureModifier(HolderSet<Structure> structures, SpawnerData spawner) implements StructureModifier
 {
