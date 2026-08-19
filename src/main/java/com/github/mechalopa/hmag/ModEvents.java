@@ -21,6 +21,7 @@ import com.github.mechalopa.hmag.world.item.enchantment.HealthBoostEnchantment;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -72,7 +73,6 @@ import net.neoforged.eventbus.api.Event.Result;
 import net.neoforged.eventbus.api.EventPriority;
 import net.neoforged.eventbus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = HMaG.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents
@@ -340,7 +340,7 @@ public class ModEvents
 
 			if (!(entity instanceof Mob))
 			{
-				throw new IllegalStateException("Trying to spawn a non-mob: " + ForgeRegistries.ENTITY_TYPES.getKey(type));
+				throw new IllegalStateException("Trying to spawn a non-mob: " + BuiltInRegistries.ENTITY_TYPE.getKey(type));
 			}
 			else
 			{

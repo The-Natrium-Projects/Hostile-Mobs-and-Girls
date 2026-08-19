@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.github.mechalopa.hmag.util.ModTags;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.neoforged.registries.ForgeRegistries;
 
 public class RandomberryItem extends Item
 {
@@ -44,7 +44,7 @@ public class RandomberryItem extends Item
 
 	public static void refreshEffectList()
 	{
-		RANDOMBERRY_EFFECTS = ForgeRegistries.MOB_EFFECTS.getValues().stream().filter(p -> {
+		RANDOMBERRY_EFFECTS = BuiltInRegistries.MOB_EFFECT.getValues().stream().filter(p -> {
 			return ModTags.checkTagContains(p, ModTags.MobEffectTags.RANDOMBERRY_GIVES);
 		}).toList();
 	}

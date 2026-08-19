@@ -1,5 +1,6 @@
 package com.github.mechalopa.hmag.util;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
@@ -10,7 +11,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.neoforged.registries.ForgeRegistries;
 
 public class ModTags
 {
@@ -179,11 +179,11 @@ public class ModTags
 
 	public static boolean checkTagContains(Enchantment enchantment, TagKey<Enchantment> tag)
 	{
-		return enchantment != null && tag != null && ForgeRegistries.ENCHANTMENTS.getHolder(enchantment).orElseThrow().is(tag);
+		return enchantment != null && tag != null && BuiltInRegistries.ENCHANTMENT.getHolder(enchantment).orElseThrow().is(tag);
 	}
 
 	public static boolean checkTagContains(MobEffect effect, TagKey<MobEffect> tag)
 	{
-		return effect != null && tag != null && ForgeRegistries.MOB_EFFECTS.getHolder(effect).orElseThrow().is(tag);
+		return effect != null && tag != null && BuiltInRegistries.MOB_EFFECT.getHolder(effect).orElseThrow().is(tag);
 	}
 }

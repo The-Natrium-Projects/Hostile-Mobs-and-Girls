@@ -24,6 +24,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -40,7 +41,6 @@ import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.item.crafting.SmithingTransformRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.neoforged.registries.ForgeRegistries;
 
 @JeiPlugin
 public class JEIPlugin implements IModPlugin
@@ -95,7 +95,7 @@ public class JEIPlugin implements IModPlugin
 
 					if (!ingredient.isEmpty() && !ingredient1.isEmpty())
 					{
-						for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS)
+						for (Enchantment enchantment : BuiltInRegistries.ENCHANTMENT)
 						{
 							if (enchantment != null && RemoveCurseRecipe.isRemovableCurse(enchantment))
 							{
@@ -117,7 +117,7 @@ public class JEIPlugin implements IModPlugin
 
 									if (!stacks.isEmpty())
 									{
-										ResourceLocation enchid = ForgeRegistries.ENCHANTMENTS.getKey(enchantment);
+										ResourceLocation enchid = BuiltInRegistries.ENCHANTMENT.getKey(enchantment);
 										ResourceLocation id = ModUtils.createHMaGRL("jei." + recipe.getId().getPath() + "." + enchid.getNamespace() + "." + enchid.getPath());
 										addSmithingRecipe(smithingRecipes, id, ingredient, Ingredient.of(stacks.stream()), ingredient1, stack1);
 									}

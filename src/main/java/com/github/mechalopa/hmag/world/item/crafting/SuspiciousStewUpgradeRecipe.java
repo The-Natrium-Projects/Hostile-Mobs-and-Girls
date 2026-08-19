@@ -8,6 +8,7 @@ import com.google.common.base.Strings;
 
 import net.minecraft.ResourceLocationException;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +20,6 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.neoforged.registries.ForgeRegistries;
 
 public class SuspiciousStewUpgradeRecipe extends CustomRecipe
 {
@@ -108,7 +108,7 @@ public class SuspiciousStewUpgradeRecipe extends CustomRecipe
 					{
 						try
 						{
-							mobeffect = ForgeRegistries.MOB_EFFECTS.getValue(ModUtils.createRL(name));
+							mobeffect = BuiltInRegistries.MOB_EFFECT.get(ModUtils.createRL(name));
 						}
 						catch (ResourceLocationException e){}
 					}
@@ -117,7 +117,7 @@ public class SuspiciousStewUpgradeRecipe extends CustomRecipe
 					{
 						CompoundTag compoundtag3 = new CompoundTag();
 						compoundtag3.putByte("EffectId", b0);
-						ResourceLocation mobeffectid = ForgeRegistries.MOB_EFFECTS.getKey(mobeffect);
+						ResourceLocation mobeffectid = BuiltInRegistries.MOB_EFFECT.getKey(mobeffect);
 
 						if (mobeffectid != null)
 						{

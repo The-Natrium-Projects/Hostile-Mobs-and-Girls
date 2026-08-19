@@ -11,6 +11,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -18,11 +19,10 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.common.loot.IGlobalLootModifier;
 import net.neoforged.common.loot.LootModifier;
-import net.neoforged.registries.ForgeRegistries;
 
 public class ReplaceItemModifier extends LootModifier
 {
-	public static final Supplier<MapCodec<ReplaceItemModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(inst.group(ForgeRegistries.ITEMS.getCodec().optionalFieldOf("original", Items.BARRIER).forGetter(m -> m.original), ForgeRegistries.ITEMS.getCodec().optionalFieldOf("replacement", Items.BARRIER).forGetter(m -> m.replacement))).apply(inst, ReplaceItemModifier::new)));
+	public static final Supplier<MapCodec<ReplaceItemModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(inst.group(BuiltInRegistries.ITEM.byNameCodec().optionalFieldOf("original", Items.BARRIER).forGetter(m -> m.original), BuiltInRegistries.ITEM.byNameCodec().optionalFieldOf("replacement", Items.BARRIER).forGetter(m -> m.replacement))).apply(inst, ReplaceItemModifier::new)));
 	private final Item original;
 	private final Item replacement;
 
