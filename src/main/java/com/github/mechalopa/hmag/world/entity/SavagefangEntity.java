@@ -1,5 +1,6 @@
 package com.github.mechalopa.hmag.world.entity;
 
+import net.minecraft.tags.EntityTypeTags;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
@@ -36,7 +37,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -119,11 +119,6 @@ public class SavagefangEntity extends Monster
 				.add(Attributes.ATTACK_DAMAGE, 4.0D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.WATER;
-	}
 
 	@Override
 	public boolean canBreatheUnderwater()
@@ -885,7 +880,7 @@ public class SavagefangEntity extends Monster
 			{
 				return false;
 			}
-			else if (livingEntity instanceof Player || (livingEntity.getMobType() != MobType.WATER && livingEntity.canDrownInFluidType(ForgeMod.WATER_TYPE.get()) && livingEntity instanceof Animal && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ANIMALS) || (livingEntity instanceof AbstractVillager && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_VILLAGERS) || (livingEntity.getMobType() == MobType.ILLAGER && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ILLAGERS))
+			else if (livingEntity instanceof Player || (!livingEntity.getType().is(EntityTypeTags.AQUATIC) && livingEntity.canDrownInFluidType(ForgeMod.WATER_TYPE.get()) && livingEntity instanceof Animal && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ANIMALS) || (livingEntity instanceof AbstractVillager && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_VILLAGERS) || (livingEntity.getType().is(EntityTypeTags.ILLAGER) && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ILLAGERS))
 			{
 				return livingEntity.distanceToSqr(this.parent) <= 4.0D * 4.0D || (livingEntity.isInWaterOrBubble() && livingEntity.distanceToSqr(this.parent) <= 9.0D * 9.0D);
 			}

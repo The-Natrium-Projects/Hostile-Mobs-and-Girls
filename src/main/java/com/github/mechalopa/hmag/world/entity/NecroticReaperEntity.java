@@ -76,11 +76,6 @@ public class NecroticReaperEntity extends Monster
 				.add(Attributes.FOLLOW_RANGE, 24.0D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.UNDEAD;
-	}
 
 	@Override
 	public void aiStep()

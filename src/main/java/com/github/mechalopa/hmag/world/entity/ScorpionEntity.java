@@ -18,7 +18,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -67,11 +66,6 @@ public class ScorpionEntity extends Monster
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.25D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.ARTHROPOD;
-	}
 
 	@Override
 	public boolean doHurtTarget(Entity entity)

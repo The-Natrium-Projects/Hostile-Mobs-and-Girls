@@ -22,7 +22,6 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -89,11 +88,6 @@ public class CrimsonSlaughtererEntity extends Monster
 				.add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 2.0D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.ARTHROPOD;
-	}
 
 	@Override
 	public boolean doHurtTarget(Entity entity)

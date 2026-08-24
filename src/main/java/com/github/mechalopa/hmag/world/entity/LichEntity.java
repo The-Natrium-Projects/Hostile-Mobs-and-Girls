@@ -22,7 +22,6 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -76,11 +75,6 @@ public class LichEntity extends Monster implements RangedAttackMob
 				.add(Attributes.ARMOR, 4.0D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.UNDEAD;
-	}
 
 	@Override
 	public boolean hurt(DamageSource source, float amount)

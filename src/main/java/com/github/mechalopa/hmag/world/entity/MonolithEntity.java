@@ -1,5 +1,6 @@
 package com.github.mechalopa.hmag.world.entity;
 
+import net.minecraft.tags.EntityTypeTags;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -39,7 +40,6 @@ import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -931,7 +931,7 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 			{
 				return false;
 			}
-			else if (livingEntityIn instanceof Player || (livingEntityIn instanceof AbstractGolem && ModConfigs.cachedServer.MONOLITH_ATTACK_GOLEMS) || (livingEntityIn instanceof AbstractVillager && ModConfigs.cachedServer.MONOLITH_ATTACK_VILLAGERS) || (livingEntityIn.getMobType() == MobType.ILLAGER && ModConfigs.cachedServer.MONOLITH_ATTACK_ILLAGERS))
+			else if (livingEntityIn instanceof Player || (livingEntityIn instanceof AbstractGolem && ModConfigs.cachedServer.MONOLITH_ATTACK_GOLEMS) || (livingEntityIn instanceof AbstractVillager && ModConfigs.cachedServer.MONOLITH_ATTACK_VILLAGERS) || (livingEntityIn.getType().is(EntityTypeTags.ILLAGER) && ModConfigs.cachedServer.MONOLITH_ATTACK_ILLAGERS))
 			{
 				final double d0 = ModConfigs.cachedServer.MONOLITH_TARGET_DISTANCE;
 				return livingEntityIn.distanceToSqr(this.parent) <= d0 * d0;

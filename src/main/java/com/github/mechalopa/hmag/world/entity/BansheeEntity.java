@@ -21,7 +21,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.VariantHolder;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -76,11 +75,6 @@ public class BansheeEntity extends AbstractFlyingMonsterEntity implements Varian
 				.add(Attributes.FOLLOW_RANGE, 24.0D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.UNDEAD;
-	}
 
 	@Override
 	public void aiStep()

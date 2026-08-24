@@ -22,7 +22,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -70,11 +69,6 @@ public class HornetEntity extends AbstractFlyingMonsterEntity
 				.add(Attributes.FOLLOW_RANGE, 24.0D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.ARTHROPOD;
-	}
 
 	@Override
 	public boolean doHurtTarget(Entity entity)
