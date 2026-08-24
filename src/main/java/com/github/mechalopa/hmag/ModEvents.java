@@ -99,7 +99,7 @@ public class ModEvents
 				{
 					ItemStack stack = attacker.getMainHandItem();
 
-					if (!stack.isEmpty() && stack.hasTag())
+					if (!stack.isEmpty())
 					{
 						final int level = EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.WATER_ASPECT.get(), stack);
 
@@ -146,7 +146,7 @@ public class ModEvents
 							{
 								ItemStack stack = attacker.getItemInHand(hand);
 
-								if (!stack.isEmpty() && stack.hasTag())
+								if (!stack.isEmpty())
 								{
 									level = Math.max(level, EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.ANTI_AIR.get(), stack));
 								}

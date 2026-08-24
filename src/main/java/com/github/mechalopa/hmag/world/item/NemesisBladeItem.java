@@ -9,7 +9,6 @@ import com.github.mechalopa.hmag.util.ModTags;
 import com.github.mechalopa.hmag.world.entity.projectile.MagicBulletEntity;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -52,8 +51,7 @@ public class NemesisBladeItem extends ModSwordItem implements ILevelItem
 		{
 			if (entity instanceof Player)
 			{
-				CompoundTag compoundnbt = stack.getOrCreateTag();
-				int itemLevel = !compoundnbt.contains(ILevelItem.LEVEL_KEY) ? 0 : (int)compoundnbt.getByte(ILevelItem.LEVEL_KEY);
+				int itemLevel = ILevelItem.getItemLevel(stack);
 				final int i = Math.max(((Player)entity).experienceLevel, 0);
 				int j = 0;
 
@@ -64,7 +62,7 @@ public class NemesisBladeItem extends ModSwordItem implements ILevelItem
 
 				if (itemLevel != j)
 				{
-					compoundnbt.putByte(ILevelItem.LEVEL_KEY, (byte)j);
+					ILevelItem.setItemLevel(stack, j);
 				}
 			}
 		}

@@ -5,7 +5,6 @@ import com.github.mechalopa.hmag.util.ModUtils;
 import com.github.mechalopa.hmag.world.item.ILevelItem;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -29,8 +28,7 @@ public class ModCreativeModeTabs
 			if (item.get() instanceof ILevelItem)
 			{
 				ItemStack stack = new ItemStack(item.get());
-				CompoundTag compoundnbt = stack.getOrCreateTag();
-				compoundnbt.putByte(ILevelItem.LEVEL_KEY, (byte)((ILevelItem)item.get()).getMaxLevel());
+				ILevelItem.setItemLevel(stack, ((ILevelItem)item.get()).getMaxLevel());
 				output.accept(stack);
 			}
 			else
