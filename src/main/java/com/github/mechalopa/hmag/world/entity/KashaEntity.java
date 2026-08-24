@@ -49,8 +49,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.common.ForgeMod;
+import net.neoforged.network.NetworkHooks;
 
 public class KashaEntity extends Monster implements VariantHolder<KashaEntity.Variant>
 {

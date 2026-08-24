@@ -25,7 +25,6 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 
 public abstract class AbstractFlyingMonsterEntity extends Monster
 {
@@ -49,7 +48,7 @@ public abstract class AbstractFlyingMonsterEntity extends Monster
 	protected void defineSynchedData()
 	{
 		super.defineSynchedData();
-		this.entityData.define(ATTACK_PHASE, (byte)0);
+		this.entityData.de.define(ATTACK_PHASE, (byte)0);
 	}
 
 	@Override

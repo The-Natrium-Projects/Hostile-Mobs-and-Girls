@@ -18,7 +18,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -32,10 +31,10 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.common.MinecraftForge;
+import net.neoforged.event.entity.living.MobEffectEvent;
+import net.neoforged.eventbus.api.Event;
+import net.neoforged.network.NetworkHooks;
 
 public class ScorpionEntity extends Monster
 {
@@ -67,11 +66,6 @@ public class ScorpionEntity extends Monster
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.25D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.ARTHROPOD;
-	}
 
 	@Override
 	public boolean doHurtTarget(Entity entity)

@@ -21,6 +21,7 @@ import com.github.mechalopa.hmag.world.item.enchantment.HealthBoostEnchantment;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -53,26 +54,25 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.common.BasicItemListing;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingVisibilityEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.event.village.WandererTradesEvent;
-import net.minecraftforge.eventbus.api.Event.Result;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.common.BasicItemListing;
+import net.neoforged.event.ItemAttributeModifierEvent;
+import net.neoforged.event.entity.EntityJoinLevelEvent;
+import net.neoforged.event.entity.item.ItemTossEvent;
+import net.neoforged.event.entity.living.LivingAttackEvent;
+import net.neoforged.event.entity.living.LivingDamageEvent;
+import net.neoforged.event.entity.living.LivingEquipmentChangeEvent;
+import net.neoforged.event.entity.living.LivingEvent.LivingTickEvent;
+import net.neoforged.event.entity.living.LivingEvent.LivingVisibilityEvent;
+import net.neoforged.event.entity.living.LivingHurtEvent;
+import net.neoforged.event.entity.living.MobEffectEvent;
+import net.neoforged.event.entity.living.MobSpawnEvent;
+import net.neoforged.event.entity.player.PlayerSleepInBedEvent;
+import net.neoforged.event.village.VillagerTradesEvent;
+import net.neoforged.event.village.WandererTradesEvent;
+import net.neoforged.eventbus.api.Event.Result;
+import net.neoforged.eventbus.api.EventPriority;
+import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = HMaG.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents
@@ -99,7 +99,7 @@ public class ModEvents
 				{
 					ItemStack stack = attacker.getMainHandItem();
 
-					if (!stack.isEmpty() && stack.hasTag())
+					if (!stack.isEmpty())
 					{
 						final int level = EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.WATER_ASPECT.get(), stack);
 
@@ -146,7 +146,7 @@ public class ModEvents
 							{
 								ItemStack stack = attacker.getItemInHand(hand);
 
-								if (!stack.isEmpty() && stack.hasTag())
+								if (!stack.isEmpty())
 								{
 									level = Math.max(level, EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.ANTI_AIR.get(), stack));
 								}
@@ -340,7 +340,7 @@ public class ModEvents
 
 			if (!(entity instanceof Mob))
 			{
-				throw new IllegalStateException("Trying to spawn a non-mob: " + ForgeRegistries.ENTITY_TYPES.getKey(type));
+				throw new IllegalStateException("Trying to spawn a non-mob: " + BuiltInRegistries.ENTITY_TYPE.getKey(type));
 			}
 			else
 			{

@@ -2,8 +2,8 @@ package com.github.mechalopa.hmag.network;
 
 import com.github.mechalopa.hmag.util.ModUtils;
 
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.network.NetworkRegistry;
+import net.neoforged.network.simple.SimpleChannel;
 
 public class ModPacketHandler
 {

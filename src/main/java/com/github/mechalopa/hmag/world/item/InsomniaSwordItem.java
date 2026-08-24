@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import com.github.mechalopa.hmag.util.ModTags;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -28,8 +27,8 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class InsomniaSwordItem extends ModSwordItem implements ILevelItem
 {
@@ -47,8 +46,7 @@ public class InsomniaSwordItem extends ModSwordItem implements ILevelItem
 		{
 			if (entity instanceof ServerPlayer)
 			{
-				CompoundTag compoundnbt = stack.getOrCreateTag();
-				int itemLevel = !compoundnbt.contains(ILevelItem.LEVEL_KEY) ? 0 : (int)compoundnbt.getByte(ILevelItem.LEVEL_KEY);
+				int itemLevel = ILevelItem.getItemLevel(stack);
 				ServerStatsCounter serverstatscounter = ((ServerPlayer)entity).getStats();
 				final int i = 24000;
 				final int j = Mth.clamp(serverstatscounter.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
@@ -57,7 +55,7 @@ public class InsomniaSwordItem extends ModSwordItem implements ILevelItem
 
 				if (itemLevel != k)
 				{
-					compoundnbt.putByte(ILevelItem.LEVEL_KEY, (byte)k);
+					ILevelItem.setItemLevel(stack, k);
 				}
 			}
 		}
