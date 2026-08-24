@@ -112,10 +112,12 @@ import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
 @EventBusSubscriber(modid = HMaG.MODID, value = Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)
@@ -143,7 +145,7 @@ public class ModClientEventBusSubscriber
 			ItemProperties.register(ModItems.FORTRESS_SHIELD.get(), ModUtils.createRL("blocking"), ModClientUtils.PROPERTY_SHIELD_BLOCKING);
 		});
 
-		MinecraftForge.EVENT_BUS.register(new ModClientEvents());
+		NeoForge.EVENT_BUS.register(new ModClientEvents());
 	}
 
 	@SubscribeEvent
