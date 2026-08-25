@@ -8,6 +8,7 @@ import com.github.mechalopa.hmag.ModConfigs;
 import com.github.mechalopa.hmag.registry.ModEffects;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -47,7 +48,8 @@ public class InsomniaFruitItem extends Item implements ILevelItem
 		{
 			if (entity instanceof ServerPlayer)
 			{
-				int itemLevel = ILevelItem.getItemLevel(stack);
+				CompoundTag compoundnbt = stack.getOrCreateTag();
+				int itemLevel = !compoundnbt.contains(ILevelItem.LEVEL_KEY) ? 0 : (int)compoundnbt.getByte(ILevelItem.LEVEL_KEY);
 				ServerStatsCounter serverstatscounter = ((ServerPlayer)entity).getStats();
 				final int i = 24000;
 				final int j = Mth.clamp(serverstatscounter.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
@@ -56,7 +58,7 @@ public class InsomniaFruitItem extends Item implements ILevelItem
 
 				if (itemLevel != k)
 				{
-					ILevelItem.setItemLevel(stack, k);
+					compoundnbt.putByte(ILevelItem.LEVEL_KEY, (byte)k);
 				}
 			}
 		}
