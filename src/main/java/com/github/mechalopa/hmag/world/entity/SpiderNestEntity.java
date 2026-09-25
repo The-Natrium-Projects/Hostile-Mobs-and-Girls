@@ -1,7 +1,5 @@
 package com.github.mechalopa.hmag.world.entity;
 
-import javax.annotation.Nonnull;
-
 import com.github.mechalopa.hmag.ModConfigs;
 import com.github.mechalopa.hmag.registry.ModSoundEvents;
 import com.github.mechalopa.hmag.util.ModTags;
@@ -11,8 +9,6 @@ import com.github.mechalopa.hmag.world.entity.ai.goal.MeleeAttackGoal2;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -29,7 +25,6 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -51,10 +46,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+
 
 public class SpiderNestEntity extends Monster
 {
@@ -80,10 +74,10 @@ public class SpiderNestEntity extends Monster
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(SUMMON_DELAY, 60);
+		super.defineSynchedData(builder);
+		builder.define(SUMMON_DELAY, 60);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -96,11 +90,6 @@ public class SpiderNestEntity extends Monster
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.75D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.ARTHROPOD;
-	}
 
 	@Override
 	public void aiStep()
@@ -185,11 +174,11 @@ public class SpiderNestEntity extends Monster
 	@Override
 	public boolean canBeAffected(MobEffectInstance potioneffect)
 	{
-		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.SPIDER_NEST_IMMUNE_TO))
+		if (ModTags.checkTagContains(potioneffect.getEffect().value(), ModTags.MobEffectTags.SPIDER_NEST_IMMUNE_TO))
 		{
-			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
-			MinecraftForge.EVENT_BUS.post(event);
-			return event.getResult() == Event.Result.ALLOW;
+			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect, null);
+			NeoForge.EVENT_BUS.post(event);
+			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
 
 		return super.canBeAffected(potioneffect);
@@ -205,7 +194,7 @@ public class SpiderNestEntity extends Monster
 
 			CaveSpider cavespider = EntityType.CAVE_SPIDER.create(attacker.level());
 			cavespider.moveTo(d1, d2, d3, random.nextFloat() * 360.0F, 0.0F);
-			cavespider.finalizeSpawn(serverlevel, attacker.level().getCurrentDifficultyAt(attacker.blockPosition()), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null, (CompoundTag)null);
+			cavespider.finalizeSpawn(serverlevel, attacker.level().getCurrentDifficultyAt(attacker.blockPosition()), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null);
 			serverlevel.addFreshEntityWithPassengers(cavespider);
 
 			if (target != null && target.isAlive())
@@ -230,12 +219,6 @@ public class SpiderNestEntity extends Monster
 	public int getMaxSpawnClusterSize()
 	{
 		return 2;
-	}
-
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 1.1F;
 	}
 
 	@Override
@@ -301,13 +284,6 @@ public class SpiderNestEntity extends Monster
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.SHEEP_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	private class MeleeAttackAndSummonGoal extends MeleeAttackGoal2

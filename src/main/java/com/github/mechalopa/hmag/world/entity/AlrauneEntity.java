@@ -19,11 +19,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -39,10 +35,10 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.network.NetworkHooks;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+
 
 public class AlrauneEntity extends Monster implements RangedAttackMob
 {
@@ -140,11 +136,11 @@ public class AlrauneEntity extends Monster implements RangedAttackMob
 	@Override
 	public boolean canBeAffected(MobEffectInstance potioneffect)
 	{
-		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.ALRAUNE_IMMUNE_TO))
+		if (potioneffect.getEffect().is(ModTags.MobEffectTags.ALRAUNE_IMMUNE_TO))
 		{
-			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
-			MinecraftForge.EVENT_BUS.post(event);
-			return event.getResult() == Event.Result.ALLOW;
+			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect, null);
+			NeoForge.EVENT_BUS.post(event);
+			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
 
 		return super.canBeAffected(potioneffect);
@@ -179,9 +175,10 @@ public class AlrauneEntity extends Monster implements RangedAttackMob
 	}
 
 	@Override
-	public double getMyRidingOffset()
+	protected EntityAttachments getVehicleAttachmentPoint()
 	{
-		return -0.45D;
+		return super.createAttachments()
+			.withDefault(EntityAttachment.PASSENGER, new Vec3(0, -0.45D, 0));
 	}
 
 	@Override
@@ -212,12 +209,5 @@ public class AlrauneEntity extends Monster implements RangedAttackMob
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.DROWNED_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

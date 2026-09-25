@@ -19,6 +19,7 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -27,7 +28,6 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 {
@@ -46,8 +46,8 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 	public static record PropCodec(Item addition, Item template, String enchantment, int min, int max)
 	{
 		public static final Codec<PropCodec> CODEC = RecordCodecBuilder.create((p -> {
-			return p.group(ForgeRegistries.ITEMS.getCodec().optionalFieldOf("addition", Items.BARRIER).forGetter(PropCodec::addition),
-					ForgeRegistries.ITEMS.getCodec().optionalFieldOf("template", Items.BARRIER).forGetter(PropCodec::template),
+			return p.group(BuiltInRegistries.ITEM.byNameCodec().optionalFieldOf("addition", Items.BARRIER).forGetter(PropCodec::addition),
+					BuiltInRegistries.ITEM.byNameCodec().optionalFieldOf("template", Items.BARRIER).forGetter(PropCodec::template),
 					Codec.STRING.fieldOf("enchantment").forGetter(PropCodec::enchantment),
 					Codec.INT.optionalFieldOf("minLevel", 0).forGetter(PropCodec::min),
 					Codec.INT.optionalFieldOf("maxLevel", 0).forGetter(PropCodec::max))
@@ -93,8 +93,8 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 
 		for (EnchantmentUpgradeProp prop : map.keySet())
 		{
-			buf.writeUtf(ForgeRegistries.ITEMS.getKey(prop.getAddition()).toString());
-			buf.writeUtf(ForgeRegistries.ITEMS.getKey(prop.getTemplate()).toString());
+			buf.writeUtf(BuiltInRegistries.ITEM.getKey(prop.getAddition()).toString());
+			buf.writeUtf(BuiltInRegistries.ITEM.getKey(prop.getTemplate()).toString());
 			buf.writeUtf(prop.getEnchantmentKey());
 			buf.writeVarInt(prop.getMinLevel());
 			buf.writeVarInt(prop.getMaxLevel());
@@ -121,13 +121,13 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 
 	private static Supplier<Item> getItemSupplier(String name)
 	{
-		return ForgeRegistries.ITEMS.getHolder(ModUtils.createRL(name)).orElseThrow();
+		return () -> BuiltInRegistries.ITEM.getHolder(ModUtils.createRL(name)).orElseThrow().value();
 	}
 
 	@Nullable
 	private static Enchantment getEnchantment(String name)
 	{
-		Optional<Holder<Enchantment>> optional = ForgeRegistries.ENCHANTMENTS.getHolder(ModUtils.createRL(name));
+		Optional<Holder<Enchantment>> optional = BuiltInRegistries.ENCHANTMENT.getHolder(ModUtils.createRL(name));
 		return optional.isPresent() ? optional.orElseThrow().get() : null;
 	}
 

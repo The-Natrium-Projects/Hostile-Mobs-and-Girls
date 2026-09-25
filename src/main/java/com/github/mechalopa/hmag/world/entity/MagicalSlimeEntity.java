@@ -20,9 +20,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
 
 public class MagicalSlimeEntity extends Slime implements VariantHolder<SlimeGirlEntity.ColorVariant>
 {
@@ -34,10 +34,10 @@ public class MagicalSlimeEntity extends Slime implements VariantHolder<SlimeGirl
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, SlimeGirlEntity.ColorVariant.PINK_1.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, SlimeGirlEntity.ColorVariant.PINK_1.getId());
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -118,12 +118,5 @@ public class MagicalSlimeEntity extends Slime implements VariantHolder<SlimeGirl
 	{
 		super.addAdditionalSaveData(compound);
 		compound.putInt("Variant", this.getVariant().getId());
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

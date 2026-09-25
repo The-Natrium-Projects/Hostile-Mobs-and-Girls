@@ -30,9 +30,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.PlayMessages;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.network.PlayMessages;
 
 public class MagicBulletEntity extends ModDamagingProjectileEntity implements VariantHolder<MagicBulletEntity.Variant>
 {
@@ -63,12 +63,12 @@ public class MagicBulletEntity extends ModDamagingProjectileEntity implements Va
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, MagicBulletEntity.Variant.LICH.getId());
-		this.entityData.define(EFFECT_LEVEL, (byte)1);
-		this.entityData.define(PIERCE_LEVEL, (byte)0);
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, MagicBulletEntity.Variant.LICH.getId());
+		builder.define(EFFECT_LEVEL, (byte)1);
+		builder.define(PIERCE_LEVEL, (byte)0);
 	}
 
 	@Override

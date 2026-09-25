@@ -1,5 +1,6 @@
 package com.github.mechalopa.hmag.world.entity;
 
+import net.minecraft.tags.EntityTypeTags;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -39,7 +40,6 @@ import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -59,12 +59,11 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.Event;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 {
@@ -99,11 +98,11 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(ATTACK_TARGET, 0);
-		this.entityData.define(ATTACK_PHASE, (byte)0);
+		super.defineSynchedData(builder);
+		builder.define(ATTACK_TARGET, 0);
+		builder.define(ATTACK_PHASE, (byte)0);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -242,8 +241,8 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.MONOLITH_IMMUNE_TO))
 		{
 			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
-			MinecraftForge.EVENT_BUS.post(event);
-			return event.getResult() == Event.Result.ALLOW;
+			NeoForge.EVENT_BUS.post(event);
+			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
 
 		return super.canBeAffected(potioneffect);
@@ -460,13 +459,6 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 	public float getClientSideAttackTime()
 	{
 		return (float)(this.level().getGameTime() % 24000L);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public static enum AttackPhase
@@ -931,7 +923,7 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 			{
 				return false;
 			}
-			else if (livingEntityIn instanceof Player || (livingEntityIn instanceof AbstractGolem && ModConfigs.cachedServer.MONOLITH_ATTACK_GOLEMS) || (livingEntityIn instanceof AbstractVillager && ModConfigs.cachedServer.MONOLITH_ATTACK_VILLAGERS) || (livingEntityIn.getMobType() == MobType.ILLAGER && ModConfigs.cachedServer.MONOLITH_ATTACK_ILLAGERS))
+			else if (livingEntityIn instanceof Player || (livingEntityIn instanceof AbstractGolem && ModConfigs.cachedServer.MONOLITH_ATTACK_GOLEMS) || (livingEntityIn instanceof AbstractVillager && ModConfigs.cachedServer.MONOLITH_ATTACK_VILLAGERS) || (livingEntityIn.getType().is(EntityTypeTags.ILLAGER) && ModConfigs.cachedServer.MONOLITH_ATTACK_ILLAGERS))
 			{
 				final double d0 = ModConfigs.cachedServer.MONOLITH_TARGET_DISTANCE;
 				return livingEntityIn.distanceToSqr(this.parent) <= d0 * d0;

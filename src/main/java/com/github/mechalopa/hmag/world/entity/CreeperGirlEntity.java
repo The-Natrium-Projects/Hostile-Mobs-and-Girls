@@ -40,7 +40,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkHooks;
 
 public class CreeperGirlEntity extends Creeper implements VariantHolder<CreeperGirlEntity.Variant>
 {
@@ -53,10 +52,10 @@ public class CreeperGirlEntity extends Creeper implements VariantHolder<CreeperG
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, CreeperGirlEntity.Variant.VARIANT_0.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, CreeperGirlEntity.Variant.VARIANT_0.getId());
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -154,13 +153,6 @@ public class CreeperGirlEntity extends Creeper implements VariantHolder<CreeperG
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.ZOMBIE_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public static enum Variant implements StringRepresentable

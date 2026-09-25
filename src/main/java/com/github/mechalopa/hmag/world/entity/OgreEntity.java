@@ -45,10 +45,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
 
 public class OgreEntity extends Monster
 {
@@ -81,10 +80,10 @@ public class OgreEntity extends Monster
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(IS_ARM_SWING, false);
+		super.defineSynchedData(builder);
+		builder.define(IS_ARM_SWING, false);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -329,13 +328,6 @@ public class OgreEntity extends Monster
 			float f = state.getDestroySpeed(level, pos);
 			return f >= 0.0F && f <= maxHardness && f / maxHardness <= this.getRandom().nextFloat() + 0.05F && this.getRandom().nextBoolean();
 		}
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	private class MeleeAttackAndDestroyGoal extends MeleeAttackGoal

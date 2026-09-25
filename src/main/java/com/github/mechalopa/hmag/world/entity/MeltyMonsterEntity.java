@@ -46,23 +46,21 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
 
 public class MeltyMonsterEntity extends Monster implements RangedAttackMob
 {
 	public MeltyMonsterEntity(EntityType<? extends MeltyMonsterEntity> type, Level level)
 	{
 		super(type, level);
-		this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
-		this.setPathfindingMalus(BlockPathTypes.LAVA, 0.0F);
-		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
-		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.WATER, -1.0F);
+		this.setPathfindingMalus(PathType.LAVA, 0.0F);
+		this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
 		this.xpReward = 15;
 	}
 
@@ -298,13 +296,6 @@ public class MeltyMonsterEntity extends Monster implements RangedAttackMob
 		this.playSound(SoundEvents.MAGMA_CUBE_SQUISH, 0.15F, 1.0F);
 	}
 
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
 	private static class StriderPathNavigation extends GroundPathNavigation
 	{
 		public StriderPathNavigation(MeltyMonsterEntity mob, Level level)
@@ -320,9 +311,9 @@ public class MeltyMonsterEntity extends Monster implements RangedAttackMob
 		}
 
 		@Override
-		protected boolean hasValidPathType(BlockPathTypes blockPathTypes)
+		protected boolean hasValidPathType(PathType blockPathTypes)
 		{
-			return blockPathTypes != BlockPathTypes.LAVA && blockPathTypes != BlockPathTypes.DAMAGE_FIRE && blockPathTypes != BlockPathTypes.DANGER_FIRE ? super.hasValidPathType(blockPathTypes) : true;
+			return blockPathTypes != PathType.LAVA && blockPathTypes != PathType.DAMAGE_FIRE && blockPathTypes != PathType.DANGER_FIRE ? super.hasValidPathType(blockPathTypes) : true;
 		}
 
 		@Override

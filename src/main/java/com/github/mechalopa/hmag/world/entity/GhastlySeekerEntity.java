@@ -38,9 +38,9 @@ import net.minecraft.world.entity.projectile.LargeFireball;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
 
 public class GhastlySeekerEntity extends FlyingMob implements Enemy
 {
@@ -66,10 +66,10 @@ public class GhastlySeekerEntity extends FlyingMob implements Enemy
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(ATTACKING_TIME, -1);
+		super.defineSynchedData(builder);
+		builder.define(ATTACKING_TIME, -1);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -200,13 +200,6 @@ public class GhastlySeekerEntity extends FlyingMob implements Enemy
 		{
 			this.explosionPower = compound.getInt("ExplosionPower");
 		}
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	private static class FireballAttackGoal extends Goal

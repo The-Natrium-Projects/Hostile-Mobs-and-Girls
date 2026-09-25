@@ -48,9 +48,9 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
+import net.minecraft.world.level.pathfinder.PathType;
+
+
 
 public class KashaEntity extends Monster implements VariantHolder<KashaEntity.Variant>
 {
@@ -61,18 +61,18 @@ public class KashaEntity extends Monster implements VariantHolder<KashaEntity.Va
 	public KashaEntity(EntityType<? extends KashaEntity> type, Level level)
 	{
 		super(type, level);
-		this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
-		this.setPathfindingMalus(BlockPathTypes.LAVA, 0.0F);
-		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
-		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.WATER, -1.0F);
+		this.setPathfindingMalus(PathType.LAVA, 0.0F);
+		this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
 		this.xpReward = 12;
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, KashaEntity.Variant.NORMAL.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, KashaEntity.Variant.NORMAL.getId());
 	}
 
 	@Override
@@ -252,13 +252,6 @@ public class KashaEntity extends Monster implements VariantHolder<KashaEntity.Va
 	protected SoundEvent getDeathSound()
 	{
 		return ModSoundEvents.KASHA_DEATH.get();
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public static enum Variant implements StringRepresentable

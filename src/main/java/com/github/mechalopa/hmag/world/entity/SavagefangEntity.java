@@ -1,5 +1,6 @@
 package com.github.mechalopa.hmag.world.entity;
 
+import net.minecraft.tags.EntityTypeTags;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
@@ -36,7 +37,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -59,12 +59,12 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
+
 
 public class SavagefangEntity extends Monster
 {
@@ -80,7 +80,7 @@ public class SavagefangEntity extends Monster
 	public SavagefangEntity(EntityType<? extends SavagefangEntity> type, Level level)
 	{
 		super(type, level);
-		this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+		this.setPathfindingMalus(PathType.WATER, 0.0F);
 		this.moveControl = new SavagefangEntity.SavagefangMoveControl(this);
 		this.lookControl = new SavagefangEntity.SavagefangLookControl(this);
 		this.xpReward = 3;
@@ -105,10 +105,10 @@ public class SavagefangEntity extends Monster
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_FLAGS_ID, (byte)0);
+		super.defineSynchedData(builder);
+		builder.define(DATA_FLAGS_ID, (byte)0);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -119,11 +119,6 @@ public class SavagefangEntity extends Monster
 				.add(Attributes.ATTACK_DAMAGE, 4.0D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.WATER;
-	}
 
 	@Override
 	public boolean canBreatheUnderwater()
@@ -546,13 +541,6 @@ public class SavagefangEntity extends Monster
 		}
 	}
 
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
 	public static class SchoolSpawnGroupData implements SpawnGroupData
 	{
 		public final SavagefangEntity leader;
@@ -885,7 +873,7 @@ public class SavagefangEntity extends Monster
 			{
 				return false;
 			}
-			else if (livingEntity instanceof Player || (livingEntity.getMobType() != MobType.WATER && livingEntity.canDrownInFluidType(ForgeMod.WATER_TYPE.get()) && livingEntity instanceof Animal && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ANIMALS) || (livingEntity instanceof AbstractVillager && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_VILLAGERS) || (livingEntity.getMobType() == MobType.ILLAGER && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ILLAGERS))
+			else if (livingEntity instanceof Player || (!livingEntity.getType().is(EntityTypeTags.AQUATIC) && livingEntity.canDrownInFluidType(ForgeMod.WATER_TYPE.get()) && livingEntity instanceof Animal && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ANIMALS) || (livingEntity instanceof AbstractVillager && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_VILLAGERS) || (livingEntity.getType().is(EntityTypeTags.ILLAGER) && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ILLAGERS))
 			{
 				return livingEntity.distanceToSqr(this.parent) <= 4.0D * 4.0D || (livingEntity.isInWaterOrBubble() && livingEntity.distanceToSqr(this.parent) <= 9.0D * 9.0D);
 			}

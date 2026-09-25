@@ -46,10 +46,10 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
+
+
 
 public class SwamperEntity extends Monster implements RangedAttackMob
 {
@@ -59,16 +59,16 @@ public class SwamperEntity extends Monster implements RangedAttackMob
 	public SwamperEntity(EntityType<? extends SwamperEntity> type, Level level)
 	{
 		super(type, level);
-		this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+		this.setPathfindingMalus(PathType.WATER, 0.0F);
 		this.xpReward = 12;
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(SHOULD_SPIT_TIMER, 0);
-		this.entityData.define(DATA_SUFFOCATING, false);
+		super.defineSynchedData(builder);
+		builder.define(SHOULD_SPIT_TIMER, 0);
+		builder.define(DATA_SUFFOCATING, false);
 	}
 
 	@Override
@@ -330,13 +330,6 @@ public class SwamperEntity extends Monster implements RangedAttackMob
 	protected SoundEvent getDeathSound()
 	{
 		return ModSoundEvents.SWAMPER_DEATH.get();
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	private class SwamperFloatGoal extends FloatGoal

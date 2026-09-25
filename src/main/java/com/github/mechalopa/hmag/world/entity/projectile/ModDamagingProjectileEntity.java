@@ -10,8 +10,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public abstract class ModDamagingProjectileEntity extends AbstractHurtingProjectile
 {
@@ -34,10 +34,10 @@ public abstract class ModDamagingProjectileEntity extends AbstractHurtingProject
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DAMAGE, Float.valueOf(3.0F));
+		super.defineSynchedData(builder);
+		builder.define(DAMAGE, Float.valueOf(3.0F));
 	}
 
 	@Override

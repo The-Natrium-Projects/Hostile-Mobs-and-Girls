@@ -30,8 +30,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
+
+
 
 public class EnderExecutorEntity extends EnderMan implements IBeamAttackMob
 {
@@ -47,11 +47,11 @@ public class EnderExecutorEntity extends EnderMan implements IBeamAttackMob
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(ATTACK_TARGET, 0);
-		this.entityData.define(ATTACKING_TIME, -20);
+		super.defineSynchedData(builder);
+		builder.define(ATTACK_TARGET, 0);
+		builder.define(ATTACKING_TIME, -20);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -321,12 +321,5 @@ public class EnderExecutorEntity extends EnderMan implements IBeamAttackMob
 	public float getClientSideAttackTime()
 	{
 		return (float)this.clientAttackTime;
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

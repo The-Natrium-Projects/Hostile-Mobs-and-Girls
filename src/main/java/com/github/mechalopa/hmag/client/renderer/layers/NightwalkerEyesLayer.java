@@ -7,8 +7,8 @@ import com.github.mechalopa.hmag.world.entity.NightwalkerEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class NightwalkerEyesLayer<T extends NightwalkerEntity, M extends NightwalkerModel<T>> extends EyesLayer<T, M>

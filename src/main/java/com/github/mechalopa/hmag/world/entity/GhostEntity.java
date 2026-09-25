@@ -28,7 +28,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.VariantHolder;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -57,10 +56,10 @@ public class GhostEntity extends AbstractFlyingMonsterEntity implements VariantH
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, GhostEntity.Variant.VARIANT_0.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, GhostEntity.Variant.VARIANT_0.getId());
 	}
 
 	@Override
@@ -85,11 +84,6 @@ public class GhostEntity extends AbstractFlyingMonsterEntity implements VariantH
 				.add(Attributes.FOLLOW_RANGE, 32.0D);
 	}
 
-	@Override
-	public MobType getMobType()
-	{
-		return MobType.UNDEAD;
-	}
 
 	@Override
 	public void aiStep()

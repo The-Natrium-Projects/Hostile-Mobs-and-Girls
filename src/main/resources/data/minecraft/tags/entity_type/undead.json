@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "hmag:banshee",
+    "hmag:dyssomnia",
+    "hmag:ghost",
+    "hmag:giant_mummy",
+    "hmag:jiangshi",
+    "hmag:lich",
+    "hmag:necrotic_reaper"
+  ]
+}

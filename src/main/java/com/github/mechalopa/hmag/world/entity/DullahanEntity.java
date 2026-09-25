@@ -53,7 +53,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.network.NetworkHooks;
+
 
 public class DullahanEntity extends Monster implements VariantHolder<DullahanEntity.Variant>
 {
@@ -66,10 +66,10 @@ public class DullahanEntity extends Monster implements VariantHolder<DullahanEnt
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, DullahanEntity.Variant.NORMAL.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, DullahanEntity.Variant.NORMAL.getId());
 	}
 
 	@Override
@@ -239,13 +239,6 @@ public class DullahanEntity extends Monster implements VariantHolder<DullahanEnt
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.PIGLIN_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public static enum Variant implements StringRepresentable

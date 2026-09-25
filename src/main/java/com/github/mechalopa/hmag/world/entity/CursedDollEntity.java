@@ -49,8 +49,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
+
+import net.neoforged.neoforge.common.NeoForgeMod;
+
 
 public class CursedDollEntity extends Monster implements VariantHolder<CommonOrUncommonVariant>
 {
@@ -63,10 +64,10 @@ public class CursedDollEntity extends Monster implements VariantHolder<CommonOrU
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, CommonOrUncommonVariant.COMMON.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, CommonOrUncommonVariant.COMMON.getId());
 	}
 
 	@Override
@@ -89,7 +90,7 @@ public class CursedDollEntity extends Monster implements VariantHolder<CommonOrU
 				.add(Attributes.ATTACK_DAMAGE, 4.0D)
 				.add(Attributes.ATTACK_KNOCKBACK, 1.0D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.25D)
-				.add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 1.5D);
+				.add(NeoForgeMod.STEP_HEIGHT_ADDITION.get(), 1.5D);
 	}
 
 	@Override
@@ -246,11 +247,4 @@ public class CursedDollEntity extends Monster implements VariantHolder<CommonOrU
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState block){}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
 }

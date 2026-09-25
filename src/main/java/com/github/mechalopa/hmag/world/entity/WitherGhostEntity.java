@@ -18,17 +18,17 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.neoforged.common.MinecraftForge;
+import net.neoforged.event.entity.living.MobEffectEvent;
+import net.neoforged.eventbus.api.Event;
 
 public class WitherGhostEntity extends GhostEntity
 {
 	public WitherGhostEntity(EntityType<? extends WitherGhostEntity> type, Level level)
 	{
 		super(type, level);
-		this.setPathfindingMalus(BlockPathTypes.LAVA, 8.0F);
+		this.setPathfindingMalus(PathType.LAVA, 8.0F);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -86,7 +86,7 @@ public class WitherGhostEntity extends GhostEntity
 		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.WITHER_GHOST_IMMUNE_TO))
 		{
 			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
-			MinecraftForge.EVENT_BUS.post(event);
+			NeoForge.EVENT_BUS.post(event);
 			return event.getResult() == Event.Result.ALLOW;
 		}
 

@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import com.google.common.base.Suppliers;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Holder;
@@ -15,13 +16,13 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.MobSpawnSettingsBuilder;
-import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.MobSpawnSettingsBuilder;
+import net.neoforged.neoforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
 
 public record ModAddSpawnsBiomeModifier(List<List<ModAddSpawnsBiomeModifier.BiomeProp>> biomePropLists, List<SpawnerData> spawners, double energyBudget, double charge) implements BiomeModifier
 {
-	public static final Supplier<Codec<ModAddSpawnsBiomeModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(builder -> builder.group(
+	public static final Supplier<MapCodec<ModAddSpawnsBiomeModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(builder -> builder.group(
 			BiomeProp.CODEC.listOf().listOf().fieldOf("biomes").forGetter(ModAddSpawnsBiomeModifier::biomePropLists),
 			new ExtraCodecs.EitherCodec<>(SpawnerData.CODEC.listOf(), SpawnerData.CODEC).xmap(either -> either.map(Function.identity(), List::of), list -> list.size() == 1 ? Either.right(list.get(0)) : Either.left(list)).fieldOf("spawners").forGetter(ModAddSpawnsBiomeModifier::spawners),
 			Codec.DOUBLE.optionalFieldOf("energy_budget", -1.0D).forGetter(ModAddSpawnsBiomeModifier::energyBudget),
@@ -81,7 +82,7 @@ public record ModAddSpawnsBiomeModifier(List<List<ModAddSpawnsBiomeModifier.Biom
 	}
 
 	@Override
-	public Codec<? extends BiomeModifier> codec()
+	public MapCodec<? extends BiomeModifier> codec()
 	{
 		return CODEC.get();
 	}

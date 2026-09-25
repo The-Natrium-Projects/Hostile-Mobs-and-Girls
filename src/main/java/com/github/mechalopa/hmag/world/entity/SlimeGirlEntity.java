@@ -57,9 +57,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+
 
 public class SlimeGirlEntity extends Monster implements VariantHolder<SlimeGirlEntity.ColorVariant>
 {
@@ -76,10 +76,10 @@ public class SlimeGirlEntity extends Monster implements VariantHolder<SlimeGirlE
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, SlimeGirlEntity.ColorVariant.PINK_1.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, SlimeGirlEntity.ColorVariant.PINK_1.getId());
 	}
 
 	@Override
@@ -337,13 +337,6 @@ public class SlimeGirlEntity extends Monster implements VariantHolder<SlimeGirlE
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.SLIME_BLOCK_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public static enum ColorVariant implements StringRepresentable
