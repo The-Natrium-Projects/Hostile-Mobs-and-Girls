@@ -63,10 +63,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.common.MinecraftForge;
-import net.neoforged.event.entity.living.MobEffectEvent;
-import net.neoforged.eventbus.api.Event;
-import net.neoforged.network.NetworkHooks;
+import net.neoforged.bus.api.Event;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 public class DyssomniaEntity extends FlyingMob implements Enemy
 {
@@ -106,12 +105,12 @@ public class DyssomniaEntity extends FlyingMob implements Enemy
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(ATTACK_PHASE, (byte)0);
-		this.entityData.define(ATTACKING_TIME, -1);
-		this.entityData.define(RETREATING, false);
+		super.defineSynchedData(builder);
+		builder.define(ATTACK_PHASE, (byte)0);
+		builder.define(ATTACKING_TIME, -1);
+		builder.define(RETREATING, false);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -229,11 +228,11 @@ public class DyssomniaEntity extends FlyingMob implements Enemy
 	@Override
 	public boolean canBeAffected(MobEffectInstance potioneffect)
 	{
-		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.DYSSOMNIA_IMMUNE_TO))
+		if (potioneffect.getEffect().is(ModTags.MobEffectTags.DYSSOMNIA_IMMUNE_TO))
 		{
 			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
-			MinecraftForge.EVENT_BUS.post(event);
-			return event.getResult() == Event.Result.ALLOW;
+			NeoForge.EVENT_BUS.post(event);
+			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
 
 		return super.canBeAffected(potioneffect);
@@ -417,13 +416,6 @@ public class DyssomniaEntity extends FlyingMob implements Enemy
 	protected float getSoundVolume()
 	{
 		return 2.0F;
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public static enum AttackPhase

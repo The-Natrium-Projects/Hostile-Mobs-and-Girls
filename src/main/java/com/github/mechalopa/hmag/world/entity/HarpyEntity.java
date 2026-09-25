@@ -51,8 +51,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.common.ForgeMod;
-import net.neoforged.network.NetworkHooks;
+
+
 
 public class HarpyEntity extends Monster implements VariantHolder<HarpyEntity.Variant>
 {
@@ -67,10 +67,10 @@ public class HarpyEntity extends Monster implements VariantHolder<HarpyEntity.Va
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, HarpyEntity.Variant.GOLD.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, HarpyEntity.Variant.GOLD.getId());
 	}
 
 	@Override
@@ -229,13 +229,6 @@ public class HarpyEntity extends Monster implements VariantHolder<HarpyEntity.Va
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.CHICKEN_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public static enum Variant implements StringRepresentable

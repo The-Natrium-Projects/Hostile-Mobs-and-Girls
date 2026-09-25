@@ -63,12 +63,12 @@ public class MagicBulletEntity extends ModDamagingProjectileEntity implements Va
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, MagicBulletEntity.Variant.LICH.getId());
-		this.entityData.define(EFFECT_LEVEL, (byte)1);
-		this.entityData.define(PIERCE_LEVEL, (byte)0);
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, MagicBulletEntity.Variant.LICH.getId());
+		builder.define(EFFECT_LEVEL, (byte)1);
+		builder.define(PIERCE_LEVEL, (byte)0);
 	}
 
 	@Override

@@ -45,12 +45,12 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.event.ForgeEventFactory;
-import net.neoforged.network.NetworkHooks;
+import net.neoforged.neoforge.event.EventHooks;
+
 
 public class GiantMummyEntity extends Monster
 {
@@ -110,7 +110,7 @@ public class GiantMummyEntity extends Monster
 
 		if (this.isAlive())
 		{
-			if (ModConfigs.cachedServer.GIANT_MUMMY_DESTROY_BLOCKS && this.level().getDifficulty().getId() > 1 && this.getTarget() != null && this.horizontalCollision && ForgeEventFactory.getMobGriefingEvent(this.level(), this))
+			if (ModConfigs.cachedServer.GIANT_MUMMY_DESTROY_BLOCKS && this.level().getDifficulty().getId() > 1 && this.getTarget() != null && this.horizontalCollision && EventHooks.canEntityGrief(this.level(), this))
 			{
 				boolean flag = false;
 				AABB aabb = this.getBoundingBox().inflate(0.25D);
@@ -196,11 +196,6 @@ public class GiantMummyEntity extends Monster
 		return -0.6D;
 	}
 
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 2.5F;
-	}
 
 	@Override
 	protected SoundEvent getAmbientSound()
@@ -228,14 +223,7 @@ public class GiantMummyEntity extends Monster
 
 	private boolean canDestroyBlock(BlockState state, Level level, BlockPos pos, LivingEntity livingEntity)
 	{
-		return state.is(ModTags.BlockTags.GIANT_MUMMY_DESTROYABLES) && state.canEntityDestroy(this.level(), pos, this) && ForgeEventFactory.onEntityDestroyBlock(this, pos, state);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
+		return state.is(ModTags.BlockTags.GIANT_MUMMY_DESTROYABLES) && state.canEntityDestroy(this.level(), pos, this) && EventHooks.onEntityDestroyBlock(this, pos, state);
 	}
 
 	private static class GiantMummyNavigation extends GroundPathNavigation
@@ -256,11 +244,11 @@ public class GiantMummyEntity extends Monster
 	private static class GiantMummyNodeEvaluator extends WalkNodeEvaluator
 	{
 		@Override
-		protected BlockPathTypes evaluateBlockPathType(BlockGetter getter, BlockPos pos, BlockPathTypes blockPathTypes)
+		protected PathType evaluateBlockPathType(BlockGetter getter, BlockPos pos, PathType blockPathTypes)
 		{
-			if ((blockPathTypes == BlockPathTypes.BLOCKED || blockPathTypes == BlockPathTypes.FENCE || blockPathTypes == BlockPathTypes.LEAVES || blockPathTypes == BlockPathTypes.COCOA) && this.mob != null && this.mob.isAlive() && ModConfigs.cachedServer.GIANT_MUMMY_DESTROY_BLOCKS && this.mob.level().getDifficulty().getId() > 1 && this.mob.getTarget() != null && getter.getBlockState(pos).is(ModTags.BlockTags.GIANT_MUMMY_DESTROYABLES))
+			if ((blockPathTypes == PathType.BLOCKED || blockPathTypes == PathType.FENCE || blockPathTypes == PathType.LEAVES || blockPathTypes == PathType.COCOA) && this.mob != null && this.mob.isAlive() && ModConfigs.cachedServer.GIANT_MUMMY_DESTROY_BLOCKS && this.mob.level().getDifficulty().getId() > 1 && this.mob.getTarget() != null && getter.getBlockState(pos).is(ModTags.BlockTags.GIANT_MUMMY_DESTROYABLES))
 			{
-				return BlockPathTypes.OPEN;
+				return PathType.OPEN;
 			}
 			else
 			{

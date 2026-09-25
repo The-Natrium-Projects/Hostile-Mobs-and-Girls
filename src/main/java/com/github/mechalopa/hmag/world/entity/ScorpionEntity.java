@@ -34,7 +34,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.common.MinecraftForge;
 import net.neoforged.event.entity.living.MobEffectEvent;
 import net.neoforged.eventbus.api.Event;
-import net.neoforged.network.NetworkHooks;
+
 
 public class ScorpionEntity extends Monster
 {
@@ -105,7 +105,7 @@ public class ScorpionEntity extends Monster
 		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.SCORPION_IMMUNE_TO))
 		{
 			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
-			MinecraftForge.EVENT_BUS.post(event);
+			NeoForge.EVENT_BUS.post(event);
 			return event.getResult() == Event.Result.ALLOW;
 		}
 
@@ -164,12 +164,5 @@ public class ScorpionEntity extends Monster
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.SPIDER_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

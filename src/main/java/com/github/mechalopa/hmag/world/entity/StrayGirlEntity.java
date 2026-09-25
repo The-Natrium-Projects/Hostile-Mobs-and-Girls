@@ -22,7 +22,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.network.NetworkHooks;
+
 
 public class StrayGirlEntity extends Stray
 {
@@ -72,12 +72,5 @@ public class StrayGirlEntity extends Stray
 		while(levelAccessor.getBlockState(blockpos).is(Blocks.POWDER_SNOW));
 
 		return Monster.checkMonsterSpawnRules(type, levelAccessor, spawnType, pos, random) && (spawnType == MobSpawnType.SPAWNER || levelAccessor.canSeeSky(pos.below()));
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

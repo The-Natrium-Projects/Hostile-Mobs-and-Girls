@@ -39,21 +39,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.neoforged.common.ForgeMod;
-import net.neoforged.common.MinecraftForge;
-import net.neoforged.event.entity.living.MobEffectEvent;
-import net.neoforged.eventbus.api.Event;
-import net.neoforged.network.NetworkHooks;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 public class CrimsonSlaughtererEntity extends Monster
 {
 	public CrimsonSlaughtererEntity(EntityType<? extends CrimsonSlaughtererEntity> type, Level level)
 	{
 		super(type, level);
-		this.setPathfindingMalus(BlockPathTypes.LAVA, 0.0F);
-		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
-		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.LAVA, 0.0F);
+		this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
 		this.xpReward = 20;
 	}
 
@@ -85,7 +82,7 @@ public class CrimsonSlaughtererEntity extends Monster
 				.add(Attributes.ATTACK_KNOCKBACK, 0.5D)
 				.add(Attributes.ARMOR, 5.0D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.75D)
-				.add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 2.0D);
+				.add(Attributes.STEP_HEIGHT, 2.0D);
 	}
 
 
@@ -137,11 +134,11 @@ public class CrimsonSlaughtererEntity extends Monster
 	@Override
 	public boolean canBeAffected(MobEffectInstance potioneffect)
 	{
-		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.CRIMSON_SLAUGHTERER_IMMUNE_TO))
+		if (potioneffect.getEffect().is(ModTags.MobEffectTags.CRIMSON_SLAUGHTERER_IMMUNE_TO))
 		{
-			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
-			MinecraftForge.EVENT_BUS.post(event);
-			return event.getResult() == Event.Result.ALLOW;
+			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect, null);
+			NeoForge.EVENT_BUS.post(event);
+			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
 
 		return super.canBeAffected(potioneffect);
@@ -192,12 +189,5 @@ public class CrimsonSlaughtererEntity extends Monster
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.SPIDER_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

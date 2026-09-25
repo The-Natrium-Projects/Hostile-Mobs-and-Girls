@@ -41,11 +41,11 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.network.NetworkHooks;
+
 
 public class FortressKeeperEntity extends Monster implements RangedAttackMob
 {
@@ -58,10 +58,10 @@ public class FortressKeeperEntity extends Monster implements RangedAttackMob
 	public FortressKeeperEntity(EntityType<? extends FortressKeeperEntity> type, Level level)
 	{
 		super(type, level);
-		this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
-		this.setPathfindingMalus(BlockPathTypes.LAVA, 0.0F);
-		this.setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0.0F);
-		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.WATER, -1.0F);
+		this.setPathfindingMalus(PathType.LAVA, 0.0F);
+		this.setPathfindingMalus(PathType.DANGER_FIRE, 0.0F);
+		this.setPathfindingMalus(PathType.DAMAGE_FIRE, 0.0F);
 		this.xpReward = 15;
 	}
 
@@ -78,10 +78,10 @@ public class FortressKeeperEntity extends Monster implements RangedAttackMob
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_FLAGS_ID, (byte)0);
+		super.defineSynchedData(builder);
+		builder.define(DATA_FLAGS_ID, (byte)0);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -368,13 +368,6 @@ public class FortressKeeperEntity extends Monster implements RangedAttackMob
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.NETHER_BRICKS_STEP, 0.5F, 0.25F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	private class RangedAttackGoal extends RangedAttackGoal2

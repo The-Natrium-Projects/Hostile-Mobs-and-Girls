@@ -21,7 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.neoforged.network.NetworkHooks;
+
 
 public class SkeletonGirlEntity extends Skeleton
 {
@@ -76,12 +76,5 @@ public class SkeletonGirlEntity extends Skeleton
 		{
 			this.level().levelEvent((Player)null, 1048, this.blockPosition(), 0);
 		}
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

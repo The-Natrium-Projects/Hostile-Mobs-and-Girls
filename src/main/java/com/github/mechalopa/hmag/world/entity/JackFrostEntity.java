@@ -41,7 +41,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.common.util.BlockSnapshot;
 import net.neoforged.event.ForgeEventFactory;
-import net.neoforged.network.NetworkHooks;
+
 
 public class JackFrostEntity extends Monster implements RangedAttackMob
 {
@@ -200,12 +200,5 @@ public class JackFrostEntity extends Monster implements RangedAttackMob
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.ZOMBIE_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

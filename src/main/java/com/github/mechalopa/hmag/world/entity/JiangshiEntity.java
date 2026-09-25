@@ -64,7 +64,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.network.NetworkHooks;
+
 
 public class JiangshiEntity extends Monster implements VariantHolder<CommonOrUncommonVariant>
 {
@@ -82,11 +82,11 @@ public class JiangshiEntity extends Monster implements VariantHolder<CommonOrUnc
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_SPEED_BONUS, 0);
-		this.entityData.define(DATA_VARIANT_ID, CommonOrUncommonVariant.COMMON.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_SPEED_BONUS, 0);
+		builder.define(DATA_VARIANT_ID, CommonOrUncommonVariant.COMMON.getId());
 	}
 
 	@Override
@@ -365,13 +365,6 @@ public class JiangshiEntity extends Monster implements VariantHolder<CommonOrUnc
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.HUSK_STEP, 0.15F, 1.0F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	private class LeapGoal extends LeapAtTargetGoal2

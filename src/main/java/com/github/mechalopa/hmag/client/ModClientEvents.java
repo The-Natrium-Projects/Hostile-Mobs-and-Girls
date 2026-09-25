@@ -54,7 +54,7 @@ public class ModClientEvents
 	@SubscribeEvent
 	public void addItemTooltip(final ItemTooltipEvent event)
 	{
-		if (!event.getToolTip().isEmpty() && event.getItemStack() != null && event.getItemStack().is(Items.SUSPICIOUS_STEW) && event.getItemStack().hasTag() && event.getItemStack().getTag().getBoolean(SuspiciousStewUpgradeRecipe.UPGRADED_KEY))
+		if (!event.getToolTip().isEmpty() && event.getItemStack() != null && event.getItemStack().is(Items.SUSPICIOUS_STEW) && !event.getItemStack().getComponents().isEmpty() && event.getItemStack().getComponents().get(SuspiciousStewUpgradeRecipe.UPGRADED_KEY))
 		{
 			event.getToolTip().add(UPGRADED_SUSPICIOUS_STEW_TOOLTIP);
 		}

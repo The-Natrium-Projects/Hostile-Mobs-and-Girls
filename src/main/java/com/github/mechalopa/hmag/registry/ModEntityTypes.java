@@ -107,7 +107,7 @@ public class ModEntityTypes
 			.of(OgreEntity::new, MobCategory.MONSTER).sized(0.9F, 2.8F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 			.build(ModUtils.createHMaGRL("ogre").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<SpiderNestEntity>> SPIDER_NEST = REGISTRY.register("spider_nest", () -> EntityType.Builder
-			.of(SpiderNestEntity::new, MobCategory.MONSTER).sized(1.2F, 1.8F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+			.of(SpiderNestEntity::new, MobCategory.MONSTER).sized(1.2F, 1.8F).eyeHeight(1.1f).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 			.build(ModUtils.createHMaGRL("spider_nest").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<MeltyMonsterEntity>> MELTY_MONSTER = REGISTRY.register("melty_monster", () -> EntityType.Builder
 			.of(MeltyMonsterEntity::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
@@ -191,7 +191,7 @@ public class ModEntityTypes
 			.of(JiangshiEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 			.build(ModUtils.createHMaGRL("jiangshi").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<GiantMummyEntity>> GIANT_MUMMY = REGISTRY.register("giant_mummy", () -> EntityType.Builder
-			.of(GiantMummyEntity::new, MobCategory.MONSTER).sized(0.9F, 2.9F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+			.of(GiantMummyEntity::new, MobCategory.MONSTER).sized(0.9F, 2.9F).eyeHeight(2.5f).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 			.build(ModUtils.createHMaGRL("giant_mummy").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<NightwalkerEntity>> NIGHTWALKER = REGISTRY.register("nightwalker", () -> EntityType.Builder
 			.of(NightwalkerEntity::new, MobCategory.MONSTER).sized(1.2F, 2.52F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)

@@ -47,10 +47,10 @@ public class BansheeEntity extends AbstractFlyingMonsterEntity implements Varian
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_VARIANT_ID, CommonOrUncommonVariant.COMMON.getId());
+		super.defineSynchedData(builder);
+		builder.define(DATA_VARIANT_ID, CommonOrUncommonVariant.COMMON.getId());
 	}
 
 	@Override

@@ -61,10 +61,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.common.MinecraftForge;
-import net.neoforged.event.entity.living.MobEffectEvent;
-import net.neoforged.eventbus.api.Event;
-import net.neoforged.network.NetworkHooks;
+import net.neoforged.bus.api.Event;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 {
@@ -99,11 +98,11 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(ATTACK_TARGET, 0);
-		this.entityData.define(ATTACK_PHASE, (byte)0);
+		super.defineSynchedData(builder);
+		builder.define(ATTACK_TARGET, 0);
+		builder.define(ATTACK_PHASE, (byte)0);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -242,8 +241,8 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.MONOLITH_IMMUNE_TO))
 		{
 			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
-			MinecraftForge.EVENT_BUS.post(event);
-			return event.getResult() == Event.Result.ALLOW;
+			NeoForge.EVENT_BUS.post(event);
+			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
 
 		return super.canBeAffected(potioneffect);
@@ -460,13 +459,6 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 	public float getClientSideAttackTime()
 	{
 		return (float)(this.level().getGameTime() % 24000L);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public static enum AttackPhase

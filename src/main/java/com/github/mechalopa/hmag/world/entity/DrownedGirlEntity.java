@@ -27,7 +27,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.network.NetworkHooks;
+
 
 public class DrownedGirlEntity extends Drowned
 {
@@ -101,12 +101,5 @@ public class DrownedGirlEntity extends Drowned
 				return random.nextInt(15) == 0 && flag;
 			}
 		}
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

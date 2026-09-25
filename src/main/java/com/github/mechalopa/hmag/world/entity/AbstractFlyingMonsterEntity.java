@@ -14,6 +14,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -45,10 +46,10 @@ public abstract class AbstractFlyingMonsterEntity extends Monster
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.de.define(ATTACK_PHASE, (byte)0);
+		super.defineSynchedData(builder);
+		builder.define(ATTACK_PHASE, (byte)0);
 	}
 
 	@Override
@@ -93,13 +94,6 @@ public abstract class AbstractFlyingMonsterEntity extends Monster
 			compound.putInt("BoundY", this.boundOrigin.getY());
 			compound.putInt("BoundZ", this.boundOrigin.getZ());
 		}
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Nullable

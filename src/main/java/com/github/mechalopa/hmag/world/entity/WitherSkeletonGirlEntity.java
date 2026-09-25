@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.neoforged.network.NetworkHooks;
+
 
 public class WitherSkeletonGirlEntity extends WitherSkeleton
 {
@@ -59,12 +59,5 @@ public class WitherSkeletonGirlEntity extends WitherSkeleton
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(4.5D);
 		this.reassessWeaponGoal();
 		return spawngroupdata;
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

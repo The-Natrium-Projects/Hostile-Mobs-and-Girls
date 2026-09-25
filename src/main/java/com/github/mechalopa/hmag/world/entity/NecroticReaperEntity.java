@@ -169,11 +169,4 @@ public class NecroticReaperEntity extends Monster
 	{
 		this.playSound(SoundEvents.WITHER_SKELETON_STEP, 0.15F, 1.0F);
 	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
 }

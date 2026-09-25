@@ -63,9 +63,9 @@ public class InkSpitEntity extends Projectile
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		this.entityData.define(DAMAGE, Float.valueOf(3.0F));
+		builder.define(DAMAGE, Float.valueOf(3.0F));
 	}
 
 	@Override

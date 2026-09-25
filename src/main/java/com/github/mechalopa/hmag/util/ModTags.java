@@ -1,7 +1,9 @@
 package com.github.mechalopa.hmag.util;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
@@ -11,6 +13,10 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.neoforged.fml.util.thread.EffectiveSide;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
+
+import java.util.Optional;
 
 public class ModTags
 {
@@ -179,11 +185,15 @@ public class ModTags
 
 	public static boolean checkTagContains(Enchantment enchantment, TagKey<Enchantment> tag)
 	{
-		return enchantment != null && tag != null && BuiltInRegistries.ENCHANTMENT.getHolder(enchantment).orElseThrow().is(tag);
+		if (enchantment == null || tag == null) return false;
+		return ModUtils.getRegistry(Registries.ENCHANTMENT)
+			.filter(reg -> reg.wrapAsHolder(enchantment).is(tag)).isPresent();
 	}
 
 	public static boolean checkTagContains(MobEffect effect, TagKey<MobEffect> tag)
 	{
-		return effect != null && tag != null && BuiltInRegistries.MOB_EFFECT.getHolder(effect).orElseThrow().is(tag);
+		if (effect == null || tag == null) return false;
+		return ModUtils.getRegistry(Registries.MOB_EFFECT)
+			.filter(reg -> reg.wrapAsHolder(effect).is(tag)).isPresent();
 	}
 }

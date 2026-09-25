@@ -31,8 +31,8 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.common.ForgeMod;
-import net.neoforged.network.NetworkHooks;
+
+
 
 public class NightwalkerEntity extends Monster implements RangedAttackMob
 {
@@ -164,12 +164,5 @@ public class NightwalkerEntity extends Monster implements RangedAttackMob
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.STONE_STEP, 0.5F, 0.25F);
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

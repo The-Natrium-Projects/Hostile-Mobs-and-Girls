@@ -1,17 +1,23 @@
 package com.github.mechalopa.hmag.util;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
+import javax.swing.text.html.Option;
 
 import com.github.mechalopa.hmag.HMaG;
 import com.mojang.serialization.Codec;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -28,12 +34,15 @@ import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.fml.util.thread.EffectiveSide;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 public class ModUtils
 {
@@ -310,12 +319,27 @@ public class ModUtils
 	@SuppressWarnings("removal")
 	public static ResourceLocation createRL(String name)
 	{
-		return new ResourceLocation(name);
+		return ResourceLocation.parse(name);
 	}
 
 	@SuppressWarnings("removal")
 	public static ResourceLocation createHMaGRL(String name)
 	{
-		return new ResourceLocation(HMaG.MODID, name);
+		return ResourceLocation.fromNamespaceAndPath(HMaG.MODID, name);
 	}
+
+	public static <T> Optional<Registry<T>> getRegistry(ResourceKey<Registry<T>> key) {
+		if (EffectiveSide.get().isServer()) {
+			return Optional.ofNullable(ServerLifecycleHooks.getCurrentServer())
+				.map(MinecraftServer::registryAccess)
+				.flatMap(ra -> ra.registry(key));
+		} else {
+			return Optional.ofNullable(Minecraft.getInstance())
+				.map(mc -> mc.level)
+				.map(Level::registryAccess)
+				.flatMap(ra -> ra.registry(key));
+		}
+	}
+
+
 }

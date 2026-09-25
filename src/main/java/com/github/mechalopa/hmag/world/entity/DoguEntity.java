@@ -42,7 +42,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.network.NetworkHooks;
+
 
 public class DoguEntity extends Monster
 {
@@ -197,11 +197,4 @@ public class DoguEntity extends Monster
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState block){}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
 }

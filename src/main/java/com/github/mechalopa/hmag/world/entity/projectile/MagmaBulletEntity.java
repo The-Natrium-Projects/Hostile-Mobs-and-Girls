@@ -51,10 +51,10 @@ public class MagmaBulletEntity extends ModDamagingProjectileEntity
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(LIFE_TIME, 25);
+		super.defineSynchedData(builder);
+		builder.define(LIFE_TIME, 25);
 	}
 
 	@Override

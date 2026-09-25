@@ -59,12 +59,12 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.common.ForgeMod;
-import net.neoforged.network.NetworkHooks;
+
+
 
 public class SavagefangEntity extends Monster
 {
@@ -80,7 +80,7 @@ public class SavagefangEntity extends Monster
 	public SavagefangEntity(EntityType<? extends SavagefangEntity> type, Level level)
 	{
 		super(type, level);
-		this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+		this.setPathfindingMalus(PathType.WATER, 0.0F);
 		this.moveControl = new SavagefangEntity.SavagefangMoveControl(this);
 		this.lookControl = new SavagefangEntity.SavagefangLookControl(this);
 		this.xpReward = 3;
@@ -105,10 +105,10 @@ public class SavagefangEntity extends Monster
 	}
 
 	@Override
-	protected void defineSynchedData()
+	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
-		super.defineSynchedData();
-		this.entityData.define(DATA_FLAGS_ID, (byte)0);
+		super.defineSynchedData(builder);
+		builder.define(DATA_FLAGS_ID, (byte)0);
 	}
 
 	public static AttributeSupplier.Builder createAttributes()
@@ -539,13 +539,6 @@ public class SavagefangEntity extends Monster
 		{
 			super.handleEntityEvent(id);
 		}
-	}
-
-	@Nonnull
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket()
-	{
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public static class SchoolSpawnGroupData implements SpawnGroupData
