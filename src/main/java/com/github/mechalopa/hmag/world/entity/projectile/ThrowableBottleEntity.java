@@ -16,7 +16,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.network.PlayMessages;
 
 public class ThrowableBottleEntity extends ThrowableItemProjectile
@@ -65,7 +65,7 @@ public class ThrowableBottleEntity extends ThrowableItemProjectile
 			if (item == ModItems.FIRE_BOTTLE.get() || item == ModItems.BLASTING_BOTTLE.get())
 			{
 				this.level().levelEvent(2002, this.blockPosition(), MobEffects.FIRE_RESISTANCE.getColor());
-				boolean flag = ForgeEventFactory.getMobGriefingEvent(this.level(), this.getOwner());
+				boolean flag = EventHooks.getMobGriefingEvent(this.level(), this.getOwner());
 				this.level().explode((Entity)null, this.getX(), this.getY(), this.getZ(), item == ModItems.BLASTING_BOTTLE.get() ? 2.5F : 1.0F, flag, Level.ExplosionInteraction.MOB);
 			}
 			else if (item == ModItems.LIGHTNING_BOTTLE.get())

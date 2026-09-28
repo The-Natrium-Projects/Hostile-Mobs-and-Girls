@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelData;
 
 @OnlyIn(Dist.CLIENT)
 public class MagmaBulletRenderer extends EntityRenderer<MagmaBulletEntity>

@@ -32,7 +32,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.network.PlayMessages;
 
 public class MagicBulletEntity extends ModDamagingProjectileEntity implements VariantHolder<MagicBulletEntity.Variant>
 {
@@ -55,11 +54,6 @@ public class MagicBulletEntity extends ModDamagingProjectileEntity implements Va
 	public MagicBulletEntity(Level level, double x, double y, double z, double accelX, double accelY, double accelZ)
 	{
 		super(ModEntityTypes.MAGIC_BULLET.get(), x, y, z, accelX, accelY, accelZ, level);
-	}
-
-	public MagicBulletEntity(PlayMessages.SpawnEntity spawnEntity, Level level)
-	{
-		this(ModEntityTypes.MAGIC_BULLET.get(), level);
 	}
 
 	@Override

@@ -1,13 +1,9 @@
 package com.github.mechalopa.hmag.world.entity;
 
-import javax.annotation.Nonnull;
-
 import com.github.mechalopa.hmag.util.ModTags;
 import com.github.mechalopa.hmag.world.entity.ai.goal.MeleeAttackGoal2;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Difficulty;
@@ -18,7 +14,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -31,9 +26,9 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.common.MinecraftForge;
-import net.neoforged.event.entity.living.MobEffectEvent;
-import net.neoforged.eventbus.api.Event;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 
 public class ScorpionEntity extends Monster
@@ -102,11 +97,11 @@ public class ScorpionEntity extends Monster
 	@Override
 	public boolean canBeAffected(MobEffectInstance potioneffect)
 	{
-		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.SCORPION_IMMUNE_TO))
+		if (ModTags.checkTagContains(potioneffect.getEffect().value(), ModTags.MobEffectTags.SCORPION_IMMUNE_TO))
 		{
-			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
+			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect, null);
 			NeoForge.EVENT_BUS.post(event);
-			return event.getResult() == Event.Result.ALLOW;
+			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
 
 		return super.canBeAffected(potioneffect);
@@ -119,15 +114,9 @@ public class ScorpionEntity extends Monster
 	}
 
 	@Override
-	public double getPassengersRidingOffset()
-	{
-		return this.getBbHeight() * 0.5F;
-	}
+	protected Vec3 getPassengerAttachmentPoint(Entity passenger, EntityDimensions dimensions, float partialTick) {
 
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 0.25F;
+		return new Vec3(0.0d, dimensions.height() * 0.5d, 0.0d);
 	}
 
 	@Override

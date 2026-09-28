@@ -47,8 +47,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 
 
@@ -191,11 +193,10 @@ public class GiantMummyEntity extends Monster
 	}
 
 	@Override
-	public double getMyRidingOffset()
+	public Vec3 getVehicleAttachmentPoint(Entity vehicle)
 	{
-		return -0.6D;
+		return new Vec3(0.0D, -0.6D, 0.0D);
 	}
-
 
 	@Override
 	protected SoundEvent getAmbientSound()
@@ -244,16 +245,21 @@ public class GiantMummyEntity extends Monster
 	private static class GiantMummyNodeEvaluator extends WalkNodeEvaluator
 	{
 		@Override
-		protected PathType evaluateBlockPathType(BlockGetter getter, BlockPos pos, PathType blockPathTypes)
+		public PathType getPathType(PathfindingContext context, int x, int y, int z)
 		{
-			if ((blockPathTypes == PathType.BLOCKED || blockPathTypes == PathType.FENCE || blockPathTypes == PathType.LEAVES || blockPathTypes == PathType.COCOA) && this.mob != null && this.mob.isAlive() && ModConfigs.cachedServer.GIANT_MUMMY_DESTROY_BLOCKS && this.mob.level().getDifficulty().getId() > 1 && this.mob.getTarget() != null && getter.getBlockState(pos).is(ModTags.BlockTags.GIANT_MUMMY_DESTROYABLES))
+			PathType type = super.getPathType(context, x, y, z);
+			if ((type == PathType.BLOCKED || type == PathType.FENCE
+				|| type == PathType.LEAVES || type == PathType.COCOA)
+				&& this.mob != null && this.mob.isAlive()
+				&& ModConfigs.cachedServer.GIANT_MUMMY_DESTROY_BLOCKS
+				&& this.mob.level().getDifficulty().getId() > 1
+				&& this.mob.getTarget() != null
+				&& this.mob.level().getBlockState(new BlockPos(x, y, z))
+				.is(ModTags.BlockTags.GIANT_MUMMY_DESTROYABLES))
 			{
 				return PathType.OPEN;
 			}
-			else
-			{
-				return super.evaluateBlockPathType(getter, pos, blockPathTypes);
-			}
+			return type;
 		}
 	}
 }

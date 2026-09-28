@@ -6,15 +6,16 @@ import com.github.mechalopa.hmag.world.item.RandomberryItem;
 import com.github.mechalopa.hmag.world.item.crafting.EnchantmentUpgradeManager;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.event.AddReloadListenerEvent;
-import net.neoforged.event.OnDatapackSyncEvent;
-import net.neoforged.event.TagsUpdatedEvent;
-import net.neoforged.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
-import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.network.PacketDistributor;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
+import net.neoforged.neoforge.event.TagsUpdatedEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
-@Mod.EventBusSubscriber(modid = HMaG.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = HMaG.MODID)
 public class ModDatapackEvents
 {
 	@SubscribeEvent
@@ -40,7 +41,7 @@ public class ModDatapackEvents
 	}
 
 	@SubscribeEvent
-	public void onPlayerLogin(PlayerLoggedInEvent event)
+	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event)
 	{
 		if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer)
 		{

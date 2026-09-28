@@ -18,11 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -38,9 +34,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FrostedIceBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.common.util.BlockSnapshot;
-import net.neoforged.event.ForgeEventFactory;
+import net.neoforged.neoforge.common.util.BlockSnapshot;
+import net.neoforged.neoforge.event.EventHooks;
 
 
 public class JackFrostEntity extends Monster implements RangedAttackMob
@@ -83,7 +80,7 @@ public class JackFrostEntity extends Monster implements RangedAttackMob
 			{
 				this.hurt(this.damageSources().onFire(), 1.0F);
 			}
-			else if (ModConfigs.cachedServer.JACK_FROST_FREEZES_WATER && ForgeEventFactory.getMobGriefingEvent(this.level(), this))
+			else if (ModConfigs.cachedServer.JACK_FROST_FREEZES_WATER && EventHooks.canEntityGrief(this.level(), this))
 			{
 				if (this.onGround())
 				{
@@ -101,7 +98,7 @@ public class JackFrostEntity extends Monster implements RangedAttackMob
 
 							if (blockstate1.isAir())
 							{
-								if (this.level().getBlockState(blockpos1) == FrostedIceBlock.meltsInto() && blockstate.canSurvive(this.level(), blockpos1) && this.level().isUnobstructed(blockstate, blockpos1, CollisionContext.empty()) && !ForgeEventFactory.onBlockPlace(this, BlockSnapshot.create(this.level().dimension(), this.level(), blockpos1), Direction.UP))
+								if (this.level().getBlockState(blockpos1) == FrostedIceBlock.meltsInto() && blockstate.canSurvive(this.level(), blockpos1) && this.level().isUnobstructed(blockstate, blockpos1, CollisionContext.empty()) && !EventHooks.onBlockPlace(this, BlockSnapshot.create(this.level().dimension(), this.level(), blockpos1), Direction.UP))
 								{
 									this.level().setBlockAndUpdate(blockpos1, blockstate);
 									this.level().scheduleTick(blockpos1, Blocks.FROSTED_ICE, Mth.nextInt(this.getRandom(), 60, 120));
@@ -167,15 +164,9 @@ public class JackFrostEntity extends Monster implements RangedAttackMob
 	}
 
 	@Override
-	public double getMyRidingOffset()
+	public Vec3 getVehicleAttachmentPoint(Entity vehicle)
 	{
-		return -0.45D;
-	}
-
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 1.74F;
+		return new Vec3(0d, -0.45D, 0d);
 	}
 
 	@Override

@@ -275,7 +275,7 @@ public class OgreEntity extends Monster
 
 	protected boolean destroyBlock()
 	{
-		if (ModConfigs.cachedServer.OGRE_DESTROY_BLOCKS && this.level().getDifficulty().getId() > 1 && ForgeEventFactory.getMobGriefingEvent(this.level(), this))
+		if (ModConfigs.cachedServer.OGRE_DESTROY_BLOCKS && this.level().getDifficulty().getId() > 1 && EventHooks.getMobGriefingEvent(this.level(), this))
 		{
 			int i1 = Mth.floor(this.getY());
 			int l1 = Mth.floor(this.getX());
@@ -319,7 +319,7 @@ public class OgreEntity extends Monster
 	@SuppressWarnings("deprecation")
 	private boolean canDestroyBlock(BlockState state, Level level, BlockPos pos, LivingEntity livingEntity, float maxHardness)
 	{
-		if (state.is(ModTags.BlockTags.OGRE_IMMUNE) || state.isAir() || state.liquid() || !(state.canEntityDestroy(this.level(), pos, this) && ForgeEventFactory.onEntityDestroyBlock(this, pos, state)))
+		if (state.is(ModTags.BlockTags.OGRE_IMMUNE) || state.isAir() || state.liquid() || !(state.canEntityDestroy(this.level(), pos, this) && EventHooks.onEntityDestroyBlock(this, pos, state)))
 		{
 			return false;
 		}

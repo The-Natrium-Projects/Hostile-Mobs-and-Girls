@@ -22,7 +22,6 @@ public class ModEnchantments
 	public static final DeferredHolder<Enchantment, WaterAspectEnchantment> WATER_ASPECT = REGISTRY.register("water_aspect", () -> new WaterAspectEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
 	public static final DeferredHolder<Enchantment, AntiAirEnchantment> ANTI_AIR = REGISTRY.register("anti_air", () -> new AntiAirEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
 
-	@SubscribeEvent
 	public static void register(IEventBus eventBus)
 	{
 		REGISTRY.register(eventBus);

@@ -54,34 +54,22 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.common.BasicItemListing;
-import net.neoforged.event.ItemAttributeModifierEvent;
-import net.neoforged.event.entity.EntityJoinLevelEvent;
-import net.neoforged.event.entity.item.ItemTossEvent;
-import net.neoforged.event.entity.living.LivingAttackEvent;
-import net.neoforged.event.entity.living.LivingDamageEvent;
-import net.neoforged.event.entity.living.LivingEquipmentChangeEvent;
-import net.neoforged.event.entity.living.LivingEvent.LivingTickEvent;
-import net.neoforged.event.entity.living.LivingEvent.LivingVisibilityEvent;
-import net.neoforged.event.entity.living.LivingHurtEvent;
-import net.neoforged.event.entity.living.MobEffectEvent;
-import net.neoforged.event.entity.living.MobSpawnEvent;
-import net.neoforged.event.entity.player.PlayerSleepInBedEvent;
-import net.neoforged.event.village.VillagerTradesEvent;
-import net.neoforged.event.village.WandererTradesEvent;
-import net.neoforged.eventbus.api.Event.Result;
-import net.neoforged.eventbus.api.EventPriority;
-import net.neoforged.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
-@Mod.EventBusSubscriber(modid = HMaG.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = HMaG.MODID)
 public class ModEvents
 {
 	private static final UUID[] NECROTIC_CHAINMAIL_ARMOR_ATTACK_SPEED_UUIDS = new UUID[]{UUID.fromString("81D1E394-8B33-AC3D-325A-C8A03E757B51"), UUID.fromString("B4EFB0CA-2180-0043-0FF9-BE033CC510D5"), UUID.fromString("7FD9FBE7-0438-BF0F-F901-F961384F9591"), UUID.fromString("28E5C0B5-109B-339B-BE83-610B5B399256")};
 	private static final Component INSOMNIA_ITEM_MESSAGE = Component.translatable("message.hmag.insomnia_item");
 
 	@SubscribeEvent
-	public void onLivingHurt(LivingHurtEvent event)
+	public void onLivingHurt(LivingIncomingDamageEvent event)
 	{
 		if (event.isCanceled())
 		{
@@ -99,9 +87,9 @@ public class ModEvents
 				{
 					ItemStack stack = attacker.getMainHandItem();
 
-					if (!stack.isEmpty() && stack.hasTag())
+					if (!stack.isEmpty())
 					{
-						final int level = EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.WATER_ASPECT.get(), stack);
+						final int level = EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.WATER_ASPECT.getDelegate(), stack);
 
 						if (level > 0)
 						{
@@ -146,9 +134,9 @@ public class ModEvents
 							{
 								ItemStack stack = attacker.getItemInHand(hand);
 
-								if (!stack.isEmpty() && stack.hasTag())
+								if (!stack.isEmpty())
 								{
-									level = Math.max(level, EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.ANTI_AIR.get(), stack));
+									level = Math.max(level, EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.ANTI_AIR.getDelegate(), stack));
 								}
 							}
 
@@ -167,27 +155,22 @@ public class ModEvents
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onLivingDamage(LivingDamageEvent event)
+	public void onLivingDamage(LivingDamageEvent.Pre event)
 	{
-		if (event.isCanceled())
-		{
-			return;
-		}
-
 		if (event.getEntity() != null && event.getSource() != null)
 		{
 			if (event.getSource().is(DamageTypeTags.IS_FIRE))
 			{
 				if (!event.getEntity().getUseItem().isEmpty() && event.getEntity().getUseItem().getItem() == ModItems.FORTRESS_SHIELD.get())
 				{
-					event.setAmount(event.getAmount() * 0.25F);
+					event.setNewDamage(event.getNewDamage() * 0.25F);
 				}
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public void onLivingAttack(LivingAttackEvent event)
+	public void onLivingAttack(LivingIncomingDamageEvent event)
 	{
 		if (event.isCanceled())
 		{
@@ -213,7 +196,7 @@ public class ModEvents
 				{
 					if (livingentity.getRandom().nextInt(3) == 0)
 					{
-						source.getEntity().setSecondsOnFire(8);
+						source.getEntity().igniteForSeconds(8);
 					}
 				}
 			}
@@ -221,7 +204,7 @@ public class ModEvents
 	}
 
 	@SubscribeEvent
-	public void onLivingVisibility(LivingVisibilityEvent event)
+	public void onLivingVisibility(LivingEvent.LivingVisibilityEvent event)
 	{
 		if (event.getEntity() == null || event.getLookingEntity() == null)
 		{
@@ -238,14 +221,16 @@ public class ModEvents
 	}
 
 	@SubscribeEvent(receiveCanceled = true)
-	public void onLivingTick(LivingTickEvent event)
+	public void onLivingTick(EntityTickEvent event)
 	{
 		if (event.getEntity() == null)
 		{
 			return;
 		}
 
-		if (event.getEntity().tickCount == 1 && !event.getEntity().getPersistentData().getBoolean(ModUtils.LIVING_UPDATE_CHECKED_KEY))
+		if (event.getEntity() instanceof LivingEntity
+			&& event.getEntity().tickCount == 1
+			&& !event.getEntity().getPersistentData().getBoolean(ModUtils.LIVING_UPDATE_CHECKED_KEY))
 		{
 			event.getEntity().getPersistentData().putBoolean(ModUtils.LIVING_UPDATE_CHECKED_KEY, true);
 
@@ -355,9 +340,9 @@ public class ModEvents
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onCheckSpawn(MobSpawnEvent.FinalizeSpawn event)
+	public void onCheckSpawn(FinalizeSpawnEvent event)
 	{
-		if (event.getResult() == Result.DENY || event.getEntity() == null)
+		if (event.isCanceled() || event.getEntity() == null)
 		{
 			return;
 		}
@@ -371,7 +356,7 @@ public class ModEvents
 				Holder<Biome> holder = level.getBiome(event.getEntity().blockPosition());
 				Mob mob = event.getEntity();
 
-				if (!holder.containsTag(ModTags.BiomeTags.NO_MOB_REPLACEMENTS))
+				if (!holder.is(ModTags.BiomeTags.NO_MOB_REPLACEMENTS))
 				{
 					if (ModConfigs.cachedServer.ZOMBIE_GIRL_REPLACE_CHANCE > 0.0D && mob.getType().is(ModTags.EntityTypeTags.ZOMBIE_GIRL_REPLACEABLES))
 					{
@@ -425,9 +410,9 @@ public class ModEvents
 				if (event.getEntity() instanceof EnderMan enderman)
 				{
 					enderman.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(enderman, LivingEntity.class, 10, false, false, (p) -> {
-						if (p.hasEffect(ModEffects.ENDER_RAGE.get()))
+						if (p.hasEffect(ModEffects.ENDER_RAGE.getDelegate()))
 						{
-							final double d0 = 8.0D + p.getEffect(ModEffects.ENDER_RAGE.get()).getAmplifier() * 12.0D;
+							final double d0 = 8.0D + p.getEffect(ModEffects.ENDER_RAGE.getDelegate()).getAmplifier() * 12.0D;
 							return p.distanceToSqr(enderman) <= d0 * d0;
 						}
 						else
@@ -462,7 +447,7 @@ public class ModEvents
 					{
 						Item item = stack.getItem();
 
-						if (item != null && item instanceof ArmorItem && ((ArmorItem)item).getMaterial() == ModArmorMaterial.ANCIENT)
+						if (item != null && item instanceof ArmorItem && ((ArmorItem)item).getMaterial().value() == ModArmorMaterial.ANCIENT)
 						{
 							++i;
 						}

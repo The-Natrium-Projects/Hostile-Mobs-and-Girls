@@ -16,7 +16,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 
 public abstract class ModBowItem extends BowItem
 {
@@ -34,7 +34,7 @@ public abstract class ModBowItem extends BowItem
 			ItemStack stack1 = player.getProjectile(stack);
 
 			int i = this.getUseDuration(stack) - count;
-			i = ForgeEventFactory.onArrowLoose(stack, level, player, i, !stack1.isEmpty() || flag);
+			i = EventHooks.onArrowLoose(stack, level, player, i, !stack1.isEmpty() || flag);
 
 			if (i < 0)
 			{

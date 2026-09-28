@@ -23,8 +23,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.event.ForgeEventFactory;
-import net.neoforged.network.PlayMessages;
+import net.neoforged.neoforge.event.EventHooks;
 
 public class InkSpitEntity extends Projectile
 {
@@ -57,11 +56,6 @@ public class InkSpitEntity extends Projectile
 		this(ModEntityTypes.INK_SPIT.get(), x, y, z, level);
 	}
 
-	public InkSpitEntity(PlayMessages.SpawnEntity spawnEntity, Level level)
-	{
-		this(ModEntityTypes.INK_SPIT.get(), level);
-	}
-
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder)
 	{
@@ -75,7 +69,7 @@ public class InkSpitEntity extends Projectile
 
 		HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
 
-		if (hitresult.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, hitresult))
+		if (hitresult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, hitresult))
 		{
 			this.onHit(hitresult);
 		}
@@ -157,7 +151,8 @@ public class InkSpitEntity extends Projectile
 		}
 	}
 
-	protected float getGravity()
+	@Override
+	protected double getDefaultGravity()
 	{
 		return 0.03F;
 	}

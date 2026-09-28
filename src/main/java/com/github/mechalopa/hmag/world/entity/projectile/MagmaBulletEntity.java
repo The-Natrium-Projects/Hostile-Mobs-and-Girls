@@ -21,8 +21,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.event.ForgeEventFactory;
-import net.neoforged.network.PlayMessages;
+import net.neoforged.neoforge.event.EventHooks;
 
 public class MagmaBulletEntity extends ModDamagingProjectileEntity
 {
@@ -43,11 +42,6 @@ public class MagmaBulletEntity extends ModDamagingProjectileEntity
 	public MagmaBulletEntity(Level level, double x, double y, double z, double accelX, double accelY, double accelZ)
 	{
 		super(ModEntityTypes.MAGMA_BULLET.get(), x, y, z, accelX, accelY, accelZ, level);
-	}
-
-	public MagmaBulletEntity(PlayMessages.SpawnEntity spawnEntity, Level level)
-	{
-		this(ModEntityTypes.MAGMA_BULLET.get(), level);
 	}
 
 	@Override
@@ -87,9 +81,7 @@ public class MagmaBulletEntity extends ModDamagingProjectileEntity
 				this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.05D, 0.0D));
 			}
 
-			this.xPower *= 0.97D;
-			this.yPower *= 0.97D;
-			this.zPower *= 0.97D;
+			this.accelerationPower *= 0.97D;
 		}
 	}
 
@@ -106,7 +98,7 @@ public class MagmaBulletEntity extends ModDamagingProjectileEntity
 			{
 				Entity entity1 = this.getOwner();
 				int i = entity.getRemainingFireTicks();
-				entity.setSecondsOnFire(5);
+				entity.igniteForSeconds(5);
 
 				boolean flag = entity.hurt(ModDamageTypes.source(this.level(), ModDamageTypes.MAGMA_BULLET, this, entity1), this.getDamage());
 
@@ -125,7 +117,7 @@ public class MagmaBulletEntity extends ModDamagingProjectileEntity
 	@Override
 	protected void onHitServer(HitResult result)
 	{
-		boolean flag = ForgeEventFactory.getMobGriefingEvent(this.level(), this.getOwner());
+		boolean flag = EventHooks.getMobGriefingEvent(this.level(), this.getOwner());
 		this.level().explode((Entity)null, this.getX(), this.getY(), this.getZ(), 0.75F, flag, Level.ExplosionInteraction.MOB);
 		this.level().broadcastEntityEvent(this, (byte)3);
 		super.onHitServer(result);
