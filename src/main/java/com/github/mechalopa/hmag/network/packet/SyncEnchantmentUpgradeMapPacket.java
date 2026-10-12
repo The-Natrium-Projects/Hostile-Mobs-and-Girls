@@ -7,7 +7,6 @@ import com.github.mechalopa.hmag.world.item.crafting.EnchantmentUpgradeManager;
 import com.github.mechalopa.hmag.world.item.crafting.EnchantmentUpgradeManager.EnchantmentUpgradeProp;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.network.NetworkEvent;
 
 public class SyncEnchantmentUpgradeMapPacket
 {

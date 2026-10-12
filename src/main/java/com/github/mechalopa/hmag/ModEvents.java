@@ -31,13 +31,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -58,9 +52,15 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.BasicItemListing;
+import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 @EventBusSubscriber(modid = HMaG.MODID)
 public class ModEvents
@@ -301,7 +301,7 @@ public class ModEvents
 
 		SpawnGroupData spawndata = null;
 		mob.copyPosition(replacementMob);
-		spawndata = mob.finalizeSpawn(level, level.getCurrentDifficultyAt(replacementMob.blockPosition()), MobSpawnType.NATURAL, spawndata, (CompoundTag)null);
+		spawndata = mob.finalizeSpawn(level, level.getCurrentDifficultyAt(replacementMob.blockPosition()), MobSpawnType.NATURAL, spawndata);
 		mob.setNoAi(replacementMob.isNoAi());
 
 		if (replacementMob.hasCustomName())
@@ -435,7 +435,7 @@ public class ModEvents
 		if (event.getEntity() != null && event.getEffectInstance() != null)
 		{
 			LivingEntity livingentity = event.getEntity();
-			MobEffect effect = event.getEffectInstance().getEffect();
+			MobEffect effect = event.getEffectInstance().getEffect().value();
 
 			if (effect == MobEffects.MOVEMENT_SLOWDOWN || effect == MobEffects.DIG_SLOWDOWN || effect == MobEffects.WEAKNESS)
 			{
@@ -447,7 +447,7 @@ public class ModEvents
 					{
 						Item item = stack.getItem();
 
-						if (item != null && item instanceof ArmorItem && ((ArmorItem)item).getMaterial().value() == ModArmorMaterial.ANCIENT)
+						if (item instanceof ArmorItem armorItem && armorItem.getMaterial().value().equals(ModArmorMaterial.ANCIENT.get()))
 						{
 							++i;
 						}
@@ -461,14 +461,14 @@ public class ModEvents
 
 				if (i >= 4 || i > event.getEffectInstance().getAmplifier() + 1)
 				{
-					event.setResult(Result.DENY);
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 				}
 			}
 			else if (effect == MobEffects.BLINDNESS)
 			{
-				if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.get()))
+				if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.getDelegate()))
 				{
-					event.setResult(Result.DENY);
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 				}
 				else if (livingentity instanceof Player)
 				{
@@ -476,29 +476,29 @@ public class ModEvents
 
 					if (!stack1.isEmpty() && stack1.getItem() == ModItems.INSOMNIA_SWORD.get() && ILevelItem.getItemLevel(stack1) > 0)
 					{
-						event.setResult(Result.DENY);
+						event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 					}
 				}
 			}
 			else if (effect == MobEffects.DARKNESS)
 			{
-				if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.get()))
+				if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.getDelegate()))
 				{
-					event.setResult(Result.DENY);
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 				}
 			}
 			else if (effect == ModEffects.COMBUSTION.get())
 			{
 				if (livingentity.fireImmune() || !ModUtils.getHeldItem(livingentity, ModItems.FORTRESS_SHIELD.get()).isEmpty())
 				{
-					event.setResult(Result.DENY);
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 				}
 			}
 			else if (effect == ModEffects.ENDER_RAGE.get())
 			{
 				if (!livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_BLACKLIST) && (livingentity instanceof EnderMan || livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_WHITELIST)))
 				{
-					event.setResult(Result.DENY);
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 				}
 			}
 		}
@@ -507,71 +507,23 @@ public class ModEvents
 	@SubscribeEvent
 	public void onItemAttributeModifier(ItemAttributeModifierEvent event)
 	{
-		if (!event.getItemStack().isEmpty() && event.getItemStack().getItem() != null && event.getSlotType() != null && event.getSlotType().getType() != null)
+		if (!event.getItemStack().isEmpty())
 		{
-			ItemStack stack = event.getItemStack();
-
-			if (event.getSlotType() == Mob.getEquipmentSlotForItem(stack))
+			if (event.getItemStack().getItem().equals(ModItems.ANCIENT_SHIELD.get()))
 			{
-				final int i = event.getSlotType().getIndex();
-
-				if (event.getSlotType().isArmor() && i >= 0 && i < HealthBoostEnchantment.HEALTH_BOOST_ENCHANTMENT_MAX_HEALTH_UUIDS.length)
-				{
-					final int level = EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.HEALTH_BOOST.get(), stack);
-
-					if (level > 0)
-					{
-						event.addModifier(Attributes.MAX_HEALTH, new AttributeModifier(HealthBoostEnchantment.HEALTH_BOOST_ENCHANTMENT_MAX_HEALTH_UUIDS[i], "Health boost enchantment " + event.getSlotType().getName() + " max health bonus", level * 1.0F, AttributeModifier.Operation.ADDITION));
-					}
-				}
-
-				if (stack.getItem() instanceof ArmorItem && ((ArmorItem)stack.getItem()).getMaterial() == ModArmorMaterial.NECROTIC_CHAIN)
-				{
-					event.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(NECROTIC_CHAINMAIL_ARMOR_ATTACK_SPEED_UUIDS[i], "Necrotic chainmail armor " + event.getSlotType().getName() + " attack speed bonus", 0.1F, AttributeModifier.Operation.MULTIPLY_TOTAL));
-				}
-				else if (stack.getItem() == ModItems.INSOMNIA_SWORD.get())
-				{
-					final int level1 = ILevelItem.getItemLevel(stack);
-
-					if (level1 > 0)
-					{
-						event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(InsomniaSwordItem.INSOMNIA_SWORD_ATTACK_DAMAGE_UUID, "Insomnia sword attack damage bonus", level1 * 1.0F + 1.0F, AttributeModifier.Operation.ADDITION));
-					}
-				}
-				else if (stack.getItem() == ModItems.NEMESIS_BLADE.get())
-				{
-					final int level2 = ILevelItem.getItemLevel(stack);
-
-					if (level2 > 0)
-					{
-						event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(NemesisBladeItem.NEMESIS_BLADE_ATTACK_DAMAGE_UUID, "Nemesis blade attack damage bonus", level2 * 1.0F, AttributeModifier.Operation.ADDITION));
-						event.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(NemesisBladeItem.NEMESIS_BLADE_ATTACK_SPEED_UUID, "Nemesis blade attack speed bonus", level2 * 0.25F, AttributeModifier.Operation.ADDITION));
-					}
-					else
-					{
-						event.addModifier(Attributes.MOVEMENT_SPEED, NemesisBladeItem.NEMESIS_BLADE_MOVEMENT_SPEED_MODIFIER);
-					}
-				}
-			}
-
-			if (event.getSlotType().getType() == EquipmentSlot.Type.HAND)
-			{
-				if (stack.getItem() == ModItems.ANCIENT_SHIELD.get())
-				{
-					event.addModifier(Attributes.KNOCKBACK_RESISTANCE, AncientShieldItem.ANCIENT_SHIELD_KNOCKBACK_RESISTANCE_MODIFIER);
-				}
+				event.addModifier(Attributes.KNOCKBACK_RESISTANCE, AncientShieldItem.ANCIENT_SHIELD_KNOCKBACK_RESISTANCE_MODIFIER, EquipmentSlotGroup.OFFHAND);
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public void onPlayerSleep(PlayerSleepInBedEvent event)
+	public void onPlayerSleep(CanPlayerSleepEvent event)
 	{
-		if (event.getResultStatus() == null)
+		if (event.getProblem() == null)
 		{
 			if (event.getEntity().getInventory().contains(ModTags.ItemTags.INSOMNIA_ITEMS))
 			{
-				event.setResult(BedSleepingProblem.OTHER_PROBLEM);
+				event.setProblem(BedSleepingProblem.OTHER_PROBLEM);
 				event.getEntity().displayClientMessage(INSOMNIA_ITEM_MESSAGE, true);
 			}
 		}
