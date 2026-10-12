@@ -17,7 +17,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.network.PlayMessages;
 
 public class HardSnowballEntity extends ModProjectileItemEntity
 {
@@ -34,11 +33,6 @@ public class HardSnowballEntity extends ModProjectileItemEntity
 	public HardSnowballEntity(Level level, double x, double y, double z)
 	{
 		super(ModEntityTypes.HARD_SNOWBALL.get(), x, y, z, level);
-	}
-
-	public HardSnowballEntity(PlayMessages.SpawnEntity spawnEntity, Level level)
-	{
-		this(ModEntityTypes.HARD_SNOWBALL.get(), level);
 	}
 
 	@Override

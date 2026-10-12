@@ -10,10 +10,9 @@ import net.minecraft.world.entity.projectile.ThrownEnderpearl;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SimpleFoiledItem;
 import net.minecraft.world.level.Level;
 
-public class EndlessPearlItem extends SimpleFoiledItem
+public class EndlessPearlItem extends Item
 {
 	public EndlessPearlItem(Item.Properties builder)
 	{
@@ -45,4 +44,9 @@ public class EndlessPearlItem extends SimpleFoiledItem
 
 		return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
 	}
+
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return true;
+    }
 }

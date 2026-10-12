@@ -58,9 +58,15 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.BasicItemListing;
+import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.CanPlayerSleepEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 @EventBusSubscriber(modid = HMaG.MODID)
 public class ModEvents
@@ -301,7 +307,7 @@ public class ModEvents
 
 		SpawnGroupData spawndata = null;
 		mob.copyPosition(replacementMob);
-		spawndata = mob.finalizeSpawn(level, level.getCurrentDifficultyAt(replacementMob.blockPosition()), MobSpawnType.NATURAL, spawndata, (CompoundTag)null);
+		spawndata = mob.finalizeSpawn(level, level.getCurrentDifficultyAt(replacementMob.blockPosition()), MobSpawnType.NATURAL, spawndata);
 		mob.setNoAi(replacementMob.isNoAi());
 
 		if (replacementMob.hasCustomName())
@@ -430,79 +436,56 @@ public class ModEvents
 	}
 
 	@SubscribeEvent
-	public void onMobEffectApplicable(MobEffectEvent.Applicable event)
-	{
-		if (event.getEntity() != null && event.getEffectInstance() != null)
-		{
-			LivingEntity livingentity = event.getEntity();
-			MobEffect effect = event.getEffectInstance().getEffect();
+	public void onMobEffectApplicable(MobEffectEvent.Applicable event) {
+        if (event.getEntity() != null && event.getEffectInstance() != null) {
+            LivingEntity livingentity = event.getEntity();
+            MobEffect effect = event.getEffectInstance().getEffect().value();
 
-			if (effect == MobEffects.MOVEMENT_SLOWDOWN || effect == MobEffects.DIG_SLOWDOWN || effect == MobEffects.WEAKNESS)
-			{
-				int i = 0;
+            if (effect == MobEffects.MOVEMENT_SLOWDOWN || effect == MobEffects.DIG_SLOWDOWN || effect == MobEffects.WEAKNESS) {
+                int i = 0;
 
-				for (ItemStack stack : livingentity.getArmorSlots())
-				{
-					if (!stack.isEmpty())
-					{
-						Item item = stack.getItem();
+                for (ItemStack stack : livingentity.getArmorSlots()) {
+                    if (!stack.isEmpty()) {
+                        Item item = stack.getItem();
 
-						if (item != null && item instanceof ArmorItem && ((ArmorItem)item).getMaterial().value() == ModArmorMaterial.ANCIENT)
-						{
-							++i;
-						}
-					}
-				}
+                        if (item != null && item instanceof ArmorItem && ((ArmorItem) item).getMaterial().value() == ModArmorMaterial.ANCIENT.get()) {
+                            ++i;
+                        }
+                    }
+                }
 
-				if (!ModUtils.getHeldItem(livingentity, ModItems.ANCIENT_SHIELD.get()).isEmpty())
-				{
-					++i;
-				}
+                if (!ModUtils.getHeldItem(livingentity, ModItems.ANCIENT_SHIELD.get()).isEmpty()) {
+                    ++i;
+                }
 
-				if (i >= 4 || i > event.getEffectInstance().getAmplifier() + 1)
-				{
-					event.setResult(Result.DENY);
-				}
-			}
-			else if (effect == MobEffects.BLINDNESS)
-			{
-				if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.get()))
-				{
-					event.setResult(Result.DENY);
-				}
-				else if (livingentity instanceof Player)
-				{
-					ItemStack stack1 = livingentity.getMainHandItem();
+                if (i >= 4 || i > event.getEffectInstance().getAmplifier() + 1) {
+                    event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+                }
+            } else if (effect == MobEffects.BLINDNESS) {
+                if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.getDelegate())) {
+                    event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+                } else if (livingentity instanceof Player) {
+                    ItemStack stack1 = livingentity.getMainHandItem();
 
-					if (!stack1.isEmpty() && stack1.getItem() == ModItems.INSOMNIA_SWORD.get() && ILevelItem.getItemLevel(stack1) > 0)
-					{
-						event.setResult(Result.DENY);
-					}
-				}
-			}
-			else if (effect == MobEffects.DARKNESS)
-			{
-				if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.get()))
-				{
-					event.setResult(Result.DENY);
-				}
-			}
-			else if (effect == ModEffects.COMBUSTION.get())
-			{
-				if (livingentity.fireImmune() || !ModUtils.getHeldItem(livingentity, ModItems.FORTRESS_SHIELD.get()).isEmpty())
-				{
-					event.setResult(Result.DENY);
-				}
-			}
-			else if (effect == ModEffects.ENDER_RAGE.get())
-			{
-				if (!livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_BLACKLIST) && (livingentity instanceof EnderMan || livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_WHITELIST)))
-				{
-					event.setResult(Result.DENY);
-				}
-			}
-		}
-	}
+                    if (!stack1.isEmpty() && stack1.getItem() == ModItems.INSOMNIA_SWORD.get() && ILevelItem.getItemLevel(stack1) > 0) {
+                        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+                    }
+                } else if (effect == MobEffects.DARKNESS) {
+                    if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.getDelegate())) {
+                        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+                    }
+                } else if (effect == ModEffects.COMBUSTION.get()) {
+                    if (livingentity.fireImmune() || !ModUtils.getHeldItem(livingentity, ModItems.FORTRESS_SHIELD.get()).isEmpty()) {
+                        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+                    }
+                } else if (effect == ModEffects.ENDER_RAGE.get()) {
+                    if (!livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_BLACKLIST) && (livingentity instanceof EnderMan || livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_WHITELIST))) {
+                        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+                    }
+                }
+            }
+        }
+    }
 
 	@SubscribeEvent
 	public void onItemAttributeModifier(ItemAttributeModifierEvent event)
@@ -565,13 +548,13 @@ public class ModEvents
 	}
 
 	@SubscribeEvent
-	public void onPlayerSleep(PlayerSleepInBedEvent event)
+	public void onPlayerSleep(CanPlayerSleepEvent event)
 	{
-		if (event.getResultStatus() == null)
+		if (event.getProblem() == null)
 		{
 			if (event.getEntity().getInventory().contains(ModTags.ItemTags.INSOMNIA_ITEMS))
 			{
-				event.setResult(BedSleepingProblem.OTHER_PROBLEM);
+				event.setProblem(BedSleepingProblem.OTHER_PROBLEM);
 				event.getEntity().displayClientMessage(INSOMNIA_ITEM_MESSAGE, true);
 			}
 		}

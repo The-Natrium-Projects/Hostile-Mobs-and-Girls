@@ -241,7 +241,11 @@ public class ModEntityTypes
 		.<PoisonSeedEntity>of(PoisonSeedEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).setTrackingRange(4).setUpdateInterval(10).setShouldReceiveVelocityUpdates(true)
 		.build(ModUtils.createHMaGRL("poison_seed").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<ThrowableBottleEntity>> THROWABLE_BOTTLE = REGISTRY.register("throwable_bottle", () -> EntityType.Builder
-		.<ThrowableBottleEntity>of(ThrowableBottleEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).setTrackingRange(4).setUpdateInterval(10).setShouldReceiveVelocityUpdates(true)
+		.<ThrowableBottleEntity>of(ThrowableBottleEntity::new, MobCategory.MISC)
+        .sized(0.25F, 0.25F)
+        .setTrackingRange(4)
+        .setUpdateInterval(10)
+        .setShouldReceiveVelocityUpdates(true)
 		.build(ModUtils.createHMaGRL("throwable_bottle").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<MagmaBulletEntity>> MAGMA_BULLET = REGISTRY.register("magma_bullet", () -> EntityType.Builder
 		.<MagmaBulletEntity>of(MagmaBulletEntity::new, MobCategory.MISC).fireImmune().sized(0.5F, 0.5F).setTrackingRange(4).setUpdateInterval(1).setShouldReceiveVelocityUpdates(true)

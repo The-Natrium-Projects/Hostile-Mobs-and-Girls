@@ -19,7 +19,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.network.PlayMessages;
 
 public class PoisonSeedEntity extends ModProjectileItemEntity
 {
@@ -36,11 +35,6 @@ public class PoisonSeedEntity extends ModProjectileItemEntity
 	public PoisonSeedEntity(Level level, double x, double y, double z)
 	{
 		super(ModEntityTypes.POISON_SEED.get(), x, y, z, level);
-	}
-
-	public PoisonSeedEntity(PlayMessages.SpawnEntity spawnEntity, Level level)
-	{
-		this(ModEntityTypes.POISON_SEED.get(), level);
 	}
 
 	@Override
@@ -109,7 +103,7 @@ public class PoisonSeedEntity extends ModProjectileItemEntity
 			}
 		}
 
-		this.level().levelEvent(2002, this.blockPosition(), MobEffects.POISON.getColor());
+		this.level().levelEvent(2002, this.blockPosition(), MobEffects.POISON.value().getColor());
 		this.level().broadcastEntityEvent(this, (byte)3);
 		super.onHitServer(result);
 	}

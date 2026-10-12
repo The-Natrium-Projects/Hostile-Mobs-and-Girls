@@ -33,12 +33,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -109,27 +104,68 @@ public class ModItems
 	public static final DeferredHolder<Item, Item> TINY_NETHERITE_SCRAP = REGISTRY.register("tiny_netherite_scrap", () -> new Item(new Item.Properties().fireResistant()));
 	public static final DeferredHolder<Item, Item> NETHERITE_NUGGET = REGISTRY.register("netherite_nugget", () -> new Item(new Item.Properties().fireResistant()));
 	public static final DeferredHolder<Item, Item> NETHER_STAR_FRAGMENT = REGISTRY.register("nether_star_fragment", () -> new ModItem(new Item.Properties().rarity(Rarity.UNCOMMON), new ModItem.Properties().foil().setResistanceType(ModItem.ResistanceType.NETHER_STAR)));
-	public static final DeferredHolder<Item, Item> LEMON = REGISTRY.register("lemon", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.1F).build())));
-	public static final DeferredHolder<Item, Item> CUREBERRY = REGISTRY.register("cureberry", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.4F).alwaysEat().build()), new ModFoodItem.Properties().healAmount(4.0F)));
-	public static final DeferredHolder<Item, Item> RANDOMBERRY = REGISTRY.register("randomberry", () -> new RandomberryItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(0.2F).alwaysEat().build())));
-	public static final DeferredHolder<Item, Item> EXP_BERRY = REGISTRY.register("exp_berry", () -> new ExperienceBerryItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(0.2F).alwaysEat().build()).rarity(Rarity.UNCOMMON)));
-	public static final DeferredHolder<Item, Item> SOUL_APPLE = REGISTRY.register("soul_apple", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(0.3F).effect(() -> new MobEffectInstance(MobEffects.INVISIBILITY, 3 * 20, 0), 1.0F).alwaysEat().build()), new ModFoodItem.Properties().eatDuration(16).healAmount(1.0F)));
-	public static final DeferredHolder<Item, Item> HONEYED_APPLE = REGISTRY.register("honeyed_apple", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationMod(0.4F).alwaysEat().build()), new ModFoodItem.Properties().eatDuration(24).removePoison()));
-	public static final DeferredHolder<Item, Item> HONEYED_LEMON = REGISTRY.register("honeyed_lemon", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationMod(0.3F).alwaysEat().build()), new ModFoodItem.Properties().removePoison()));
-	public static final DeferredHolder<Item, Item> LEMON_PIE = REGISTRY.register("lemon_pie", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(7).saturationMod(0.3F).build())));
-	public static final DeferredHolder<Item, Item> GOLDEN_TROPICAL_FISH = REGISTRY.register("golden_tropical_fish", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(5).saturationMod(1.3F).effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 60 * 20, 1), 1.0F).effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 15 * 20, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 15 * 20, 0), 1.0F).alwaysEat().build()).rarity(Rarity.RARE)));
-	public static final DeferredHolder<Item, Item> CUBIC_NUCLEUS = REGISTRY.register("cubic_nucleus", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(4).saturationMod(0.8F).effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 15 * 20, 0), 1.0F).alwaysEat().build()), new ModFoodItem.Properties().eatDuration(48)));
-	public static final DeferredHolder<Item, Item> SAVAGEFANG_MEAT = REGISTRY.register("savagefang_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationMod(0.1F).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 30 * 20, 0), 0.2F).build())));
-	public static final DeferredHolder<Item, Item> COOKED_SAVAGEFANG_MEAT = REGISTRY.register("cooked_savagefang_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationMod(0.7F).build())));
-	public static final DeferredHolder<Item, Item> SWAMPER_TENTACLE = REGISTRY.register("swamper_tentacle", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.3F).effect(() -> new MobEffectInstance(MobEffects.POISON, 5 * 20, 0), 0.1F).build())));
-	public static final DeferredHolder<Item, Item> COOKED_SWAMPER_TENTACLE = REGISTRY.register("cooked_swamper_tentacle", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationMod(0.8F).build())));
-	public static final DeferredHolder<Item, Item> RAVAGER_MEAT = REGISTRY.register("ravager_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.3F).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 30 * 20, 0), 0.6F).meat().build())));
-	public static final DeferredHolder<Item, Item> COOKED_RAVAGER_MEAT = REGISTRY.register("cooked_ravager_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationMod(0.8F).effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 10 * 20, 0), 0.1F).meat().build())));
-	public static final DeferredHolder<Item, Item> BAT_STEW = REGISTRY.register("bat_stew", () -> new BowlFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationMod(0.6F).effect(() -> new MobEffectInstance(ModEffects.DARKNESS_RESISTANCE.get(), 10 * 20, 0), 0.3F).alwaysEat().build()).stacksTo(1)));
-	public static final DeferredHolder<Item, Item> SWAMPY_STEW = REGISTRY.register("swampy_stew", () -> new SwampyStewItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(11).saturationMod(0.8F).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 10 * 20, 0), 0.3F).alwaysEat().build()).stacksTo(1)));
-	public static final DeferredHolder<Item, Item> SPECTRAL_SOUP = REGISTRY.register("spectral_soup", () -> new BowlFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationMod(1.0F).effect(() -> new MobEffectInstance(MobEffects.GLOWING, 30 * 20, 0), 1.0F).alwaysEat().build()).stacksTo(1)));
-	public static final DeferredHolder<Item, Item> LIGHTNING_SOUP = REGISTRY.register("lightning_soup", () -> new LightningSoupItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(9).saturationMod(1.8F).effect(() -> new MobEffectInstance(MobEffects.GLOWING, 60 * 20, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 60 * 20, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60 * 20, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 60 * 20, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60 * 20, 1), 1.0F).effect(() -> new MobEffectInstance(MobEffects.JUMP, 60 * 20, 1), 1.0F).alwaysEat().build()).stacksTo(1).rarity(Rarity.RARE)));
-	public static final DeferredHolder<Item, Item> INSOMNIA_FRUIT = REGISTRY.register("insomnia_fruit", () -> new InsomniaFruitItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(5).saturationMod(0.3F).alwaysEat().build()).stacksTo(1).rarity(Rarity.RARE)));
+
+    // Food
+    public static final DeferredHolder<Item, Item> LEMON = REGISTRY.register("lemon", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationModifier(0.1F).build())));
+	public static final DeferredHolder<Item, Item> CUREBERRY = REGISTRY.register("cureberry", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationModifier(0.4F).alwaysEdible().build()), new ModFoodItem.Properties().healAmount(4.0F)));
+	public static final DeferredHolder<Item, Item> RANDOMBERRY = REGISTRY.register("randomberry", () -> new RandomberryItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationModifier(0.2F).alwaysEdible().build())));
+	public static final DeferredHolder<Item, Item> EXP_BERRY = REGISTRY.register("exp_berry", () -> new ExperienceBerryItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationModifier(0.2F).alwaysEdible().build()).rarity(Rarity.UNCOMMON)));
+	public static final DeferredHolder<Item, Item> SOUL_APPLE = REGISTRY.register("soul_apple", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationModifier(0.3F).effect(() -> new MobEffectInstance(MobEffects.INVISIBILITY, 3 * 20, 0), 1.0F).alwaysEdible().build()), new ModFoodItem.Properties().eatDuration(16).healAmount(1.0F)));
+	public static final DeferredHolder<Item, Item> HONEYED_APPLE = REGISTRY.register("honeyed_apple", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationModifier(0.4F).alwaysEdible().build()), new ModFoodItem.Properties().eatDuration(24).removePoison()));
+	public static final DeferredHolder<Item, Item> HONEYED_LEMON = REGISTRY.register("honeyed_lemon", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationModifier(0.3F).alwaysEdible().build()), new ModFoodItem.Properties().removePoison()));
+	public static final DeferredHolder<Item, Item> LEMON_PIE = REGISTRY.register("lemon_pie", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(7).saturationModifier(0.3F).build())));
+	public static final DeferredHolder<Item, Item> GOLDEN_TROPICAL_FISH = REGISTRY.register("golden_tropical_fish", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(5).saturationModifier(1.3F).effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 60 * 20, 1), 1.0F).effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 15 * 20, 0), 1.0F).effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 15 * 20, 0), 1.0F).alwaysEdible().build()).rarity(Rarity.RARE)));
+	public static final DeferredHolder<Item, Item> CUBIC_NUCLEUS = REGISTRY.register("cubic_nucleus", () -> new ModFoodItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(4).saturationModifier(0.8F).effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 15 * 20, 0), 1.0F).alwaysEdible().build()), new ModFoodItem.Properties().eatDuration(48)));
+	public static final DeferredHolder<Item, Item> SAVAGEFANG_MEAT = REGISTRY.register("savagefang_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(3).saturationModifier(0.1F).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 30 * 20, 0), 0.2F).build())));
+	public static final DeferredHolder<Item, Item> COOKED_SAVAGEFANG_MEAT = REGISTRY.register("cooked_savagefang_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationModifier(0.7F).build())));
+	public static final DeferredHolder<Item, Item> SWAMPER_TENTACLE = REGISTRY.register("swamper_tentacle", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationModifier(0.3F).effect(() -> new MobEffectInstance(MobEffects.POISON, 5 * 20, 0), 0.1F).build())));
+	public static final DeferredHolder<Item, Item> COOKED_SWAMPER_TENTACLE = REGISTRY.register("cooked_swamper_tentacle", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationModifier(0.8F).build())));
+	public static final DeferredHolder<Item, Item> RAVAGER_MEAT = REGISTRY.register("ravager_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationModifier(0.3F).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 30 * 20, 0), 0.6F).meat().build())));
+	public static final DeferredHolder<Item, Item> COOKED_RAVAGER_MEAT = REGISTRY.register("cooked_ravager_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationModifier(0.8F).effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 10 * 20, 0), 0.1F).meat().build())));
+	public static final DeferredHolder<Item, Item> BAT_STEW = REGISTRY.register("bat_stew", () ->
+        new BowlFoodItem(new Item.Properties()
+            .food((new FoodProperties.Builder())
+                .nutrition(6)
+                .saturationModifier(0.6F)
+                .effect(() -> new MobEffectInstance(ModEffects.DARKNESS_RESISTANCE.get(), 10 * 20, 0), 0.3F)
+                .alwaysEdible()
+                .usingConvertsTo(Items.BOWL)
+                .build())
+            .stacksTo(1)));
+	public static final DeferredHolder<Item, Item> SWAMPY_STEW = REGISTRY.register("swampy_stew", () -> new SwampyStewItem(new Item.Properties()
+        .food((new FoodProperties.Builder())
+            .nutrition(11)
+            .saturationModifier(0.8F)
+            .effect(() -> new MobEffectInstance(MobEffects.WATER_BREATHING, 10 * 20, 0), 0.3F)
+            .alwaysEdible()
+            .usingConvertsTo(Items.BOWL)
+            .build())
+        .stacksTo(1)));
+	public static final DeferredHolder<Item, Item> SPECTRAL_SOUP = REGISTRY.register("spectral_soup", () -> new Item(new Item.Properties()
+        .food((new FoodProperties.Builder())
+            .nutrition(6)
+            .saturationModifier(1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 30 * 20, 0), 1.0F)
+            .alwaysEdible()
+            .usingConvertsTo(Items.BOWL)
+            .build())
+        .stacksTo(1)));
+	public static final DeferredHolder<Item, Item> LIGHTNING_SOUP = REGISTRY.register("lightning_soup", () -> new LightningSoupItem(new Item.Properties()
+        .food((new FoodProperties.Builder())
+            .nutrition(9)
+            .saturationModifier(1.8F)
+            .effect(() -> new MobEffectInstance(MobEffects.GLOWING, 60 * 20, 0), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, 60 * 20, 0), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 60 * 20, 0), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 60 * 20, 0), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60 * 20, 1), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.JUMP, 60 * 20, 1), 1.0F)
+            .alwaysEdible()
+            .usingConvertsTo(Items.BOWL)
+            .build())
+        .stacksTo(1)
+        .rarity(Rarity.RARE)));
+	public static final DeferredHolder<Item, Item> INSOMNIA_FRUIT = REGISTRY.register("insomnia_fruit", () -> new InsomniaFruitItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(5).saturationModifier(0.3F).alwaysEdible().build()).stacksTo(1).rarity(Rarity.RARE)));
 	public static final DeferredHolder<Item, Item> INSOMNIA_SWORD = REGISTRY.register("insomnia_sword", () -> new InsomniaSwordItem(Tiers.DIAMOND, new Item.Properties().rarity(Rarity.RARE)));
 	public static final DeferredHolder<Item, Item> NEMESIS_BLADE = REGISTRY.register("nemesis_blade", () -> new NemesisBladeItem(Tiers.NETHERITE, new Item.Properties().rarity(Rarity.EPIC).fireResistant()));
 	public static final DeferredHolder<Item, Item> IRON_SPEAR = REGISTRY.register("iron_spear", () -> new ModSwordItem(Tiers.IRON, 2.0F, -2.4F, new Item.Properties()));

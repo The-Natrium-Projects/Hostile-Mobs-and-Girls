@@ -19,9 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.PathType;
-import net.neoforged.common.MinecraftForge;
-import net.neoforged.event.entity.living.MobEffectEvent;
-import net.neoforged.eventbus.api.Event;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 public class WitherGhostEntity extends GhostEntity
 {
@@ -83,11 +82,11 @@ public class WitherGhostEntity extends GhostEntity
 	@Override
 	public boolean canBeAffected(MobEffectInstance potioneffect)
 	{
-		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.WITHER_GHOST_IMMUNE_TO))
+		if (ModTags.checkTagContains(potioneffect.getEffect().value(), ModTags.MobEffectTags.WITHER_GHOST_IMMUNE_TO))
 		{
-			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
-			NeoForge.EVENT_BUS.post(event);
-			return event.getResult() == Event.Result.ALLOW;
+			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect, null);
+            NeoForge.EVENT_BUS.post(event);
+			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
 
 		return super.canBeAffected(potioneffect);

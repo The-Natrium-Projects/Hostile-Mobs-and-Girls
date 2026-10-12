@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.network.PlayMessages;
 
 public class ThrowableBottleEntity extends ThrowableItemProjectile
 {
@@ -34,11 +33,6 @@ public class ThrowableBottleEntity extends ThrowableItemProjectile
 	public ThrowableBottleEntity(Level level, double x, double y, double z)
 	{
 		super(ModEntityTypes.THROWABLE_BOTTLE.get(), x, y, z, level);
-	}
-
-	public ThrowableBottleEntity(PlayMessages.SpawnEntity spawnEntity, Level level)
-	{
-		this(ModEntityTypes.THROWABLE_BOTTLE.get(), level);
 	}
 
 	@Override
@@ -64,8 +58,8 @@ public class ThrowableBottleEntity extends ThrowableItemProjectile
 
 			if (item == ModItems.FIRE_BOTTLE.get() || item == ModItems.BLASTING_BOTTLE.get())
 			{
-				this.level().levelEvent(2002, this.blockPosition(), MobEffects.FIRE_RESISTANCE.getColor());
-				boolean flag = EventHooks.getMobGriefingEvent(this.level(), this.getOwner());
+				this.level().levelEvent(2002, this.blockPosition(), MobEffects.FIRE_RESISTANCE.value().getColor());
+				boolean flag = EventHooks.canEntityGrief(this.level(), this.getOwner());
 				this.level().explode((Entity)null, this.getX(), this.getY(), this.getZ(), item == ModItems.BLASTING_BOTTLE.get() ? 2.5F : 1.0F, flag, Level.ExplosionInteraction.MOB);
 			}
 			else if (item == ModItems.LIGHTNING_BOTTLE.get())
@@ -75,11 +69,11 @@ public class ThrowableBottleEntity extends ThrowableItemProjectile
 				Entity owner = this.getOwner();
 				lightningbolt.setCause((owner != null && owner instanceof ServerPlayer) ? (ServerPlayer)owner : null);
 				this.level().addFreshEntity(lightningbolt);
-				this.level().levelEvent(2002, this.blockPosition(), MobEffects.NIGHT_VISION.getColor());
+				this.level().levelEvent(2002, this.blockPosition(), MobEffects.NIGHT_VISION.value().getColor());
 			}
 			else
 			{
-				this.level().levelEvent(2002, this.blockPosition(), MobEffects.HARM.getColor());
+				this.level().levelEvent(2002, this.blockPosition(), MobEffects.HARM.value().getColor());
 			}
 
 			this.discard();
@@ -87,7 +81,7 @@ public class ThrowableBottleEntity extends ThrowableItemProjectile
 	}
 
 	@Override
-	protected float getGravity()
+	public double getDefaultGravity()
 	{
 		return 0.05F;
 	}

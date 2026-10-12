@@ -10,10 +10,8 @@ import com.github.mechalopa.hmag.HMaG;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.*;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +30,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
@@ -87,7 +85,7 @@ public class ModUtils
 
 						if (stack.getDamageValue() >= stack.getMaxDamage())
 						{
-							livingEntity.broadcastBreakEvent(EquipmentSlot.HEAD);
+							livingEntity.onEquippedItemBroken(stack.getItem(), EquipmentSlot.HEAD);
 							livingEntity.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
 						}
 					}
@@ -97,7 +95,7 @@ public class ModUtils
 
 				if (flag)
 				{
-					livingEntity.setSecondsOnFire(seconds);
+					livingEntity.setRemainingFireTicks(seconds);
 				}
 			}
 		}
@@ -109,7 +107,7 @@ public class ModUtils
 
 		if (livingEntity.getMainHandItem().isEmpty() && livingEntity.isOnFire() && random.nextFloat() < f * 0.3F)
 		{
-			target.setSecondsOnFire(2 * (int)f);
+			target.setRemainingFireTicks(2 * (int)f);
 		}
 	}
 
@@ -306,14 +304,15 @@ public class ModUtils
 		return false;
 	}
 
-	public static ItemStack getPotionStack(Potion potion)
+	public static ItemStack getPotionStack(Holder<Potion> potion)
 	{
 		return getPotionStack(potion, Items.POTION);
 	}
 
-	public static ItemStack getPotionStack(Potion potion, Item containerItem)
+    @Deprecated
+	public static ItemStack getPotionStack(Holder<Potion> potion, Item containerItem)
 	{
-		return PotionUtils.setPotion(new ItemStack(containerItem), potion);
+        return PotionContents.createItemStack(containerItem, potion);
 	}
 
 	@SuppressWarnings("removal")

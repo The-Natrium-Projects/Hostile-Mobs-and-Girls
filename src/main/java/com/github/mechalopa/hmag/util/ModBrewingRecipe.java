@@ -2,10 +2,11 @@ package com.github.mechalopa.hmag.util;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.neoforged.common.brewing.BrewingRecipe;
+import net.neoforged.neoforge.common.brewing.BrewingRecipe;
 
 public class ModBrewingRecipe extends BrewingRecipe
 {
@@ -35,7 +36,9 @@ public class ModBrewingRecipe extends BrewingRecipe
 			{
 				for (ItemStack stack1 : stacks)
 				{
-					if (ItemStack.isSameItem(stack1, stack) && PotionUtils.getPotion(stack1).equals(PotionUtils.getPotion(stack)))
+					if (ItemStack.isSameItem(stack1, stack)
+                        && stack1.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
+                        .equals(stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)))
 					{
 						return true;
 					}
