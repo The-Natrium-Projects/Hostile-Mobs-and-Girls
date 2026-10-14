@@ -1,18 +1,25 @@
 package com.github.mechalopa.hmag.world.level.storage.loot.conditions;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.Serializer;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.fml.ModList;
 
 public class ModLoadedCondition implements LootItemCondition
 {
-	public static final LootItemConditionType TYPE = new LootItemConditionType(new ModLoadedCondition.ConditionSerializer());
+    public static final MapCodec<ModLoadedCondition> CODEC =
+        RecordCodecBuilder.mapCodec(instance -> instance.group(
+            Codec.STRING.fieldOf("modid")
+                .forGetter(condition -> condition.modid)
+        ).apply(instance, ModLoadedCondition::new));
+
+    // Replace the old TYPE declaration too.
+// Declare this AFTER CODEC.
+    public static final LootItemConditionType TYPE =
+        new LootItemConditionType(CODEC);
 	private final String modid;
 
 	private ModLoadedCondition(String modid)
@@ -58,18 +65,4 @@ public class ModLoadedCondition implements LootItemCondition
 		}
 	}
 
-	public static class ConditionSerializer implements Serializer<ModLoadedCondition>
-	{
-		@Override
-		public void serialize(JsonObject object, ModLoadedCondition instance, JsonSerializationContext ctx)
-		{
-			object.addProperty("modid", instance.modid);
-		}
-
-		@Override
-		public ModLoadedCondition deserialize(JsonObject json, JsonDeserializationContext ctx)
-		{
-			return new ModLoadedCondition(json.get("modid").getAsString());
-		}
-	}
 }

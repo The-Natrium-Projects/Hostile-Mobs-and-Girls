@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.common.IPlantable;
+import net.neoforged.neoforge.common.util.TriState;
 
 public class WitherSandBlock extends SoulSandBlock
 {
@@ -58,4 +59,15 @@ public class WitherSandBlock extends SoulSandBlock
 
 		return false;
 	}
+
+    @Override
+    public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
+
+        if (plant.getBlock() == Blocks.WITHER_ROSE)
+        {
+            return TriState.TRUE;
+        }
+
+        return TriState.FALSE;
+    }
 }

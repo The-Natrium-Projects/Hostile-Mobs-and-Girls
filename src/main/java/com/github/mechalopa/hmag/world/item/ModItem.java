@@ -29,9 +29,9 @@ public class ModItem extends Item
 	}
 
 	@Override
-	public boolean canBeHurtBy(DamageSource damageSource)
+	public boolean canBeHurtBy(ItemStack stack, DamageSource damageSource)
 	{
-		return ((this.resistanceType == ResistanceType.NETHER_STAR && damageSource.is(DamageTypeTags.IS_EXPLOSION)) || (this.resistanceType == ResistanceType.INVINCIBLE && !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY))) ? false : super.canBeHurtBy(damageSource);
+		return ((this.resistanceType == ResistanceType.NETHER_STAR && damageSource.is(DamageTypeTags.IS_EXPLOSION)) || (this.resistanceType == ResistanceType.INVINCIBLE && !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY))) ? false : super.canBeHurtBy(stack, damageSource);
 	}
 
 	@Override

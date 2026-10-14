@@ -87,13 +87,13 @@ public class CreeperGirlEntity extends Creeper implements VariantHolder<CreeperG
 	@SuppressWarnings("deprecation")
 	@Override
 	@Nullable
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag)
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData)
 	{
 		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData, dataTag);
 		RandomSource randomsource = levelAccessor.getRandom();
 		this.setVariant(CreeperGirlEntity.Variant.getSpawnVariant(randomsource));
 		this.populateDefaultEquipmentSlots(randomsource, difficulty);
-		this.populateDefaultEquipmentEnchantments(randomsource, difficulty);
+		this.populateDefaultEquipmentEnchantments(levelAccessor.getLevel(), randomsource, difficulty);
 
 		if (this.getItemBySlot(EquipmentSlot.HEAD).isEmpty())
 		{
@@ -107,11 +107,10 @@ public class CreeperGirlEntity extends Creeper implements VariantHolder<CreeperG
 				this.armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
 			}
 		}
-
 		return spawnData;
 	}
 
-	@Override
+    @Override
 	public CreeperGirlEntity.Variant getVariant()
 	{
 		return CreeperGirlEntity.Variant.byId(this.entityData.get(DATA_VARIANT_ID));

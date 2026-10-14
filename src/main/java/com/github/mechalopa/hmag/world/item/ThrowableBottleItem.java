@@ -1,10 +1,12 @@
 package com.github.mechalopa.hmag.world.item;
 
+import com.github.mechalopa.hmag.HMaG;
+import com.github.mechalopa.hmag.registry.ModItems;
 import com.github.mechalopa.hmag.world.entity.projectile.ThrowableBottleEntity;
 
 import net.minecraft.Util;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
-import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -14,10 +16,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
-public class ThrowableBottleItem extends ModItem
+public class ThrowableBottleItem extends ModItem implements ProjectileItem
 {
 	public ThrowableBottleItem(Item.Properties builder)
 	{
@@ -27,29 +33,26 @@ public class ThrowableBottleItem extends ModItem
 	public ThrowableBottleItem(Item.Properties builder, ModItem.Properties builder1)
 	{
 		super(builder, builder1);
-		DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior()
-		{
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack)
-			{
-				return Util.make(new ThrowableBottleEntity(level, position.x(), position.y(), position.z()), (e) -> {
-					e.setItem(stack);
-				});
-			}
-
-			@Override
-			protected float getUncertainty()
-			{
-				return super.getUncertainty() * 0.5F;
-			}
-
-			@Override
-			protected float getPower()
-			{
-				return super.getPower() * 1.25F;
-			}
-		});
 	}
+
+
+    @Override
+    public Projectile asProjectile(Level level, Position position, ItemStack itemStack, Direction direction)
+    {
+        ThrowableBottleEntity projectile = new ThrowableBottleEntity(
+            level, position.x(), position.y(), position.z());
+        projectile.setItem(itemStack);
+        return projectile;
+    }
+
+    @Override
+    public ProjectileItem.DispenseConfig createDispenseConfig()
+    {
+        return ProjectileItem.DispenseConfig.builder()
+            .uncertainty(ProjectileItem.DispenseConfig.DEFAULT.uncertainty() * 0.5F)
+            .power(ProjectileItem.DispenseConfig.DEFAULT.power() * 1.25F)
+            .build();
+    }
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand)
@@ -75,4 +78,5 @@ public class ThrowableBottleItem extends ModItem
 
 		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
 	}
+
 }

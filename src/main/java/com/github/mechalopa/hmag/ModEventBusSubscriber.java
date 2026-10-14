@@ -66,6 +66,7 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -90,6 +91,11 @@ public class ModEventBusSubscriber
 		});
 
 		Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, ModUtils.createHMaGRL("mod_loaded"), ModLoadedCondition.TYPE);
+
+        DispenserBlock.registerProjectileBehavior(ModItems.FIRE_BOTTLE.get());
+        DispenserBlock.registerProjectileBehavior(ModItems.BLASTING_BOTTLE.get());
+        DispenserBlock.registerProjectileBehavior(ModItems.LIGHTNING_BOTTLE.get());
+
 	}
 
 //	@SubscribeEvent
