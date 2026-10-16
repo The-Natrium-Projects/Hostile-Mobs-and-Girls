@@ -8,7 +8,6 @@ import com.github.mechalopa.hmag.world.entity.ai.goal.RangedAttackGoal2;
 import com.github.mechalopa.hmag.world.entity.projectile.MagicBulletEntity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerLevel;
@@ -99,7 +98,7 @@ public class LichEntity extends Monster implements RangedAttackMob
 				BlockPos blockpos = this.blockPosition().offset(-2 + this.getRandom().nextInt(5), 1, -2 + this.getRandom().nextInt(5));
 				Vex vex = EntityType.VEX.create(this.level());
 				vex.moveTo(blockpos, 0.0F, 0.0F);
-				vex.finalizeSpawn(serverlevel, this.level().getCurrentDifficultyAt(blockpos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null, (CompoundTag)null);
+				vex.finalizeSpawn(serverlevel, this.level().getCurrentDifficultyAt(blockpos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null);
 				vex.setOwner(this);
 				vex.setBoundOrigin(blockpos);
 				vex.setLimitedLife(20 * (30 + this.random.nextInt(90)));

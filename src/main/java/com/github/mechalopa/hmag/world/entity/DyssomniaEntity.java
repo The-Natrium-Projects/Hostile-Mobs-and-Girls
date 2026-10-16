@@ -250,7 +250,7 @@ public class DyssomniaEntity extends FlyingMob implements Enemy
 
 			Phantom phantom = EntityType.PHANTOM.create(attacker.level());
 			phantom.moveTo(d1, d2, d3, this.getYRot() + (random.nextFloat() - 0.5F) * 12.0F, 0.0F);
-			phantom.finalizeSpawn(serverlevel, attacker.level().getCurrentDifficultyAt(attacker.blockPosition()), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null, (CompoundTag)null);
+			phantom.finalizeSpawn(serverlevel, attacker.level().getCurrentDifficultyAt(attacker.blockPosition()), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null);
 			serverlevel.addFreshEntityWithPassengers(phantom);
 			phantom.getPersistentData().putBoolean(ModUtils.WITH_SPAWN_PARTICLE_KEY, true);
 			serverlevel.gameEvent(phantom, GameEvent.ENTITY_PLACE, phantom.blockPosition());
