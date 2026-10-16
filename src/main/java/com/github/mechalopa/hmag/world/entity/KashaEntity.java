@@ -231,12 +231,6 @@ public class KashaEntity extends Monster implements VariantHolder<KashaEntity.Va
 	}
 
 	@Override
-	public double getMyRidingOffset()
-	{
-		return 0.14D;
-	}
-
-	@Override
 	protected SoundEvent getAmbientSound()
 	{
 		return ModSoundEvents.KASHA_AMBIENT.get();

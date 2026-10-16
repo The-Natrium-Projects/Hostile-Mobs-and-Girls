@@ -32,13 +32,11 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -330,12 +328,6 @@ public class SavagefangEntity extends Monster
 	public boolean isPushedByFluid()
 	{
 		return false;
-	}
-
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return size.height * 0.65F;
 	}
 
 	public void setLeapCooldown(int value)

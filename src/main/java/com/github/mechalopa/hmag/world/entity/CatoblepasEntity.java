@@ -121,12 +121,6 @@ public class CatoblepasEntity extends Monster
 	}
 
 	@Override
-	public double getMyRidingOffset()
-	{
-		return 0.14D;
-	}
-
-	@Override
 	protected SoundEvent getAmbientSound()
 	{
 		return ModSoundEvents.CATOBLEPAS_AMBIENT.get();

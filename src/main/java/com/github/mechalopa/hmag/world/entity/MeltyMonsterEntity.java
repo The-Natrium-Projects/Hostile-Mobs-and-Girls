@@ -16,12 +16,10 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -252,18 +250,6 @@ public class MeltyMonsterEntity extends Monster implements RangedAttackMob
 	public int getMaxSpawnClusterSize()
 	{
 		return 3;
-	}
-
-	@Override
-	public double getMyRidingOffset()
-	{
-		return -0.45D;
-	}
-
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 1.74F;
 	}
 
 	@Override
