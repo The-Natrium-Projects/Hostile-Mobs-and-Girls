@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 import com.github.mechalopa.hmag.ModConfigs;
 import com.github.mechalopa.hmag.util.ModTags;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -187,9 +186,9 @@ public class EnderExecutorEntity extends EnderMan implements IBeamAttackMob
 	@SuppressWarnings("deprecation")
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag)
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData)
 	{
-		SpawnGroupData spawngroupdata = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData, dataTag);
+		SpawnGroupData spawngroupdata = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData);
 		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
 		return spawngroupdata;
 	}

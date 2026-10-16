@@ -35,7 +35,6 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
@@ -172,19 +171,6 @@ public class AlrauneEntity extends Monster implements RangedAttackMob
 	public int getMaxSpawnClusterSize()
 	{
 		return 2;
-	}
-
-	@Override
-	protected EntityAttachments getVehicleAttachmentPoint()
-	{
-		return super.createAttachments()
-			.withDefault(EntityAttachment.PASSENGER, new Vec3(0, -0.45D, 0));
-	}
-
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 1.74F;
 	}
 
 	@Override

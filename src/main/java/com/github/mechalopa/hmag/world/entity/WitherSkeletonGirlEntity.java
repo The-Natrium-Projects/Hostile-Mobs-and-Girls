@@ -3,7 +3,6 @@ package com.github.mechalopa.hmag.world.entity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.util.RandomSource;
@@ -53,9 +52,9 @@ public class WitherSkeletonGirlEntity extends WitherSkeleton
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag)
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData)
 	{
-		SpawnGroupData spawngroupdata = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData, dataTag);
+		SpawnGroupData spawngroupdata = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(4.5D);
 		this.reassessWeaponGoal();
 		return spawngroupdata;

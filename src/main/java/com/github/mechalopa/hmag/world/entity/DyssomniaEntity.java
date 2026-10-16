@@ -37,13 +37,11 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -250,7 +248,7 @@ public class DyssomniaEntity extends FlyingMob implements Enemy
 
 			Phantom phantom = EntityType.PHANTOM.create(attacker.level());
 			phantom.moveTo(d1, d2, d3, this.getYRot() + (random.nextFloat() - 0.5F) * 12.0F, 0.0F);
-			phantom.finalizeSpawn(serverlevel, attacker.level().getCurrentDifficultyAt(attacker.blockPosition()), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null, (CompoundTag)null);
+			phantom.finalizeSpawn(serverlevel, attacker.level().getCurrentDifficultyAt(attacker.blockPosition()), MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null);
 			serverlevel.addFreshEntityWithPassengers(phantom);
 			phantom.getPersistentData().putBoolean(ModUtils.WITH_SPAWN_PARTICLE_KEY, true);
 			serverlevel.gameEvent(phantom, GameEvent.ENTITY_PLACE, phantom.blockPosition());
@@ -380,12 +378,6 @@ public class DyssomniaEntity extends FlyingMob implements Enemy
 	public int getMaxSpawnClusterSize()
 	{
 		return 1;
-	}
-
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return size.height * 0.45F;
 	}
 
 	@Override

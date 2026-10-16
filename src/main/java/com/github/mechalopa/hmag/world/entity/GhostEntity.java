@@ -145,14 +145,14 @@ public class GhostEntity extends AbstractFlyingMonsterEntity implements VariantH
 	@SuppressWarnings("deprecation")
 	@Override
 	@Nullable
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag)
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData)
 	{
-		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData, dataTag);
+		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData);
 		RandomSource randomsource = levelAccessor.getRandom();
 		this.setCanPickUpLoot(randomsource.nextFloat() < 0.55F * difficulty.getSpecialMultiplier());
 		this.setVariant(GhostEntity.Variant.getSpawnVariant(randomsource));
 		this.populateDefaultEquipmentSlots(randomsource, difficulty);
-		this.populateDefaultEquipmentEnchantments(randomsource, difficulty);
+		this.populateDefaultEquipmentEnchantments(levelAccessor.getLevel(), randomsource, difficulty);
 
 		if (this.getItemBySlot(EquipmentSlot.HEAD).isEmpty())
 		{

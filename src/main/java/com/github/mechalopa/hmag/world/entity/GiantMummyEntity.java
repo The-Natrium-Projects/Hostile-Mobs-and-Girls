@@ -50,7 +50,6 @@ import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.PathfindingContext;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 
 
@@ -190,12 +189,6 @@ public class GiantMummyEntity extends Monster
 	public int getMaxSpawnClusterSize()
 	{
 		return 2;
-	}
-
-	@Override
-	public Vec3 getVehicleAttachmentPoint(Entity vehicle)
-	{
-		return new Vec3(0.0D, -0.6D, 0.0D);
 	}
 
 	@Override

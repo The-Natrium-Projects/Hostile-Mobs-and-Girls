@@ -127,9 +127,9 @@ public class BansheeEntity extends AbstractFlyingMonsterEntity implements Varian
 	@SuppressWarnings("deprecation")
 	@Override
 	@Nullable
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag)
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData)
 	{
-		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData, dataTag);
+		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData);
 		this.setVariant(CommonOrUncommonVariant.getSpawnVariant(levelAccessor.getRandom(), ModConfigs.cachedServer.BANSHEE_ANOTHER_VARIANT_SPAWN_CHANCE));
 		return spawnData;
 	}

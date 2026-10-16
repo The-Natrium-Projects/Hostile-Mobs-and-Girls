@@ -34,7 +34,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FrostedIceBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.neoforged.neoforge.common.util.BlockSnapshot;
 import net.neoforged.neoforge.event.EventHooks;
@@ -161,12 +160,6 @@ public class JackFrostEntity extends Monster implements RangedAttackMob
 	public int getMaxSpawnClusterSize()
 	{
 		return 2;
-	}
-
-	@Override
-	public Vec3 getVehicleAttachmentPoint(Entity vehicle)
-	{
-		return new Vec3(0d, -0.45D, 0d);
 	}
 
 	@Override

@@ -124,19 +124,19 @@ public class ModEntityTypes
 		.of(EnderExecutorEntity::new, MobCategory.MONSTER).sized(0.6F, 2.9F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("ender_executor").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<KoboldEntity>> KOBOLD = REGISTRY.register("kobold", () -> EntityType.Builder
-		.of(KoboldEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(KoboldEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).eyeHeight(1.52F).vehicleAttachment(new Vec3(0D, 0.32D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("kobold").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<LichEntity>> LICH = REGISTRY.register("lich", () -> EntityType.Builder
-		.of(LichEntity::new, MobCategory.MONSTER).sized(0.6F, 2.3F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(LichEntity::new, MobCategory.MONSTER).sized(0.6F, 2.3F).eyeHeight(2.0F).vehicleAttachment(new Vec3(0D, 0.6D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("lich").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<OgreEntity>> OGRE = REGISTRY.register("ogre", () -> EntityType.Builder
-		.of(OgreEntity::new, MobCategory.MONSTER).sized(0.9F, 2.8F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(OgreEntity::new, MobCategory.MONSTER).sized(0.9F, 2.8F).eyeHeight(2.5F).vehicleAttachment(new Vec3(0D, 0.6D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("ogre").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<SpiderNestEntity>> SPIDER_NEST = REGISTRY.register("spider_nest", () -> EntityType.Builder
 		.of(SpiderNestEntity::new, MobCategory.MONSTER).sized(1.2F, 1.8F).eyeHeight(1.1f).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("spider_nest").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<MeltyMonsterEntity>> MELTY_MONSTER = REGISTRY.register("melty_monster", () -> EntityType.Builder
-		.of(MeltyMonsterEntity::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(MeltyMonsterEntity::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 1.95F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("melty_monster").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<CursedDollEntity>> CURSED_DOLL = REGISTRY.register("cursed_doll", () -> EntityType.Builder
 		.of(CursedDollEntity::new, MobCategory.MONSTER)
@@ -151,12 +151,13 @@ public class ModEntityTypes
 		.of(JackFrostEntity::new, MobCategory.MONSTER).immuneTo(Blocks.POWDER_SNOW)
 		.sized(0.6F, 1.95F)
 		.eyeHeight(1.74f)
+		.vehicleAttachment(new Vec3(0D, -0.45D, 0D))
 		.setTrackingRange(8)
 		.setUpdateInterval(3)
 		.setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("jack_frost").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<HornetEntity>> HORNET = REGISTRY.register("hornet", () -> EntityType.Builder
-		.of(HornetEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(HornetEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).eyeHeight(1.52F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("hornet").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<DullahanEntity>> DULLAHAN = REGISTRY.register("dullahan", () -> EntityType.Builder
 		.of(DullahanEntity::new, MobCategory.MONSTER)
@@ -171,10 +172,10 @@ public class ModEntityTypes
 		.of(BansheeEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("banshee").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<AlrauneEntity>> ALRAUNE = REGISTRY.register("alraune", () -> EntityType.Builder
-		.of(AlrauneEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(AlrauneEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, -0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("alraune").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<CatoblepasEntity>> CATOBLEPAS = REGISTRY.register("catoblepas", () -> EntityType.Builder
-		.of(CatoblepasEntity::new, MobCategory.MONSTER).sized(0.9F, 1.4F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(CatoblepasEntity::new, MobCategory.MONSTER).sized(0.9F, 1.4F).vehicleAttachment(new Vec3(0D, -0.14D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("catoblepas").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<ScorpionEntity>> SCORPION = REGISTRY.register("scorpion", () -> EntityType.Builder
 		.of(ScorpionEntity::new, MobCategory.MONSTER)
@@ -185,67 +186,67 @@ public class ModEntityTypes
 		.setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("scorpion").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<KashaEntity>> KASHA = REGISTRY.register("kasha", () -> EntityType.Builder
-		.of(KashaEntity::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 0.7F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(KashaEntity::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 0.7F).vehicleAttachment(new Vec3(0D, -0.14D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("kasha").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<DoguEntity>> DOGU = REGISTRY.register("dogu", () -> EntityType.Builder
-		.of(DoguEntity::new, MobCategory.MONSTER).sized(0.6F, 1.99F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(DoguEntity::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("dogu").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<GhastlySeekerEntity>> GHASTLY_SEEKER = REGISTRY.register("ghastly_seeker", () -> EntityType.Builder
 		.of(GhastlySeekerEntity::new, MobCategory.MONSTER).fireImmune().sized(0.9F, 2.9F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("ghastly_seeker").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<RedcapEntity>> REDCAP = REGISTRY.register("redcap", () -> EntityType.Builder
-		.of(RedcapEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(RedcapEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).eyeHeight(1.52F).vehicleAttachment(new Vec3(0D, 0.32D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("redcap").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<SlimeGirlEntity>> SLIME_GIRL = REGISTRY.register("slime_girl", () -> EntityType.Builder
-		.of(SlimeGirlEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(SlimeGirlEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("slime_girl").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<MagicalSlimeEntity>> MAGICAL_SLIME = REGISTRY.register("magical_slime", () -> EntityType.Builder
 		.of(MagicalSlimeEntity::new, MobCategory.MONSTER).sized(2.04F, 2.04F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("magical_slime").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<MonolithEntity>> MONOLITH = REGISTRY.register("monolith", () -> EntityType.Builder
-		.of(MonolithEntity::new, MobCategory.MONSTER).sized(0.6F, 1.75F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(MonolithEntity::new, MobCategory.MONSTER).sized(0.6F, 1.75F).eyeHeight(1.0F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("monolith").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<CrimsonSlaughtererEntity>> CRIMSON_SLAUGHTERER = REGISTRY.register("crimson_slaughterer", () -> EntityType.Builder
-		.of(CrimsonSlaughtererEntity::new, MobCategory.MONSTER).fireImmune().sized(0.75F, 2.45F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(CrimsonSlaughtererEntity::new, MobCategory.MONSTER).fireImmune().sized(0.75F, 2.45F).eyeHeight(0.55F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("crimson_slaughterer").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<DyssomniaEntity>> DYSSOMNIA = REGISTRY.register("dyssomnia", () -> EntityType.Builder
-		.of(DyssomniaEntity::new, MobCategory.MONSTER).sized(2.3F, 1.1F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(DyssomniaEntity::new, MobCategory.MONSTER).sized(2.3F, 1.1F).eyeHeight(1.1F * 0.45F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("dyssomnia").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<SnowCanineEntity>> SNOW_CANINE = REGISTRY.register("snow_canine", () -> EntityType.Builder
-		.of(SnowCanineEntity::new, MobCategory.MONSTER).immuneTo(Blocks.POWDER_SNOW).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(SnowCanineEntity::new, MobCategory.MONSTER).immuneTo(Blocks.POWDER_SNOW).sized(0.6F, 1.95F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("snow_canine").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<HarpyEntity>> HARPY = REGISTRY.register("harpy", () -> EntityType.Builder
-		.of(HarpyEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(HarpyEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("harpy").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<SavagefangEntity>> SAVAGEFANG = REGISTRY.register("savagefang", () -> EntityType.Builder
-		.of(SavagefangEntity::new, MobCategory.MONSTER).sized(0.75F, 0.55F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(SavagefangEntity::new, MobCategory.MONSTER).sized(0.75F, 0.55F).eyeHeight(0.55F * 0.65F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("savagefang").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<FortressKeeperEntity>> FORTRESS_KEEPER = REGISTRY.register("fortress_keeper", () -> EntityType.Builder
-		.of(FortressKeeperEntity::new, MobCategory.MONSTER).fireImmune().sized(1.2F, 2.15F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(FortressKeeperEntity::new, MobCategory.MONSTER).fireImmune().sized(1.2F, 2.15F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.1D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("fortress_keeper").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<NecroticReaperEntity>> NECROTIC_REAPER = REGISTRY.register("necrotic_reaper", () -> EntityType.Builder
-		.of(NecroticReaperEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(NecroticReaperEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("necrotic_reaper").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<DodomekiEntity>> DODOMEKI = REGISTRY.register("dodomeki", () -> EntityType.Builder
-		.of(DodomekiEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(DodomekiEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("dodomeki").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<ImpEntity>> IMP = REGISTRY.register("imp", () -> EntityType.Builder
-		.of(ImpEntity::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 1.7F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(ImpEntity::new, MobCategory.MONSTER).fireImmune().sized(0.6F, 1.7F).eyeHeight(1.52F).vehicleAttachment(new Vec3(0D, 0.32D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("imp").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<GlaryadEntity>> GLARYAD = REGISTRY.register("glaryad", () -> EntityType.Builder
-		.of(GlaryadEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(GlaryadEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("glaryad").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<JiangshiEntity>> JIANGSHI = REGISTRY.register("jiangshi", () -> EntityType.Builder
-		.of(JiangshiEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(JiangshiEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).vehicleAttachment(new Vec3(0D, 0.45D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("jiangshi").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<GiantMummyEntity>> GIANT_MUMMY = REGISTRY.register("giant_mummy", () -> EntityType.Builder
-		.of(GiantMummyEntity::new, MobCategory.MONSTER).sized(0.9F, 2.9F).eyeHeight(2.5f).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(GiantMummyEntity::new, MobCategory.MONSTER).sized(0.9F, 2.9F).eyeHeight(2.5f).vehicleAttachment(new Vec3(0D, -0.6D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("giant_mummy").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<NightwalkerEntity>> NIGHTWALKER = REGISTRY.register("nightwalker", () -> EntityType.Builder
-		.of(NightwalkerEntity::new, MobCategory.MONSTER).sized(1.2F, 2.52F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(NightwalkerEntity::new, MobCategory.MONSTER).sized(1.2F, 2.52F).eyeHeight(2.0F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("nightwalker").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<SwamperEntity>> SWAMPER = REGISTRY.register("swamper", () -> EntityType.Builder
-		.of(SwamperEntity::new, MobCategory.MONSTER).sized(0.9F, 1.9F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(SwamperEntity::new, MobCategory.MONSTER).sized(0.9F, 1.9F).eyeHeight(0.9F).vehicleAttachment(new Vec3(0D, -0.1D, 0D)).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("swamper").toString()));
 
 	public static final DeferredHolder<EntityType<?>, EntityType<MagicBulletEntity>> MAGIC_BULLET = REGISTRY.register("magic_bullet", () -> EntityType.Builder
