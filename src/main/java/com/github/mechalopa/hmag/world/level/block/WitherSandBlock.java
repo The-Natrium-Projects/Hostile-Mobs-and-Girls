@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.common.IPlantable;
 import net.neoforged.neoforge.common.util.TriState;
 
 public class WitherSandBlock extends SoulSandBlock
@@ -45,19 +44,6 @@ public class WitherSandBlock extends SoulSandBlock
 		{
 			level.addParticle(ParticleTypes.SMOKE, pos.getX() + rand.nextDouble(), pos.getY() + 1.1D, pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
 		}
-	}
-
-	@Override
-	public boolean canSustainPlant(BlockState state, BlockGetter getter, BlockPos pos, Direction facing, IPlantable plantable)
-	{
-		BlockState plant = plantable.getPlant(getter, pos.relative(facing));
-
-		if (plant.getBlock() == Blocks.WITHER_ROSE)
-		{
-			return true;
-		}
-
-		return false;
 	}
 
     @Override

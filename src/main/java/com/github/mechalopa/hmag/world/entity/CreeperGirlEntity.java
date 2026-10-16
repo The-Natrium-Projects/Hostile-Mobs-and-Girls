@@ -23,13 +23,7 @@ import net.minecraft.util.ByIdMap;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.VariantHolder;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Creeper;
@@ -40,6 +34,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public class CreeperGirlEntity extends Creeper implements VariantHolder<CreeperGirlEntity.Variant>
 {
@@ -89,7 +84,7 @@ public class CreeperGirlEntity extends Creeper implements VariantHolder<CreeperG
 	@Nullable
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData)
 	{
-		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData, dataTag);
+		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData);
 		RandomSource randomsource = levelAccessor.getRandom();
 		this.setVariant(CreeperGirlEntity.Variant.getSpawnVariant(randomsource));
 		this.populateDefaultEquipmentSlots(randomsource, difficulty);
@@ -136,19 +131,7 @@ public class CreeperGirlEntity extends Creeper implements VariantHolder<CreeperG
 		compound.putInt("Variant", this.getVariant().getId());
 	}
 
-	@Override
-	public double getMyRidingOffset()
-	{
-		return -0.45D;
-	}
-
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 1.74F;
-	}
-
-	@Override
+    @Override
 	protected void playStepSound(BlockPos pos, BlockState block)
 	{
 		this.playSound(SoundEvents.ZOMBIE_STEP, 0.15F, 1.0F);

@@ -163,13 +163,13 @@ public class DullahanEntity extends Monster implements VariantHolder<DullahanEnt
 	@SuppressWarnings("deprecation")
 	@Override
 	@Nullable
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag)
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData)
 	{
-		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData, dataTag);
+		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData);
 		RandomSource randomsource = levelAccessor.getRandom();
 		this.setVariant(randomsource.nextDouble() < ModConfigs.cachedServer.HEADLESS_DULLAHAN_SPAWN_CHANCE ? DullahanEntity.Variant.HEADLESS : DullahanEntity.Variant.NORMAL);
 		this.populateDefaultEquipmentSlots(randomsource, difficulty);
-		this.populateDefaultEquipmentEnchantments(randomsource, difficulty);
+		this.populateDefaultEquipmentEnchantments(levelAccessor.getLevel(), randomsource, difficulty);
 		return spawnData;
 	}
 
@@ -203,18 +203,6 @@ public class DullahanEntity extends Monster implements VariantHolder<DullahanEnt
 	public int getMaxSpawnClusterSize()
 	{
 		return 2;
-	}
-
-	@Override
-	public double getMyRidingOffset()
-	{
-		return -0.45D;
-	}
-
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 1.74F;
 	}
 
 	@Override

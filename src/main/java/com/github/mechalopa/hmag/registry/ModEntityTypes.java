@@ -58,6 +58,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -105,7 +106,13 @@ public class ModEntityTypes
 		.of(StrayGirlEntity::new, MobCategory.MONSTER).immuneTo(Blocks.POWDER_SNOW).sized(0.6F, 1.99F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("stray_girl").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<CreeperGirlEntity>> CREEPER_GIRL = REGISTRY.register("creeper_girl", () -> EntityType.Builder
-		.of(CreeperGirlEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(CreeperGirlEntity::new, MobCategory.MONSTER)
+        .sized(0.6F, 1.95F)
+        .setTrackingRange(8)
+        .setUpdateInterval(3)
+        .eyeHeight(1.74f)
+        .vehicleAttachment(new Vec3(0d, 0.45d, 0d))
+        .setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("creeper_girl").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<GhostEntity>> GHOST = REGISTRY.register("ghost", () -> EntityType.Builder
 		.of(GhostEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
@@ -134,7 +141,11 @@ public class ModEntityTypes
 	public static final DeferredHolder<EntityType<?>, EntityType<CursedDollEntity>> CURSED_DOLL = REGISTRY.register("cursed_doll", () -> EntityType.Builder
 		.of(CursedDollEntity::new, MobCategory.MONSTER)
 		.sized(0.6F, 1.7F)
-		.setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+        .eyeHeight(1.52f)
+        .vehicleAttachment(new Vec3(0d, 0.32d, 0d))
+		.setTrackingRange(8)
+        .setUpdateInterval(3)
+        .setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("cursed_doll").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<JackFrostEntity>> JACK_FROST = REGISTRY.register("jack_frost", () -> EntityType.Builder
 		.of(JackFrostEntity::new, MobCategory.MONSTER).immuneTo(Blocks.POWDER_SNOW)
@@ -148,7 +159,13 @@ public class ModEntityTypes
 		.of(HornetEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("hornet").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<DullahanEntity>> DULLAHAN = REGISTRY.register("dullahan", () -> EntityType.Builder
-		.of(DullahanEntity::new, MobCategory.MONSTER).sized(0.6F, 1.75F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)
+		.of(DullahanEntity::new, MobCategory.MONSTER)
+        .sized(0.6F, 1.75F)
+        .eyeHeight(1.74f)
+        .vehicleAttachment(new Vec3(0d, 0.45d, 0d))
+        .setTrackingRange(8)
+        .setUpdateInterval(3)
+        .setShouldReceiveVelocityUpdates(false)
 		.build(ModUtils.createHMaGRL("dullahan").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<BansheeEntity>> BANSHEE = REGISTRY.register("banshee", () -> EntityType.Builder
 		.of(BansheeEntity::new, MobCategory.MONSTER).sized(0.6F, 1.95F).setTrackingRange(8).setUpdateInterval(3).setShouldReceiveVelocityUpdates(false)

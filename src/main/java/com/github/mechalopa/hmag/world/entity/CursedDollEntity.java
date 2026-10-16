@@ -90,7 +90,7 @@ public class CursedDollEntity extends Monster implements VariantHolder<CommonOrU
 				.add(Attributes.ATTACK_DAMAGE, 4.0D)
 				.add(Attributes.ATTACK_KNOCKBACK, 1.0D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.25D)
-				.add(NeoForgeMod.STEP_HEIGHT_ADDITION.get(), 1.5D);
+				.add(Attributes.STEP_HEIGHT, 1.5D);
 	}
 
 	@Override
@@ -173,13 +173,13 @@ public class CursedDollEntity extends Monster implements VariantHolder<CommonOrU
 	@SuppressWarnings("deprecation")
 	@Override
 	@Nullable
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag)
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData)
 	{
-		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData, dataTag);
+		spawnData = super.finalizeSpawn(levelAccessor, difficulty, spawnType, spawnData);
 		RandomSource randomsource = levelAccessor.getRandom();
 		this.setVariant(CommonOrUncommonVariant.getSpawnVariant(randomsource, ModConfigs.cachedServer.CURSED_DOLL_ANOTHER_VARIANT_SPAWN_CHANCE));
 		this.populateDefaultEquipmentSlots(randomsource, difficulty);
-		this.populateDefaultEquipmentEnchantments(randomsource, difficulty);
+		this.populateDefaultEquipmentEnchantments(levelAccessor.getLevel(), randomsource, difficulty);
 		return spawnData;
 	}
 
@@ -213,18 +213,6 @@ public class CursedDollEntity extends Monster implements VariantHolder<CommonOrU
 	public int getMaxSpawnClusterSize()
 	{
 		return 3;
-	}
-
-	@Override
-	public double getMyRidingOffset()
-	{
-		return -0.32D;
-	}
-
-	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 1.52F;
 	}
 
 	@Override
