@@ -61,7 +61,7 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 
 public class SavagefangEntity extends Monster
@@ -115,13 +115,6 @@ public class SavagefangEntity extends Monster
 				.add(Attributes.MAX_HEALTH, 12.0D)
 				.add(Attributes.MOVEMENT_SPEED, 3.0D)
 				.add(Attributes.ATTACK_DAMAGE, 4.0D);
-	}
-
-
-	@Override
-	public boolean canBreatheUnderwater()
-	{
-		return true;
 	}
 
 	@Override
@@ -556,7 +549,7 @@ public class SavagefangEntity extends Monster
 		@Override
 		public void tick()
 		{
-			if (this.mob.isEyeInFluidType(ForgeMod.WATER_TYPE.get()))
+			if (this.mob.isEyeInFluidType(NeoForgeMod.WATER_TYPE.value()))
 			{
 				this.mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
 			}
@@ -865,7 +858,7 @@ public class SavagefangEntity extends Monster
 			{
 				return false;
 			}
-			else if (livingEntity instanceof Player || (!livingEntity.getType().is(EntityTypeTags.AQUATIC) && livingEntity.canDrownInFluidType(ForgeMod.WATER_TYPE.get()) && livingEntity instanceof Animal && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ANIMALS) || (livingEntity instanceof AbstractVillager && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_VILLAGERS) || (livingEntity.getType().is(EntityTypeTags.ILLAGER) && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ILLAGERS))
+			else if (livingEntity instanceof Player || (!livingEntity.getType().is(EntityTypeTags.AQUATIC) && livingEntity.canDrownInFluidType(NeoForgeMod.WATER_TYPE.value()) && livingEntity instanceof Animal && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ANIMALS) || (livingEntity instanceof AbstractVillager && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_VILLAGERS) || (livingEntity.getType().is(EntityTypeTags.ILLAGER) && ModConfigs.cachedServer.SAVAGEFANG_ATTACK_ILLAGERS))
 			{
 				return livingEntity.distanceToSqr(this.parent) <= 4.0D * 4.0D || (livingEntity.isInWaterOrBubble() && livingEntity.distanceToSqr(this.parent) <= 9.0D * 9.0D);
 			}

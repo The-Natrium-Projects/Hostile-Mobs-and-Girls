@@ -48,7 +48,9 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.neoforge.event.EventHooks;
 
 public class MeltyMonsterEntity extends Monster implements RangedAttackMob
 {
@@ -109,7 +111,7 @@ public class MeltyMonsterEntity extends Monster implements RangedAttackMob
 
 		if (!this.level().isClientSide())
 		{
-			if (ModConfigs.cachedServer.MELTY_MONSTER_SET_FIRE_CHANCE > 0.0D && !this.isInLava() && !this.isInWaterRainOrBubble() && !this.isFreezing() && EventHooks.getMobGriefingEvent(this.level(), this))
+			if (ModConfigs.cachedServer.MELTY_MONSTER_SET_FIRE_CHANCE > 0.0D && !this.isInLava() && !this.isInWaterRainOrBubble() && !this.isFreezing() && EventHooks.canEntityGrief(this.level(), this))
 			{
 				int i = Mth.floor(this.getX());
 				int j = Mth.floor(this.getY() + 0.125D);
@@ -150,7 +152,7 @@ public class MeltyMonsterEntity extends Monster implements RangedAttackMob
 		double d2 = target.getY() + target.getEyeHeight() * 0.5D - this.getY(0.5D);
 		double d3 = target.getZ() - this.getZ();
 		double d4 = Math.sqrt(d1 * d1 + d3 * d3) * 0.02D;
-		SmallFireball fireballentity = new SmallFireball(this.level(), this, d1 + this.getRandom().nextGaussian() * d4, d2, d3 + this.getRandom().nextGaussian() * d4);
+		SmallFireball fireballentity = new SmallFireball(this.level(), this, new Vec3( d1 + this.getRandom().nextGaussian() * d4, d2, d3 + this.getRandom().nextGaussian() * d4));
 		fireballentity.setPos(fireballentity.getX(), this.getY(0.5D) + 0.5D, fireballentity.getZ());
 		this.level().addFreshEntity(fireballentity);
 		this.playSound(SoundEvents.BLAZE_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
@@ -340,7 +342,7 @@ public class MeltyMonsterEntity extends Monster implements RangedAttackMob
 		@Override
 		protected boolean isValidTarget(LevelReader levelReader, BlockPos pos)
 		{
-			return levelReader.getBlockState(pos).is(Blocks.LAVA) && levelReader.getBlockState(pos.above()).isPathfindable(levelReader, pos, PathComputationType.LAND);
+			return levelReader.getBlockState(pos).is(Blocks.LAVA) && levelReader.getBlockState(pos.above()).isPathfindable(PathComputationType.LAND);
 		}
 	}
 }

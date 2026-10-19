@@ -31,9 +31,9 @@ public class DrownedGirlRenderer extends ZombieGirlRenderer
 	}
 
 	@Override
-	protected void setupRotations(Zombie entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks)
+	protected void setupRotations(Zombie entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks, float scale)
 	{
-		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks);
+		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks, scale);
 		float f = entity.getSwimAmount(partialTicks);
 
 		if (f > 0.0F)

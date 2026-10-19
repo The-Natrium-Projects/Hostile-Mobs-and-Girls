@@ -73,12 +73,6 @@ public class DoguEntity extends Monster
 	}
 
 	@Override
-	public boolean canBreatheUnderwater()
-	{
-		return true;
-	}
-
-	@Override
 	public boolean doHurtTarget(Entity entity)
 	{
 		if (super.doHurtTarget(entity))
@@ -124,11 +118,11 @@ public class DoguEntity extends Monster
 			{
 				amount = amount * 0.5F;
 			}
-			else if (!source.isIndirect() && source.getEntity() != null && source.getEntity() instanceof LivingEntity)
+			else if (source.isDirect() && source.getEntity() != null && source.getEntity() instanceof LivingEntity)
 			{
 				ItemStack stack = ((LivingEntity)source.getEntity()).getMainHandItem();
 
-				if (!stack.isEmpty() && stack.getItem() != null && stack.getItem().isCorrectToolForDrops(Blocks.STONE.defaultBlockState()))
+				if (!stack.isEmpty() && stack.getItem() != null && stack.getItem().isCorrectToolForDrops(stack, Blocks.STONE.defaultBlockState()))
 				{
 					amount = amount * 2.0F;
 				}

@@ -95,7 +95,7 @@ public class ModUtils
 
 				if (flag)
 				{
-					livingEntity.setRemainingFireTicks(seconds);
+					livingEntity.igniteForSeconds(seconds);
 				}
 			}
 		}
@@ -107,7 +107,7 @@ public class ModUtils
 
 		if (livingEntity.getMainHandItem().isEmpty() && livingEntity.isOnFire() && random.nextFloat() < f * 0.3F)
 		{
-			target.setRemainingFireTicks(2 * (int)f);
+			target.igniteForSeconds(2 * (int)f);
 		}
 	}
 

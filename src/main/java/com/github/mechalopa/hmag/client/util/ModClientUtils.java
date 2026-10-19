@@ -2,6 +2,7 @@ package com.github.mechalopa.hmag.client.util;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.util.FastColor;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -29,6 +30,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.joml.Vector3f;
 
 @OnlyIn(Dist.CLIENT)
 public class ModClientUtils
@@ -41,7 +43,7 @@ public class ModClientUtils
 		}
 		else
 		{
-			return livingentity.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration() - livingentity.getUseItemRemainingTicks()) / 20.0F;
+			return livingentity.getUseItem() != stack ? 0.0F : (float)(stack.getUseDuration(livingentity) - livingentity.getUseItemRemainingTicks()) / 20.0F;
 		}
 	};
 	public static final ClampedItemPropertyFunction PROPERTY_BOW_PULLING = (stack, world, livingentity, seed) -> {
@@ -81,9 +83,19 @@ public class ModClientUtils
 		return false;
 	}
 
-	public static void drawVertex(VertexConsumer vertexConsumer, Matrix4f matrix, Matrix3f normals, float f, float f1, float f2, int i, int j, int k, float f3, float f4)
+	public static void drawVertex(VertexConsumer vertexConsumer, Matrix4f matrix,
+	                              Matrix3f normals, float f, float f1, float f2,
+	                              int i, int j, int k, float f3, float f4)
 	{
-		vertexConsumer.vertex(matrix, f, f1, f2).color(i, j, k, 255).uv(f3, f4).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(normals, 0.0F, 1.0F, 0.0F).endVertex();
+		Vector3f normal =
+			normals.transform(new org.joml.Vector3f(0.0F, 1.0F, 0.0F));
+
+		vertexConsumer.addVertex(matrix, f, f1, f2)
+			.setColor(i, j, k, 255)
+			.setUv(f3, f4)
+			.setOverlay(OverlayTexture.NO_OVERLAY)
+			.setLight(15728880)
+			.setNormal(normal.x(), normal.y(), normal.z());
 	}
 
 	public static int getSkyDarken(Level level)
@@ -188,9 +200,13 @@ public class ModClientUtils
 		final int k = i % j;
 		final int l = (i + 1) % j;
 		final float f = ((float)(entity.tickCount % 25) + partialTicks) / 25.0F;
-		final float[] afloat1 = Sheep.getColorArray(DyeColor.byId(k));
-		final float[] afloat2 = Sheep.getColorArray(DyeColor.byId(l));
-		final float[] afloat3 = {afloat1[0] * (1.0F - f) + afloat2[0] * f, afloat1[1] * (1.0F - f) + afloat2[1] * f, afloat1[2] * (1.0F - f) + afloat2[2] * f};
-		return afloat3;
+		final int afloat1 = Sheep.getColor(DyeColor.byId(k));
+		final int afloat2 = Sheep.getColor(DyeColor.byId(l));
+		return new float[] {
+			FastColor.ARGB32.red(afloat1) * (1.0F - f) + FastColor.ARGB32.red(afloat2) * f,
+			FastColor.ARGB32.green(afloat1) * (1.0F - f) + FastColor.ARGB32.green(afloat2) * f,
+			FastColor.ARGB32.blue(afloat1) * (1.0F - f) + FastColor.ARGB32.blue(afloat2) * f};
 	}
+
+
 }

@@ -268,7 +268,7 @@ public class GhastlySeekerEntity extends FlyingMob implements Enemy
 							world.levelEvent((Player)null, 1016, this.parent.blockPosition(), 0);
 						}
 
-						LargeFireball largefireball = new LargeFireball(world, this.parent, d2, d3, d4, this.parent.getExplosionPower());
+						LargeFireball largefireball = new LargeFireball(world, this.parent, new Vec3(d2, d3, d4), this.parent.getExplosionPower());
 						largefireball.setPos(this.parent.getX() + vec3.x * 0.5D, this.parent.getY(0.5D) + 0.25D, largefireball.getZ() + vec3.z * 0.5D);
 						world.addFreshEntity(largefireball);
 						this.attackTimer = -50;

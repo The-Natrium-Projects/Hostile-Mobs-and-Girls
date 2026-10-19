@@ -37,9 +37,9 @@ public class DyssomniaRenderer extends MobRenderer<DyssomniaEntity, DyssomniaMod
 	}
 
 	@Override
-	protected void setupRotations(DyssomniaEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks)
+	protected void setupRotations(DyssomniaEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks, float scale)
 	{
-		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks);
+		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks, scale);
 		poseStack.mulPose(Axis.XP.rotationDegrees(entity.getXRotAnimationScale(partialTicks) * 180.0F));
 	}
 

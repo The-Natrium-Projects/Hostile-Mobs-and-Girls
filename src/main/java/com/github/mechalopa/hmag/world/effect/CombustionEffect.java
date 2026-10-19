@@ -16,8 +16,8 @@ public class CombustionEffect extends MobEffect
 	{
 		if (!livingEntity.level().isClientSide() && !livingEntity.fireImmune() && !livingEntity.isInWaterRainOrBubble() && (!livingEntity.isOnFire() || livingEntity.getRemainingFireTicks() <= 1))
 		{
-			livingEntity.setRemainingFireTicks(livingEntity.getRemainingFireTicks() + 20);
-			livingEntity.setSecondsOnFire(1);
+			livingEntity.igniteForSeconds(livingEntity.getRemainingFireTicks() + 20);
+			livingEntity.igniteForSeconds(1);
 		}
 	}
 

@@ -88,20 +88,6 @@ public class MeleeAttackGoal2 extends MeleeAttackGoal
 		}
 	}
 
-	@Override
-	protected double getAttackReachSqr(LivingEntity attackTarget)
-	{
-		if (this.reachScale > 0.0F)
-		{
-			final float f = this.mob.getBbWidth() * this.reachScale * 2.0F;
-			return f * f + attackTarget.getBbWidth();
-		}
-		else
-		{
-			return super.getAttackReachSqr(attackTarget);
-		}
-	}
-
 	protected boolean isValidDistance(LivingEntity attackTarget)
 	{
 		return this.maxAttackDistance <= 0.0F || ((double)this.maxAttackDistance * (double)this.maxAttackDistance) >= this.mob.distanceToSqr(attackTarget.getX(), attackTarget.getY(), attackTarget.getZ());

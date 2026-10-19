@@ -49,8 +49,7 @@ public class ModShieldModel extends Model
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int j, float f, float f1, float f2, float f3)
-	{
-		this.root.render(poseStack, vertexConsumer, i, j, f, f1, f2, f3);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int i, int i1, int i2) {
+		this.root.render(poseStack, vertexConsumer, i, i1, i2);
 	}
 }

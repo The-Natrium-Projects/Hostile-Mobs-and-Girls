@@ -20,6 +20,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -127,7 +128,7 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 	@Nullable
 	private static Enchantment getEnchantment(String name)
 	{
-		Optional<Holder<Enchantment>> optional = BuiltInRegistries.ENCHANTMENT.getHolder(ModUtils.createRL(name));
+		Optional<Holder<Enchantment>> optional = Registries.ENCHANTMENT.registry.get(ModUtils.createRL(name));
 		return optional.isPresent() ? optional.orElseThrow().get() : null;
 	}
 

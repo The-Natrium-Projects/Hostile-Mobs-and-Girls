@@ -196,4 +196,11 @@ public class ModTags
 		return ModUtils.getRegistry(Registries.MOB_EFFECT)
 			.filter(reg -> reg.wrapAsHolder(effect).is(tag)).isPresent();
 	}
+
+	@Deprecated
+	public static boolean checkTagContains(Holder<MobEffect> effect, TagKey<MobEffect> tag)
+	{
+		if (effect == null || tag == null) return false;
+		return effect.is(tag);
+	}
 }

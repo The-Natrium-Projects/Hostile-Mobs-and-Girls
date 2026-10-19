@@ -43,9 +43,9 @@ public class CursedDollRenderer extends AbstractGirlRenderer<CursedDollEntity, C
 	}
 
 	@Override
-	protected void setupRotations(CursedDollEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks)
+	protected void setupRotations(CursedDollEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks, float scale)
 	{
-		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks);
+		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks, scale);
 		poseStack.mulPose(Axis.XP.rotationDegrees(-10.0F));
 	}
 

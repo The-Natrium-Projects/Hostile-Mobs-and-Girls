@@ -45,6 +45,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.event.EventHooks;
 
 
 public class OgreEntity extends Monster
@@ -261,7 +262,7 @@ public class OgreEntity extends Monster
 
 	protected boolean destroyBlock()
 	{
-		if (ModConfigs.cachedServer.OGRE_DESTROY_BLOCKS && this.level().getDifficulty().getId() > 1 && EventHooks.getMobGriefingEvent(this.level(), this))
+		if (ModConfigs.cachedServer.OGRE_DESTROY_BLOCKS && this.level().getDifficulty().getId() > 1 && EventHooks.canEntityGrief(this.level(), this))
 		{
 			int i1 = Mth.floor(this.getY());
 			int l1 = Mth.floor(this.getX());
@@ -323,14 +324,14 @@ public class OgreEntity extends Monster
 			super(mob, speed, useLongMemory);
 		}
 
-		@Override
-		protected void checkAndPerformAttack(LivingEntity attackTarget, double distToEnemySqr)
-		{
-			double d0 = this.getAttackReachSqr(attackTarget);
 
+		@Override
+		protected void checkAndPerformAttack(LivingEntity attackTarget)
+		{
+			double distToEnemySqr = this.mob.distanceToSqr(attackTarget);
 			if (this.getTicksUntilNextAttack() <= 0)
 			{
-				if (distToEnemySqr <= d0)
+				if (this.mob.isWithinMeleeAttackRange(attackTarget))
 				{
 					this.resetAttackCooldown();
 					this.mob.swing(InteractionHand.MAIN_HAND);

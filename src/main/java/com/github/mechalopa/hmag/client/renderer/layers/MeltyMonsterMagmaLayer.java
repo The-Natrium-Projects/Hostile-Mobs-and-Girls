@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -62,7 +63,7 @@ public class MeltyMonsterMagmaLayer extends RenderLayer<MeltyMonsterEntity, Melt
 				vertexconsumer = buffer.getBuffer(getMeltyMonsterOverlay(resourcelocation, 0.0F, f * -0.001F));
 			}
 
-			this.layerModel.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+			this.layerModel.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.colorFromFloat(1.0F, 1.0F, 1.0F, 1.0F));
 		}
 	}
 

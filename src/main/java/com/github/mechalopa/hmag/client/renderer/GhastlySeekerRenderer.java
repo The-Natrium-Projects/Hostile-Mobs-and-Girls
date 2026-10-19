@@ -33,9 +33,9 @@ public class GhastlySeekerRenderer extends MobRenderer<GhastlySeekerEntity, Ghas
 	}
 
 	@Override
-	protected void setupRotations(GhastlySeekerEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks)
+	protected void setupRotations(GhastlySeekerEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks, float scale)
 	{
-		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks);
+		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks, scale);
 		poseStack.mulPose(Axis.XP.rotationDegrees(-15.0F));
 	}
 

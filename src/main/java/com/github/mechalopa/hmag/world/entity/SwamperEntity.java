@@ -46,7 +46,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
-
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 
 public class SwamperEntity extends Monster implements RangedAttackMob
@@ -74,7 +74,7 @@ public class SwamperEntity extends Monster implements RangedAttackMob
 	{
 		this.goalSelector.addGoal(1, new SwamperEntity.SwamperFloatGoal(this));
 		this.goalSelector.addGoal(2, new SwamperEntity.SwamperGoToWaterGoal(this, 1.2D));
-		this.goalSelector.addGoal(3, new SwamperEntity.SwamperMeleeAttackGoal(this, 1.2D, false, 8.0F / 9.0F, 6.0F));
+		this.goalSelector.addGoal(3, new SwamperMeleeAttackGoal(this, 1.2D, false, 8.0F / 9.0F, 6.0F));
 		this.goalSelector.addGoal(4, new RangedAttackGoal(this, 1.0D, 30, 60, 8.0F));
 		this.goalSelector.addGoal(5, new SwamperEntity.SwamperRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
@@ -93,12 +93,6 @@ public class SwamperEntity extends Monster implements RangedAttackMob
 				.add(Attributes.ATTACK_DAMAGE, 6.0D)
 				.add(Attributes.ARMOR, 2.0D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.5D);
-	}
-
-	@Override
-	public boolean canBreatheUnderwater()
-	{
-		return true;
 	}
 
 	@Override
@@ -331,11 +325,11 @@ public class SwamperEntity extends Monster implements RangedAttackMob
 		@Override
 		public boolean canUse()
 		{
-			return super.canUse() && this.mob.getTarget() != null && this.mob.getTarget().isAlive() && !this.mob.getTarget().isEyeInFluidType(ForgeMod.WATER_TYPE.get());
+			return super.canUse() && this.mob.getTarget() != null && this.mob.getTarget().isAlive() && !this.mob.getTarget().isEyeInFluidType(NeoForgeMod.WATER_TYPE.value());
 		}
 	}
 
-	private class SwamperMeleeAttackGoal extends MeleeAttackGoal2
+	private static class SwamperMeleeAttackGoal extends MeleeAttackGoal2
 	{
 		private final SwamperEntity mob;
 		private final Level level;

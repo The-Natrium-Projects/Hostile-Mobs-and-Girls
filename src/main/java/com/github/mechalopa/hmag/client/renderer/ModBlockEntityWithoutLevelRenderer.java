@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -54,7 +55,7 @@ public class ModBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelR
 		poseStack.pushPose();
 		poseStack.scale(1.0F, -1.0F, -1.0F);
 		VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(buffer, model.renderType(resource), false, stack.hasFoil());
-		model.renderToBuffer(poseStack, vertexconsumer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+		model.renderToBuffer(poseStack, vertexconsumer, packedLight, packedOverlay, FastColor.ARGB32.colorFromFloat(1.0F, 1.0F, 1.0F, 1.0F));
 		poseStack.popPose();
 	}
 }

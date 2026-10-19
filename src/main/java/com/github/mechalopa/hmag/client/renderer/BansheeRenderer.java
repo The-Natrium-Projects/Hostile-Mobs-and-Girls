@@ -43,11 +43,13 @@ public class BansheeRenderer extends AbstractGirlRenderer<BansheeEntity, Banshee
 	}
 
 	@Override
-	protected void setupRotations(BansheeEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks)
+	protected void setupRotations(BansheeEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks, float scale)
 	{
-		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks);
+		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks, scale);
 		poseStack.mulPose(Axis.XP.rotationDegrees(-6.0F));
 	}
+
+
 
 	@Override
 	protected int getBlockLightLevel(BansheeEntity entity, BlockPos pos)

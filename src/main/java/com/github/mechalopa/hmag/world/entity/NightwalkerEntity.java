@@ -58,7 +58,7 @@ public class NightwalkerEntity extends Monster implements RangedAttackMob
 				.add(Attributes.MOVEMENT_SPEED, 0.22D)
 				.add(Attributes.ARMOR, 2.0D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
-				.add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 1.0D);
+				.add(Attributes.STEP_HEIGHT, 1.0D);
 	}
 
 	@Override

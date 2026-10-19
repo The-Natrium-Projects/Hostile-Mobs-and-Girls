@@ -92,7 +92,7 @@ public class HarpyEntity extends Monster implements VariantHolder<HarpyEntity.Va
 				.add(Attributes.ATTACK_DAMAGE, 7.0D)
 				.add(Attributes.ATTACK_KNOCKBACK, 0.5D)
 				.add(Attributes.FOLLOW_RANGE, 20.0D)
-				.add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 1.5D);
+				.add(Attributes.STEP_HEIGHT, 1.5D);
 	}
 
 	@Override

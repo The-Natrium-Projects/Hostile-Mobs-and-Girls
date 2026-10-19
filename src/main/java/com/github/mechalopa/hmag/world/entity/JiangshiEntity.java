@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.UUID;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.github.mechalopa.hmag.HMaG;
 import com.github.mechalopa.hmag.ModConfigs;
 import com.github.mechalopa.hmag.registry.ModSoundEvents;
 import com.github.mechalopa.hmag.util.ModTags;
@@ -17,11 +17,10 @@ import com.github.mechalopa.hmag.world.entity.ai.goal.MeleeAttackGoal2;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -66,7 +65,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 public class JiangshiEntity extends Monster implements VariantHolder<CommonOrUncommonVariant>
 {
-	private static final UUID SPEED_MODIFIER_BY_DAMAGE_UUID = UUID.fromString("A25E5B12-7881-3AE6-D9F5-418CB7D9E02E");
+	private static final ResourceLocation SPEED_MODIFIER_BY_DAMAGE_ID = ResourceLocation.fromNamespaceAndPath(HMaG.MODID, "jiangshi_speed_modifier_by_damage");
 	private static final EntityDataAccessor<Integer> DATA_SPEED_BONUS = SynchedEntityData.defineId(JiangshiEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(JiangshiEntity.class, EntityDataSerializers.INT);
 	public static final int SPEED_BONUS_MAX = 7;
@@ -277,11 +276,11 @@ public class JiangshiEntity extends Monster implements VariantHolder<CommonOrUnc
 		{
 			if (!this.level().isClientSide())
 			{
-				this.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_BY_DAMAGE_UUID);
+				this.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_BY_DAMAGE_ID);
 
 				if (value > 0)
 				{
-					this.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(new AttributeModifier(SPEED_MODIFIER_BY_DAMAGE_UUID, "Speed bonus by damage", 0.6D * ((double)value / (double)SPEED_BONUS_MAX), AttributeModifier.Operation.MULTIPLY_TOTAL));
+					this.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(new AttributeModifier(SPEED_MODIFIER_BY_DAMAGE_ID, 0.6D * ((double)value / (double)SPEED_BONUS_MAX), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 				}
 			}
 

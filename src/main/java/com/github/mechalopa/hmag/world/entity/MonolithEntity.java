@@ -219,11 +219,11 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 		{
 			amount = amount * 0.5F;
 		}
-		else if (!source.isIndirect() && source.getEntity() != null && source.getEntity() instanceof LivingEntity)
+		else if (source.isDirect() && source.getEntity() != null && source.getEntity() instanceof LivingEntity)
 		{
 			ItemStack stack = ((LivingEntity)source.getEntity()).getMainHandItem();
 
-			if (!stack.isEmpty() && stack.getItem() != null && stack.getItem().isCorrectToolForDrops(Blocks.STONE.defaultBlockState()))
+			if (!stack.isEmpty() && stack.getItem() != null && stack.getItem().isCorrectToolForDrops(stack, Blocks.STONE.defaultBlockState()))
 			{
 				amount = amount * 2.0F;
 			}
@@ -235,20 +235,14 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 	@Override
 	public boolean canBeAffected(MobEffectInstance potioneffect)
 	{
-		if (ModTags.checkTagContains(potioneffect.getEffect(), ModTags.MobEffectTags.MONOLITH_IMMUNE_TO))
+		if (potioneffect.getEffect().is(ModTags.MobEffectTags.MONOLITH_IMMUNE_TO))
 		{
-			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
+			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect, null);
 			NeoForge.EVENT_BUS.post(event);
 			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
 
 		return super.canBeAffected(potioneffect);
-	}
-
-	@Override
-	public boolean canBreatheUnderwater()
-	{
-		return true;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -618,7 +612,7 @@ public class MonolithEntity extends FlyingMob implements Enemy, IBeamAttackMob
 
 					this.parent.playSound(SoundEvents.SHULKER_SHOOT, 1.0F, (this.parent.getRandom().nextFloat() - this.parent.getRandom().nextFloat()) * 0.2F + 1.0F);
 					this.parent.level().broadcastEntityEvent(this.parent, (byte)15);
-					this.parent.gameEvent(GameEvent.ENTITY_ROAR);
+					this.parent.gameEvent(GameEvent.ENTITY_ACTION);
 					Vec3 vec3 = this.parent.getDeltaMovement();
 					Vec3 vec31 = (new Vec3(target.getX() - this.parent.getX(), 0.0D, target.getZ() - this.parent.getZ())).normalize().scale(0.25D);
 					this.parent.setDeltaMovement(vec3.x / 2.0D - vec31.x, vec3.y, vec3.z / 2.0D - vec31.z);

@@ -6,6 +6,7 @@ import java.util.function.IntFunction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.github.mechalopa.hmag.HMaG;
 import com.github.mechalopa.hmag.ModConfigs;
 import com.github.mechalopa.hmag.registry.ModSoundEvents;
 import com.github.mechalopa.hmag.util.ModTags;
@@ -18,6 +19,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
@@ -54,8 +56,8 @@ import net.minecraft.world.level.pathfinder.PathType;
 
 public class KashaEntity extends Monster implements VariantHolder<KashaEntity.Variant>
 {
-	private static final UUID ATTACK_DAMAGE_MODIFIER_UUID = UUID.fromString("7DDA541D-ABAA-BBF4-D099-AAC57D64ADA9");
-	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(ATTACK_DAMAGE_MODIFIER_UUID, "Soul variant attack damage bonus", 1.0D, AttributeModifier.Operation.ADDITION);
+	private static final ResourceLocation ATTACK_DAMAGE_MODIFIER_UUID = ResourceLocation.fromNamespaceAndPath(HMaG.MODID, "kasha_attack_damage");
+	private static final AttributeModifier ATTACK_DAMAGE_MODIFIER = new AttributeModifier(ATTACK_DAMAGE_MODIFIER_UUID, 1.0D, AttributeModifier.Operation.ADD_VALUE);
 	private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = SynchedEntityData.defineId(KashaEntity.class, EntityDataSerializers.INT);
 
 	public KashaEntity(EntityType<? extends KashaEntity> type, Level level)
@@ -103,7 +105,7 @@ public class KashaEntity extends Monster implements VariantHolder<KashaEntity.Va
 				.add(Attributes.MOVEMENT_SPEED, 0.325D)
 				.add(Attributes.ATTACK_DAMAGE, 5.0D)
 				.add(Attributes.ATTACK_KNOCKBACK, 1.0D)
-				.add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 2.0D);
+				.add(Attributes.STEP_HEIGHT, 2.0D);
 	}
 
 	@Override
@@ -145,7 +147,7 @@ public class KashaEntity extends Monster implements VariantHolder<KashaEntity.Va
 
 				if (i > 0)
 				{
-					entity.setSecondsOnFire(i);
+					entity.igniteForSeconds(i);
 				}
 			}
 

@@ -228,7 +228,7 @@ public class DyssomniaEntity extends FlyingMob implements Enemy
 	{
 		if (potioneffect.getEffect().is(ModTags.MobEffectTags.DYSSOMNIA_IMMUNE_TO))
 		{
-			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect);
+			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, potioneffect, null);
 			NeoForge.EVENT_BUS.post(event);
 			return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
 		}
@@ -255,7 +255,7 @@ public class DyssomniaEntity extends FlyingMob implements Enemy
 
 			if (this.isOnFire())
 			{
-				phantom.setSecondsOnFire(this.getRemainingFireTicks() / 20 + 2);
+				phantom.igniteForSeconds(this.getRemainingFireTicks() + 40);
 				flag = true;
 			}
 		}

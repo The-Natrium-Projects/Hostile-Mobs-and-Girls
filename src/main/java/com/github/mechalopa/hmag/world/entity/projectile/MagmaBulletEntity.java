@@ -104,7 +104,7 @@ public class MagmaBulletEntity extends ModDamagingProjectileEntity
 
 				if (!flag)
 				{
-					entity.setRemainingFireTicks(i);
+					entity.igniteForSeconds(i);
 				}
 				else if (entity1 != null && entity1 instanceof LivingEntity)
 				{
@@ -117,7 +117,7 @@ public class MagmaBulletEntity extends ModDamagingProjectileEntity
 	@Override
 	protected void onHitServer(HitResult result)
 	{
-		boolean flag = EventHooks.getMobGriefingEvent(this.level(), this.getOwner());
+		boolean flag = EventHooks.canEntityGrief(this.level(), this.getOwner());
 		this.level().explode((Entity)null, this.getX(), this.getY(), this.getZ(), 0.75F, flag, Level.ExplosionInteraction.MOB);
 		this.level().broadcastEntityEvent(this, (byte)3);
 		super.onHitServer(result);

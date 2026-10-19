@@ -11,9 +11,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import org.w3c.dom.css.RGBColor;
 
 @OnlyIn(Dist.CLIENT)
 public class StrayGirlClothingLayer<T extends AbstractSkeleton, M extends EntityModel<T>> extends RenderLayer<T, M>
@@ -30,6 +32,6 @@ public class StrayGirlClothingLayer<T extends AbstractSkeleton, M extends Entity
 	@Override
 	public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, T livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch)
 	{
-		coloredCutoutModelCopyLayerRender(this.getParentModel(), this.layerModel, TEXTURE, poseStack, buffer, packedLight, livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, 1.0F, 1.0F, 1.0F);
+		coloredCutoutModelCopyLayerRender(this.getParentModel(), this.layerModel, TEXTURE, poseStack, buffer, packedLight, livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, FastColor.ARGB32.colorFromFloat(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 }

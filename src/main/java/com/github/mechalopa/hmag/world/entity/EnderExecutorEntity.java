@@ -60,7 +60,7 @@ public class EnderExecutorEntity extends EnderMan implements IBeamAttackMob
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
 				.add(Attributes.ATTACK_DAMAGE, 8.0D)
 				.add(Attributes.ARMOR, 4.0D)
-				.add(ForgeMod.STEP_HEIGHT_ADDITION.get(), 1.0D);
+				.add(Attributes.STEP_HEIGHT, 1.0D);
 	}
 
 	@Override

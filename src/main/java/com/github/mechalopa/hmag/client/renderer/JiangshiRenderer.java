@@ -33,9 +33,9 @@ public class JiangshiRenderer extends AbstractGirlRenderer<JiangshiEntity, Jiang
 	}
 
 	@Override
-	protected void setupRotations(JiangshiEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks)
+	protected void setupRotations(JiangshiEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks, float scale)
 	{
-		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks);
+		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks, scale);
 
 		if (this.getModel() != null && !this.getModel().riding && !((double)entity.walkAnimation.speed() < 0.01D))
 		{

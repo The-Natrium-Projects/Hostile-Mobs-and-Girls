@@ -34,9 +34,9 @@ public class SavagefangRenderer extends MobRenderer<SavagefangEntity, Savagefang
 	}
 
 	@Override
-	protected void setupRotations(SavagefangEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks)
+	protected void setupRotations(SavagefangEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks, float scale)
 	{
-		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks);
+		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks, scale);
 
 		float f = 4.3F * Mth.sin(0.6F * ageInTicks);
 		poseStack.mulPose(Axis.YP.rotationDegrees(f));

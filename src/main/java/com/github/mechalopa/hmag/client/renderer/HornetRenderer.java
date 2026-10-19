@@ -31,9 +31,9 @@ public class HornetRenderer extends AbstractGirlRenderer<HornetEntity, HornetMod
 	}
 
 	@Override
-	protected void setupRotations(HornetEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks)
+	protected void setupRotations(HornetEntity entity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks, float scale)
 	{
-		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks);
+		super.setupRotations(entity, poseStack, ageInTicks, rotationYaw, partialTicks, scale);
 		poseStack.mulPose(Axis.XP.rotationDegrees(-6.0F));
 	}
 

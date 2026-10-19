@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -68,7 +69,7 @@ public abstract class AbstractClothingLayer<T extends LivingEntity, M extends En
 					f2 = this.getB(livingEntity);
 				}
 
-				entitymodel.renderToBuffer(poseStack, vertexconsumer, packedLight, LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F), f, f1, f2, this.getAlpha(livingEntity));
+				entitymodel.renderToBuffer(poseStack, vertexconsumer, packedLight, LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F), FastColor.ARGB32.colorFromFloat(this.getAlpha(livingEntity), f, f1, f2));
 			}
 		}
 	}
