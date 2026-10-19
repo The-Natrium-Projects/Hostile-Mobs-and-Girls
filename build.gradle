@@ -115,13 +115,38 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
+repositories {
+    mavenLocal()
+    maven {
+        name 'Jared\'s Maven' // JEI
+        url 'https://maven.blamejared.com/'
+    }
+    maven {
+        name = "Curios" // Curios
+        url = uri("https://maven.theillusivec4.top/")
+    }
+    maven { // TOP
+        url "https://maven.k-4u.nl"
+    }
+    maven { //CS
+        url "https://nexus.resourcefulbees.com/repository/maven-public/"
+    }
+    maven {
+        name 'Curseforge Maven' // Jade
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
 dependencies {
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-    //compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-    //compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
-    //localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
