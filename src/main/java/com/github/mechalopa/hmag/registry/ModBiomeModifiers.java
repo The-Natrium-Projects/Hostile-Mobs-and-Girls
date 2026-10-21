@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class ModBiomeModifiers
 {
-	private static final DeferredRegister<MapCodec<? extends BiomeModifier>> REGISTRY = DeferredRegister.create(NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, HMaG.MODID);
+    public static final DeferredRegister<MapCodec<? extends BiomeModifier>> REGISTRY = DeferredRegister.create(NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, HMaG.MODID);
 
 	public static final DeferredHolder<MapCodec<? extends BiomeModifier>, MapCodec<ModAddSpawnsBiomeModifier>> ADD_SPAWNS = REGISTRY.register("add_spawns", ModAddSpawnsBiomeModifier.CODEC);
 

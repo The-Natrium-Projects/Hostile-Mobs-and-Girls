@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class ModStructureModifiers
 {
-	private static final DeferredRegister<MapCodec<? extends StructureModifier>> REGISTRY = DeferredRegister.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIER_SERIALIZERS, HMaG.MODID);
+	public static final DeferredRegister<MapCodec<? extends StructureModifier>> REGISTRY = DeferredRegister.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIER_SERIALIZERS, HMaG.MODID);
 
 	public static final DeferredHolder<MapCodec<? extends StructureModifier>, MapCodec<ModAddSpawnsStructureModifier>> ADD_SPAWNS = REGISTRY.register("add_spawns", ModAddSpawnsStructureModifier.CODEC);
 

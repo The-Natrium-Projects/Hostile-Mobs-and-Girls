@@ -66,7 +66,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModEntityTypes
 {
-	private static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, HMaG.MODID);
+    public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, HMaG.MODID);
 
 	public static final DeferredHolder<EntityType<?>, EntityType<ZombieGirlEntity>> ZOMBIE_GIRL = REGISTRY.register("zombie_girl", () -> EntityType.Builder
 		.of(ZombieGirlEntity::new, MobCategory.MONSTER)

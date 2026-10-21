@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModPotions
 {
-	private static final DeferredRegister<Potion> REGISTRY = DeferredRegister.create(BuiltInRegistries.POTION, HMaG.MODID);
+    public static final DeferredRegister<Potion> REGISTRY = DeferredRegister.create(BuiltInRegistries.POTION, HMaG.MODID);
 
 	public static final DeferredHolder<Potion, Potion> KOBOLD = REGISTRY.register("hmag.kobold", () -> new Potion(new MobEffectInstance(MobEffects.DIG_SPEED, 180 * 20, 0), new MobEffectInstance(MobEffects.WEAKNESS, 180 * 20, 0)));
 	public static final DeferredHolder<Potion, Potion> KOBOLD_STRONG = REGISTRY.register("hmag.kobold_strong", () -> new Potion(new MobEffectInstance(MobEffects.DIG_SPEED, 90 * 20, 1), new MobEffectInstance(MobEffects.WEAKNESS, 90 * 20, 1)));
@@ -27,12 +27,6 @@ public class ModPotions
 	public static final DeferredHolder<Potion, Potion> ENDER_RAGE_STRONG = REGISTRY.register("hmag.ender_rage_strong", () -> new Potion(new MobEffectInstance(ModEffects.ENDER_RAGE.get(), 45 * 20, 2)));
 	public static final DeferredHolder<Potion, Potion> COMBUSTION = REGISTRY.register("hmag.combustion", () -> new Potion(new MobEffectInstance(ModEffects.COMBUSTION.get(), 45 * 20, 0)));
 	public static final DeferredHolder<Potion, Potion> COMBUSTION_LONG = REGISTRY.register("hmag.combustion_long", () -> new Potion(new MobEffectInstance(ModEffects.COMBUSTION.get(), 90 * 20, 0)));
-
-	@SubscribeEvent
-	public static void register(IEventBus eventBus)
-	{
-		REGISTRY.register(eventBus);
-	}
 
 	public static DeferredRegister<Potion> getPotionRegistry()
 	{

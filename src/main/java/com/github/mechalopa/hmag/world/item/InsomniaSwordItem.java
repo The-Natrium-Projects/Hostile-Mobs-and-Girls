@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import com.github.mechalopa.hmag.registry.ModDataComponentTypes;
 import com.github.mechalopa.hmag.util.ModTags;
 
 import net.minecraft.ChatFormatting;
@@ -47,8 +48,7 @@ public class InsomniaSwordItem extends ModSwordItem implements ILevelItem
 		{
 			if (entity instanceof ServerPlayer)
 			{
-				CompoundTag compoundnbt = stack.getOrCreateTag();
-				int itemLevel = !compoundnbt.contains(ILevelItem.LEVEL_KEY) ? 0 : (int)compoundnbt.getByte(ILevelItem.LEVEL_KEY);
+				int itemLevel = stack.getOrDefault(ModDataComponentTypes.ITEM_LEVEL, 0);
 				ServerStatsCounter serverstatscounter = ((ServerPlayer)entity).getStats();
 				final int i = 24000;
 				final int j = Mth.clamp(serverstatscounter.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
@@ -57,7 +57,7 @@ public class InsomniaSwordItem extends ModSwordItem implements ILevelItem
 
 				if (itemLevel != k)
 				{
-					compoundnbt.putByte(ILevelItem.LEVEL_KEY, (byte)k);
+					stack.set(ModDataComponentTypes.ITEM_LEVEL, k);
 				}
 			}
 		}

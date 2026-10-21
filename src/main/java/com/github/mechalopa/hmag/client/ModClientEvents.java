@@ -1,6 +1,7 @@
 package com.github.mechalopa.hmag.client;
 
 import com.github.mechalopa.hmag.HMaG;
+import com.github.mechalopa.hmag.registry.ModDataComponentTypes;
 import com.github.mechalopa.hmag.world.item.ModBowItem;
 import com.github.mechalopa.hmag.world.item.crafting.SuspiciousStewUpgradeRecipe;
 
@@ -54,7 +55,11 @@ public class ModClientEvents
 	@SubscribeEvent
 	public void addItemTooltip(final ItemTooltipEvent event)
 	{
-		if (!event.getToolTip().isEmpty() && event.getItemStack() != null && event.getItemStack().is(Items.SUSPICIOUS_STEW) && !event.getItemStack().getComponents().isEmpty() && event.getItemStack().getComponents().get(SuspiciousStewUpgradeRecipe.UPGRADED_KEY))
+		if (!event.getToolTip().isEmpty()
+            && event.getItemStack() != null
+            && event.getItemStack().is(Items.SUSPICIOUS_STEW)
+            && !event.getItemStack().getComponents().isEmpty()
+            && event.getItemStack().getComponents().getOrDefault(ModDataComponentTypes.SUSPICIOUS_STEW_UPGRADE_KEY.value(), false))
 		{
 			event.getToolTip().add(UPGRADED_SUSPICIOUS_STEW_TOOLTIP);
 		}

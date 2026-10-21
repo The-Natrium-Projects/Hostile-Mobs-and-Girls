@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModSoundEvents
 {
-	private static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, HMaG.MODID);
+    public static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, HMaG.MODID);
 
 	public static final DeferredHolder<SoundEvent, SoundEvent> GIRL_MOB_AMBIENT = createSoundEvent("entity.girls.ambient");
 	public static final DeferredHolder<SoundEvent, SoundEvent> GIRL_MOB_HURT = createSoundEvent("entity.girls.hurt");

@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModParticleTypes
 {
-	private static final DeferredRegister<ParticleType<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, HMaG.MODID);
+    public static final DeferredRegister<ParticleType<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, HMaG.MODID);
 
 	public static final DeferredHolder<ParticleType<?>, SimpleParticleType> ENCHANTMENT_RUNE = REGISTRY.register("enchantment_rune", () -> new SimpleParticleType(false));
 	public static final DeferredHolder<ParticleType<?>, SimpleParticleType> NEMESIS_FLAME = REGISTRY.register("nemesis_flame", () -> new SimpleParticleType(false));
