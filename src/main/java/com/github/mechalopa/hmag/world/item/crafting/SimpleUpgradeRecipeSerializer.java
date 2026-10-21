@@ -1,41 +1,33 @@
 package com.github.mechalopa.hmag.world.item.crafting;
 
-import javax.annotation.Nonnull;
+import java.util.function.Supplier;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
 public class SimpleUpgradeRecipeSerializer<T extends AbstractUpgradeRecipe> implements RecipeSerializer<T>
 {
-	private final SimpleUpgradeRecipeSerializer.Factory<T> constructor;
+	private final MapCodec<T> codec;
+	private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
-	public SimpleUpgradeRecipeSerializer(SimpleUpgradeRecipeSerializer.Factory<T> constructor)
+	public SimpleUpgradeRecipeSerializer(Supplier<T> constructor)
 	{
-		this.constructor = constructor;
+		this.codec = MapCodec.unit(constructor);
+		this.streamCodec = StreamCodec.unit(constructor.get());
 	}
 
 	@Override
-	public T fromJson(ResourceLocation recipeId, JsonObject json)
+	public MapCodec<T> codec()
 	{
-		return this.constructor.create(recipeId);
+		return this.codec;
 	}
 
 	@Override
-	@Nonnull
-	public T fromNetwork(@Nonnull ResourceLocation recipeId, FriendlyByteBuf buffer)
+	public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec()
 	{
-		return this.constructor.create(recipeId);
-	}
-
-	@Override
-	public void toNetwork(FriendlyByteBuf buffer, T recipe){}
-
-	@FunctionalInterface
-	public interface Factory<T extends AbstractUpgradeRecipe>
-	{
-		T create(ResourceLocation recipeId);
+		return this.streamCodec;
 	}
 }

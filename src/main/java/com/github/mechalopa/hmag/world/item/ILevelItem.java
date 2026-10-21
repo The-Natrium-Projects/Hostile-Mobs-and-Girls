@@ -2,6 +2,7 @@ package com.github.mechalopa.hmag.world.item;
 
 import com.github.mechalopa.hmag.HMaG;
 
+import com.github.mechalopa.hmag.registry.ModDataComponentTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
@@ -24,18 +25,12 @@ public interface ILevelItem
 		}
 		else
 		{
-			CompoundTag compoundnbt = stack.getTag();
-			return compoundnbt != null && compoundnbt.contains(LEVEL_KEY) ? (int)compoundnbt.getByte(LEVEL_KEY) : 0;
+			return stack.getOrDefault(ModDataComponentTypes.ITEM_LEVEL, 0);
 		}
 	}
 
 	public static void removeItemLevelTag(ItemStack stack)
 	{
-		CompoundTag compoundnbt = stack.getTag();
-
-		if (compoundnbt != null && compoundnbt.contains(LEVEL_KEY))
-		{
-			compoundnbt.remove(LEVEL_KEY);
-		}
+		stack.remove(ModDataComponentTypes.ITEM_LEVEL);
 	}
 }

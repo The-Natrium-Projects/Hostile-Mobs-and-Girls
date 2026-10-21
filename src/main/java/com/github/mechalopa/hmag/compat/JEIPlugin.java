@@ -13,7 +13,6 @@ import com.github.mechalopa.hmag.world.item.crafting.EnchantmentUpgradeRecipe;
 import com.github.mechalopa.hmag.world.item.crafting.RemoveCurseRecipe;
 import com.github.mechalopa.hmag.world.item.crafting.SuspiciousStewUpgradeRecipe;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
 import mezz.jei.api.IModPlugin;
@@ -22,25 +21,30 @@ import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.item.crafting.SmithingRecipe;
+import net.minecraft.world.item.crafting.SmithingRecipeInput;
 import net.minecraft.world.item.crafting.SmithingTransformRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 @JeiPlugin
 public class JEIPlugin implements IModPlugin
@@ -76,15 +80,21 @@ public class JEIPlugin implements IModPlugin
 				Items.IRON_INGOT);
 
 		Minecraft minecraft = Minecraft.getInstance();
-		Iterable<Recipe<?>> recipes = minecraft.level.getRecipeManager().getRecipes();
-		List<SmithingRecipe> smithingRecipes = new ArrayList<SmithingRecipe>();
-		List<CraftingRecipe> shapelessRecipes = new ArrayList<CraftingRecipe>();
+		if (minecraft.level == null)
+		{
+			return;
+		}
+		HolderLookup.Provider registries = minecraft.level.registryAccess();
+		Iterable<RecipeHolder<?>> recipes = minecraft.level.getRecipeManager().getRecipes();
+		List<RecipeHolder<SmithingRecipe>> smithingRecipes = new ArrayList<>();
+		List<RecipeHolder<CraftingRecipe>> shapelessRecipes = new ArrayList<>();
 		boolean flag = false;
 		boolean flag1 = false;
 		boolean flag2 = false;
 
-		for (Recipe<?> recipe : recipes)
+		for (RecipeHolder<?> recipeHolder : recipes)
 		{
+			Recipe<?> recipe = recipeHolder.value();
 			if (recipe != null)
 			{
 				if (recipe instanceof RemoveCurseRecipe && !flag)
@@ -95,7 +105,7 @@ public class JEIPlugin implements IModPlugin
 
 					if (!ingredient.isEmpty() && !ingredient1.isEmpty())
 					{
-						for (Enchantment enchantment : BuiltInRegistries.ENCHANTMENT)
+						for (Holder<Enchantment> enchantment : registries.lookupOrThrow(Registries.ENCHANTMENT).listElements().toList())
 						{
 							if (enchantment != null && RemoveCurseRecipe.isRemovableCurse(enchantment))
 							{
@@ -105,20 +115,20 @@ public class JEIPlugin implements IModPlugin
 								{
 									List<ItemStack> stacks = Lists.newArrayList();
 
-									for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i)
+									for (int i = enchantment.value().getMinLevel(); i <= enchantment.value().getMaxLevel(); ++i)
 									{
 										if (i > 0)
 										{
 											ItemStack stack2 = stack1.copy();
-											EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, i), stack2);
+											setEnchantmentLevel(stack2, enchantment, i);
 											stacks.add(stack2);
 										}
 									}
 
 									if (!stacks.isEmpty())
 									{
-										ResourceLocation enchid = BuiltInRegistries.ENCHANTMENT.getKey(enchantment);
-										ResourceLocation id = ModUtils.createHMaGRL("jei." + recipe.getId().getPath() + "." + enchid.getNamespace() + "." + enchid.getPath());
+										ResourceLocation enchid = enchantment.unwrapKey().orElseThrow().location();
+										ResourceLocation id = ModUtils.createHMaGRL("jei." + recipeHolder.id().getPath() + "." + enchid.getNamespace() + "." + enchid.getPath());
 										addSmithingRecipe(smithingRecipes, id, ingredient, Ingredient.of(stacks.stream()), ingredient1, stack1);
 									}
 								}
@@ -136,9 +146,9 @@ public class JEIPlugin implements IModPlugin
 
 						for (EnchantmentUpgradeProp prop : EnchantmentUpgradeManager.getPropMap().keySet())
 						{
-							if (prop.isValid())
+							if (prop.isValid(registries))
 							{
-								final Enchantment enchantment = prop.getEnchantment();
+								final Holder<Enchantment> enchantment = prop.getEnchantment(registries);
 								ItemStack stack = getEnchantableItemStack(registration, items, enchantment, ModTags.ItemTags.ENCHANTMENT_NOT_UPGRADABLES);
 
 								if (!stack.isEmpty())
@@ -148,16 +158,16 @@ public class JEIPlugin implements IModPlugin
 
 									for (int j = minLevel; j <= maxLevel; ++j)
 									{
-										ResourceLocation id = ModUtils.createHMaGRL("jei." + recipe.getId().getPath() + "." + i + "." + j);
+										ResourceLocation id = ModUtils.createHMaGRL("jei." + recipeHolder.id().getPath() + "." + i + "." + j);
 										ItemStack stack1 = stack.copy();
 										ItemStack stack2 = stack.copy();
 
 										if (j > 0)
 										{
-											EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, j), stack1);
+											setEnchantmentLevel(stack1, enchantment, j);
 										}
 
-										EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, j + 1), stack2);
+										setEnchantmentLevel(stack2, enchantment, j + 1);
 										addSmithingRecipe(smithingRecipes, id, Ingredient.of(prop.getTemplate()), Ingredient.of(stack1), Ingredient.of(prop.getAddition()), stack2);
 									}
 
@@ -177,11 +187,12 @@ public class JEIPlugin implements IModPlugin
 						String group = "jei." + HMaG.MODID + ".suspicious.stew.upgrade";
 						NonNullList<Ingredient> inputs = NonNullList.of(Ingredient.EMPTY, Ingredient.of(Items.SUSPICIOUS_STEW), ingredient);
 						ItemStack output = new ItemStack(Items.SUSPICIOUS_STEW, 1);
-						CompoundTag compoundtag = output.getOrCreateTag();
+						CompoundTag compoundtag = new CompoundTag();
 						compoundtag.putBoolean(SuspiciousStewUpgradeRecipe.UPGRADED_KEY, true);
-						ResourceLocation id = ModUtils.createHMaGRL("jei." + recipe.getId().getPath());
-						ShapelessRecipe recipe3 = new ShapelessRecipe(id, group, CraftingBookCategory.MISC, output, inputs);
-						shapelessRecipes.add(recipe3);
+						output.set(DataComponents.CUSTOM_DATA, CustomData.of(compoundtag));
+						ResourceLocation id = ModUtils.createHMaGRL("jei." + recipeHolder.id().getPath());
+						ShapelessRecipe recipe3 = new ShapelessRecipe(group, CraftingBookCategory.MISC, output, inputs);
+						shapelessRecipes.add(new RecipeHolder<>(id, recipe3));
 					}
 				}
 
@@ -196,18 +207,25 @@ public class JEIPlugin implements IModPlugin
 		registration.addRecipes(RecipeTypes.CRAFTING, shapelessRecipes);
 	}
 
-	private static void addSmithingRecipe(List<SmithingRecipe> smithingRecipes, ResourceLocation id, Ingredient template, Ingredient base, Ingredient addition, ItemStack output)
+	private static void addSmithingRecipe(List<RecipeHolder<SmithingRecipe>> smithingRecipes, ResourceLocation id, Ingredient template, Ingredient base, Ingredient addition, ItemStack output)
 	{
-		smithingRecipes.add(new FixedOutputSmithingTransformRecipe(id, template, base, addition, output));
+		smithingRecipes.add(new RecipeHolder<>(id, new FixedOutputSmithingTransformRecipe(template, base, addition, output)));
 	}
 
-	private static ItemStack getEnchantableItemStack(IRecipeRegistration registration, List<Item> list, Enchantment enchantment, TagKey<Item> blacklist)
+	private static void setEnchantmentLevel(ItemStack stack, Holder<Enchantment> enchantment, int level)
+	{
+		ItemEnchantments.Mutable mutable = new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(stack));
+		mutable.set(enchantment, level);
+		EnchantmentHelper.setEnchantments(stack, mutable.toImmutable());
+	}
+
+	private static ItemStack getEnchantableItemStack(IRecipeRegistration registration, List<Item> list, Holder<Enchantment> enchantment, TagKey<Item> blacklist)
 	{
 		for (Item item : list)
 		{
 			ItemStack stack = new ItemStack(item);
 
-			if (enchantment.canEnchant(stack) && !stack.is(blacklist))
+			if (stack.supportsEnchantment(enchantment) && !stack.is(blacklist))
 			{
 				return stack;
 			}
@@ -217,9 +235,9 @@ public class JEIPlugin implements IModPlugin
 
 		for (ItemStack stack2 : stacks)
 		{
-			if (!stack2.isEmpty() && stack2.getItem() != Items.ENCHANTED_BOOK && enchantment.canEnchant(stack2) && !stack2.is(blacklist))
+			if (!stack2.isEmpty() && stack2.getItem() != Items.ENCHANTED_BOOK && stack2.supportsEnchantment(enchantment) && !stack2.is(blacklist))
 			{
-				return stack2;
+				return stack2.copy();
 			}
 		}
 
@@ -228,15 +246,15 @@ public class JEIPlugin implements IModPlugin
 
 	private static final class FixedOutputSmithingTransformRecipe extends SmithingTransformRecipe
 	{
-		public FixedOutputSmithingTransformRecipe(ResourceLocation id, Ingredient template, Ingredient base, Ingredient addition, ItemStack output)
+		public FixedOutputSmithingTransformRecipe(Ingredient template, Ingredient base, Ingredient addition, ItemStack output)
 		{
-			super(id, template, base, addition, output);
+			super(template, base, addition, output);
 		}
 
 		@Override
-		public ItemStack assemble(Container container, RegistryAccess registryAccess)
+		public ItemStack assemble(SmithingRecipeInput container, HolderLookup.Provider registryAccess)
 		{
-			return this.getResultItem(registryAccess);
+			return this.getResultItem(registryAccess).copy();
 		}
 	}
 }

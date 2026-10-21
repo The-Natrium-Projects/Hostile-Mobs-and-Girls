@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.github.mechalopa.hmag.ModConfigs;
+import com.github.mechalopa.hmag.registry.ModDataComponentTypes;
 import com.github.mechalopa.hmag.registry.ModEffects;
 
 import net.minecraft.ChatFormatting;
@@ -48,8 +49,7 @@ public class InsomniaFruitItem extends Item implements ILevelItem
 		{
 			if (entity instanceof ServerPlayer)
 			{
-				CompoundTag compoundnbt = stack.getOrCreateTag();
-				int itemLevel = !compoundnbt.contains(ILevelItem.LEVEL_KEY) ? 0 : (int)compoundnbt.getByte(ILevelItem.LEVEL_KEY);
+				int itemLevel = stack.getOrDefault(ModDataComponentTypes.ITEM_LEVEL, 0);
 				ServerStatsCounter serverstatscounter = ((ServerPlayer)entity).getStats();
 				final int i = 24000;
 				final int j = Mth.clamp(serverstatscounter.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
@@ -58,7 +58,7 @@ public class InsomniaFruitItem extends Item implements ILevelItem
 
 				if (itemLevel != k)
 				{
-					compoundnbt.putByte(ILevelItem.LEVEL_KEY, (byte)k);
+					stack.set(ModDataComponentTypes.ITEM_LEVEL, k);
 				}
 			}
 		}
@@ -82,7 +82,7 @@ public class InsomniaFruitItem extends Item implements ILevelItem
 					livingEntity.addEffect(new MobEffectInstance(MobEffects.HUNGER, 180 * 20, 1));
 					livingEntity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 180 * 20, 0));
 					livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 180 * 20, 1));
-					livingEntity.addEffect(new MobEffectInstance(ModEffects.COMBUSTION.get(), 180 * 20, 0));
+					livingEntity.addEffect(new MobEffectInstance(ModEffects.COMBUSTION, 180 * 20, 0));
 					level.playSound((Player)null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 0.8F, 0.8F + level.getRandom().nextFloat() * 0.4F);
 					j = ModConfigs.cachedServer.INSOMNIA_FRUIT_COOLDOWN_LEVEL_0;
 				}
@@ -130,13 +130,13 @@ public class InsomniaFruitItem extends Item implements ILevelItem
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag)
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag tooltipFlag)
 	{
 		final int i = ILevelItem.getItemLevel(stack);
 		list.add(Component.translatable("text." + ILevelItem.LEVEL_KEY, i + 1).withStyle(i >= 5 ? ChatFormatting.LIGHT_PURPLE : (i >= 4 ? ChatFormatting.AQUA : (i >= 2 ? ChatFormatting.YELLOW : (i <= 0 ? ChatFormatting.RED : ChatFormatting.GRAY)))));
 	}
 
-	@Override
+    @Override
 	public int getMaxLevel()
 	{
 		return 5;

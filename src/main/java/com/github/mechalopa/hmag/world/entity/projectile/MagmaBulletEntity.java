@@ -10,11 +10,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.EntityHitResult;
@@ -100,15 +103,16 @@ public class MagmaBulletEntity extends ModDamagingProjectileEntity
 				int i = entity.getRemainingFireTicks();
 				entity.igniteForSeconds(5);
 
-				boolean flag = entity.hurt(ModDamageTypes.source(this.level(), ModDamageTypes.MAGMA_BULLET, this, entity1), this.getDamage());
+				DamageSource source = ModDamageTypes.source(this.level(), ModDamageTypes.MAGMA_BULLET, this, entity1);
+				boolean flag = entity.hurt(source, this.getDamage());
 
 				if (!flag)
 				{
 					entity.igniteForSeconds(i);
 				}
-				else if (entity1 != null && entity1 instanceof LivingEntity)
+				else if (entity1 instanceof LivingEntity && this.level() instanceof ServerLevel serverLevel)
 				{
-					this.doEnchantDamageEffects((LivingEntity)entity1, entity);
+					EnchantmentHelper.doPostAttackEffects(serverLevel, entity, source);
 				}
 			}
 		}

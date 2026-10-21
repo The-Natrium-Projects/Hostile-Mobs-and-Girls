@@ -27,7 +27,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModBlocks
 {
-	private static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(BuiltInRegistries.BLOCK, HMaG.MODID);
+    public static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(BuiltInRegistries.BLOCK, HMaG.MODID);
 
 	public static final DeferredHolder<Block, Block> EVIL_CRYSTAL_BLOCK = REGISTRY.register("evil_crystal_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.25F, 1.0F).sound(SoundType.STONE).instrument(NoteBlockInstrument.BASEDRUM)));
 	public static final DeferredHolder<Block, Block> SOUL_POWDER_BLOCK = REGISTRY.register("soul_powder_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(0.5F).lightLevel((state) -> 5).sound(SoundType.SAND).instrument(NoteBlockInstrument.COW_BELL)));

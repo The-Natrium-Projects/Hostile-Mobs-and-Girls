@@ -17,6 +17,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -25,18 +26,18 @@ public class SuspiciousStewUpgradeRecipe extends CustomRecipe
 {
 	public static final String UPGRADED_KEY = HMaG.MODID + ".upgraded";
 
-	public SuspiciousStewUpgradeRecipe(ResourceLocation recipeId, CraftingBookCategory category)
+	public SuspiciousStewUpgradeRecipe(CraftingBookCategory category)
 	{
-		super(recipeId, category);
+		super(category);
 	}
 
-	@Override
-	public boolean matches(CraftingContainer inv, Level level)
+    @Override
+	public boolean matches(CraftingInput inv, Level level)
 	{
 		boolean flag = false;
 		boolean flag1 = false;
 
-		for (int i = 0; i < inv.getContainerSize(); ++i)
+		for (int i = 0; i < inv.size(); ++i)
 		{
 			ItemStack stack = inv.getItem(i);
 

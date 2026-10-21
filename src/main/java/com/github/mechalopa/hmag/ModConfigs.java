@@ -89,18 +89,6 @@ public class ModConfigs
 	public static ModConfigSpec.IntValue INSOMNIA_FRUIT_COOLDOWN_LEVEL_4;
 	public static ModConfigSpec.IntValue INSOMNIA_FRUIT_COOLDOWN_LEVEL_5;
 
-	public static ModConfigSpec.IntValue HEALTH_BOOST_MAX_LEVEL;
-	public static ModConfigSpec.BooleanValue HEALTH_BOOST_IS_TREASURE;
-	public static ModConfigSpec.BooleanValue HEALTH_BOOST_IS_TRADEABLE;
-	public static ModConfigSpec.BooleanValue HEALTH_BOOST_IS_DISCOVERABLE;
-	public static ModConfigSpec.IntValue WATER_ASPECT_MAX_LEVEL;
-	public static ModConfigSpec.BooleanValue WATER_ASPECT_IS_TREASURE;
-	public static ModConfigSpec.BooleanValue WATER_ASPECT_IS_TRADEABLE;
-	public static ModConfigSpec.BooleanValue WATER_ASPECT_IS_DISCOVERABLE;
-	public static ModConfigSpec.IntValue ANTI_AIR_MAX_LEVEL;
-	public static ModConfigSpec.BooleanValue ANTI_AIR_IS_TREASURE;
-	public static ModConfigSpec.BooleanValue ANTI_AIR_IS_TRADEABLE;
-	public static ModConfigSpec.BooleanValue ANTI_AIR_IS_DISCOVERABLE;
 
 	public static ModConfigSpec.BooleanValue KOBOLD_POTION_BREWING_RECIPES;
 	public static ModConfigSpec.BooleanValue HEALING_III_POTION_BREWING_RECIPES;
@@ -224,23 +212,6 @@ public class ModConfigs
 
 		SERVER_BUILDER.pop();
 
-		SERVER_BUILDER.push("enchantment");
-
-		HEALTH_BOOST_MAX_LEVEL = SERVER_BUILDER.defineInRange("healthBoostMaxLevel", 5, 1, Integer.MAX_VALUE);
-		HEALTH_BOOST_IS_TREASURE = SERVER_BUILDER.define("healthBoostIsTreasure", true);
-		HEALTH_BOOST_IS_TRADEABLE = SERVER_BUILDER.define("healthBoostIsTradeable", true);
-		HEALTH_BOOST_IS_DISCOVERABLE = SERVER_BUILDER.define("healthBoostIsDiscoverable", true);
-		WATER_ASPECT_MAX_LEVEL = SERVER_BUILDER.defineInRange("waterAspectMaxLevel", 5, 1, Integer.MAX_VALUE);
-		WATER_ASPECT_IS_TREASURE = SERVER_BUILDER.define("waterAspectIsTreasure", false);
-		WATER_ASPECT_IS_TRADEABLE = SERVER_BUILDER.define("waterAspectIsTradeable", true);
-		WATER_ASPECT_IS_DISCOVERABLE = SERVER_BUILDER.define("waterAspectIsDiscoverable", true);
-		ANTI_AIR_MAX_LEVEL = SERVER_BUILDER.defineInRange("antiAirMaxLevel", 5, 1, Integer.MAX_VALUE);
-		ANTI_AIR_IS_TREASURE = SERVER_BUILDER.define("antiAirIsTreasure", false);
-		ANTI_AIR_IS_TRADEABLE = SERVER_BUILDER.define("antiAirIsTradeable", true);
-		ANTI_AIR_IS_DISCOVERABLE = SERVER_BUILDER.define("antiAirIsDiscoverable", true);
-
-		SERVER_BUILDER.pop();
-
 		SERVER_BUILDER.push("potion");
 
 		KOBOLD_POTION_BREWING_RECIPES = SERVER_BUILDER.define("enableKoboldPotionBrewingRecipes", true);
@@ -349,18 +320,6 @@ public class ModConfigs
 		public static int INSOMNIA_FRUIT_COOLDOWN_LEVEL_4;
 		public static int INSOMNIA_FRUIT_COOLDOWN_LEVEL_5;
 
-		public static int HEALTH_BOOST_MAX_LEVEL;
-		public static boolean HEALTH_BOOST_IS_TREASURE;
-		public static boolean HEALTH_BOOST_IS_TRADEABLE;
-		public static boolean HEALTH_BOOST_IS_DISCOVERABLE;
-		public static int WATER_ASPECT_MAX_LEVEL;
-		public static boolean WATER_ASPECT_IS_TREASURE;
-		public static boolean WATER_ASPECT_IS_TRADEABLE;
-		public static boolean WATER_ASPECT_IS_DISCOVERABLE;
-		public static int ANTI_AIR_MAX_LEVEL;
-		public static boolean ANTI_AIR_IS_TREASURE;
-		public static boolean ANTI_AIR_IS_TRADEABLE;
-		public static boolean ANTI_AIR_IS_DISCOVERABLE;
 
 		public static boolean KOBOLD_POTION_BREWING_RECIPES;
 		public static boolean HEALING_III_POTION_BREWING_RECIPES;
@@ -459,18 +418,6 @@ public class ModConfigs
 			INSOMNIA_FRUIT_COOLDOWN_LEVEL_4 = ModConfigs.INSOMNIA_FRUIT_COOLDOWN_LEVEL_4.get();
 			INSOMNIA_FRUIT_COOLDOWN_LEVEL_5 = ModConfigs.INSOMNIA_FRUIT_COOLDOWN_LEVEL_5.get();
 
-			HEALTH_BOOST_MAX_LEVEL = ModConfigs.HEALTH_BOOST_MAX_LEVEL.get();
-			HEALTH_BOOST_IS_TREASURE = ModConfigs.HEALTH_BOOST_IS_TREASURE.get();
-			HEALTH_BOOST_IS_TRADEABLE = ModConfigs.HEALTH_BOOST_IS_TRADEABLE.get();
-			HEALTH_BOOST_IS_DISCOVERABLE = ModConfigs.HEALTH_BOOST_IS_DISCOVERABLE.get();
-			WATER_ASPECT_MAX_LEVEL = ModConfigs.WATER_ASPECT_MAX_LEVEL.get();
-			WATER_ASPECT_IS_TREASURE = ModConfigs.WATER_ASPECT_IS_TREASURE.get();
-			WATER_ASPECT_IS_TRADEABLE = ModConfigs.WATER_ASPECT_IS_TRADEABLE.get();
-			WATER_ASPECT_IS_DISCOVERABLE = ModConfigs.WATER_ASPECT_IS_DISCOVERABLE.get();
-			ANTI_AIR_MAX_LEVEL = ModConfigs.ANTI_AIR_MAX_LEVEL.get();
-			ANTI_AIR_IS_TREASURE = ModConfigs.ANTI_AIR_IS_TREASURE.get();
-			ANTI_AIR_IS_TRADEABLE = ModConfigs.ANTI_AIR_IS_TRADEABLE.get();
-			ANTI_AIR_IS_DISCOVERABLE = ModConfigs.ANTI_AIR_IS_DISCOVERABLE.get();
 
 			KOBOLD_POTION_BREWING_RECIPES = ModConfigs.KOBOLD_POTION_BREWING_RECIPES.get();
 			HEALING_III_POTION_BREWING_RECIPES = ModConfigs.HEALING_III_POTION_BREWING_RECIPES.get();

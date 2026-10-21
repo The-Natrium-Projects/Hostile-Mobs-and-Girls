@@ -16,15 +16,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModRecipes
 {
-	private static final DeferredRegister<RecipeSerializer<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, HMaG.MODID);
+    public static final DeferredRegister<RecipeSerializer<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, HMaG.MODID);
 
 	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<RemoveCurseRecipe>> REMOVE_CURSE = REGISTRY.register("remove_curse", () -> new SimpleUpgradeRecipeSerializer<>(RemoveCurseRecipe::new));
 	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<EnchantmentUpgradeRecipe>> ENCHANTMENT_UPGRADE = REGISTRY.register("enchantment_upgrade", () -> new SimpleUpgradeRecipeSerializer<>(EnchantmentUpgradeRecipe::new));
 	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<SuspiciousStewUpgradeRecipe>> SUSPICIOUS_STEW_UPGRADE = REGISTRY.register("suspicious_stew_upgrade", () -> new SimpleCraftingRecipeSerializer<>(SuspiciousStewUpgradeRecipe::new));
 
-	@SubscribeEvent
-	public static void register(IEventBus eventBus)
-	{
-		REGISTRY.register(eventBus);
-	}
 }

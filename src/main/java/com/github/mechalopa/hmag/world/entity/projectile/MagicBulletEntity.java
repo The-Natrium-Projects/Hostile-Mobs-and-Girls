@@ -14,9 +14,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.VariantHolder;
 import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -139,13 +142,14 @@ public class MagicBulletEntity extends ModDamagingProjectileEntity implements Va
 					}
 				}
 
-				flag = entity.hurt(this.damageSources().indirectMagic(this, livingentity), damage);
+				DamageSource source = this.damageSources().indirectMagic(this, livingentity);
+				flag = entity.hurt(source, damage);
 
 				if (flag)
 				{
-					if (entity.isAlive())
+					if (entity.isAlive() && this.level() instanceof ServerLevel serverLevel)
 					{
-						this.doEnchantDamageEffects(livingentity, entity);
+						EnchantmentHelper.doPostAttackEffects(serverLevel, entity, source);
 					}
 				}
 			}

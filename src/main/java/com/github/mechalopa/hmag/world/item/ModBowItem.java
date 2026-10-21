@@ -1,22 +1,21 @@
 package com.github.mechalopa.hmag.world.item;
 
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.event.EventHooks;
 
 public abstract class ModBowItem extends BowItem
 {
@@ -26,100 +25,22 @@ public abstract class ModBowItem extends BowItem
 	}
 
 	@Override
-	public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int count)
+	protected void shoot(ServerLevel level, LivingEntity shooter, InteractionHand hand, ItemStack weapon, List<ItemStack> projectiles, float velocity, float inaccuracy, boolean critical, @Nullable LivingEntity target)
 	{
-		if (livingEntity instanceof Player player)
-		{
-			boolean flag = player.getAbilities().instabuild || EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
-			ItemStack stack1 = player.getProjectile(stack);
-
-			int i = this.getUseDuration(stack) - count;
-			i = EventHooks.onArrowLoose(stack, level, player, i, !stack1.isEmpty() || flag);
-
-			if (i < 0)
-			{
-				return;
-			}
-
-			if (!stack1.isEmpty() || flag)
-			{
-				if (stack1.isEmpty())
-				{
-					stack1 = new ItemStack(Items.ARROW);
-				}
-
-				float f = getPowerForTime(i);
-
-				if (!(f < 0.1D))
-				{
-					boolean flag1 = player.getAbilities().instabuild || (stack1.getItem() instanceof ArrowItem && ((ArrowItem)stack1.getItem()).isInfinite(stack1, stack, player));
-
-					if (!level.isClientSide())
-					{
-						AbstractArrow arrow = this.createArrow(level, stack1, stack, player, f, flag1);
-
-						stack.hurtAndBreak(1, player, (p) -> {
-							p.broadcastBreakEvent(player.getUsedItemHand());
-						});
-
-						level.addFreshEntity(arrow);
-					}
-
-					level.playSound((Player)null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT,  SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-
-					if (!flag1 && !player.getAbilities().instabuild)
-					{
-						stack1.shrink(1);
-
-						if (stack1.isEmpty())
-						{
-							player.getInventory().removeItem(stack1);
-						}
-					}
-
-					player.awardStat(Stats.ITEM_USED.get(this));
-				}
-			}
-		}
+		super.shoot(level, shooter, hand, weapon, projectiles, velocity * this.getArrowVelocity(weapon, shooter) / 3.0F, inaccuracy, critical, target);
 	}
 
-	protected AbstractArrow createArrow(Level level, ItemStack arrowStack, ItemStack bowStack, Player player, float power, boolean flag)
+	@Override
+	protected Projectile createProjectile(Level level, LivingEntity shooter, ItemStack weapon, ItemStack projectileStack, boolean critical)
 	{
-		ArrowItem arrowitem = (ArrowItem)(arrowStack.getItem() instanceof ArrowItem ? arrowStack.getItem() : Items.ARROW);
-		AbstractArrow arrow = this.customArrow(arrowitem.createArrow(level, arrowStack, player));
-		arrow.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, power * this.getArrowVelocity(bowStack, player), 1.0F);
-		arrow.setBaseDamage(arrow.getBaseDamage() + this.getBowDamage(bowStack, player));
+		Projectile projectile = super.createProjectile(level, shooter, weapon, projectileStack, critical);
 
-		if (power == 1.0F)
+		if (projectile instanceof AbstractArrow arrow)
 		{
-			arrow.setCritArrow(true);
+			arrow.setBaseDamage(arrow.getBaseDamage() + this.getBowDamage(weapon, shooter));
 		}
 
-		int j = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.POWER_ARROWS, bowStack);
-
-		if (j > 0)
-		{
-			arrow.setBaseDamage(arrow.getBaseDamage() + j * 0.5D + 0.5D);
-		}
-
-		int k = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PUNCH_ARROWS, bowStack);
-
-		if (k > 0)
-		{
-			arrow.setKnockback(k);
-		}
-
-		if (EnchantmentHelper.getTagEnchantmentLevel(Enchantments.FLAMING_ARROWS, bowStack) > 0)
-		{
-			arrow.setSecondsOnFire(100);
-		}
-
-		if (flag || player.getAbilities().instabuild && (arrowStack.getItem() == Items.SPECTRAL_ARROW || arrowStack.getItem() == Items.TIPPED_ARROW))
-		{
-			arrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-		}
-
-		return arrow;
+		return projectile;
 	}
 
 	public float getBowDamage(ItemStack stack, LivingEntity livingEntity)

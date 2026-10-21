@@ -21,7 +21,7 @@ public class EvilFlameItem extends ModItem
 	{
 		if (!player.level().isClientSide())
 		{
-			entity.setSecondsOnFire(3);
+			entity.igniteForSeconds(3);
 			player.crit(entity);
 			player.level().playSound((Player)null, player.getX(), player.getY(), player.getZ(), SoundEvents.FLINTANDSTEEL_USE, SoundSource.NEUTRAL, 1.0F, player.level().getRandom().nextFloat() * 0.4F + 0.8F);
 			stack.shrink(1);

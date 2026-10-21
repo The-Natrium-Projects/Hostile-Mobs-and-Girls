@@ -28,21 +28,21 @@ public class HMaG
 
 		modEventBus.addListener(ModConfigs::loadConfig);
 
-		ModBlocks.register(modEventBus);
-		ModCreativeModeTabs.register(modEventBus);
-		ModEffects.register(modEventBus);
-		ModEnchantments.register(modEventBus);
-		ModEntityTypes.register(modEventBus);
-		ModItems.register(modEventBus);
-		ModLootModifiers.register(modEventBus);
-		ModParticleTypes.register(modEventBus);
-		ModPotions.register(modEventBus);
-		ModRecipes.register(modEventBus);
-		ModSoundEvents.register(modEventBus);
-		ModBiomeModifiers.register(modEventBus);
-		ModStructureModifiers.register(modEventBus);
-		ModDataComponentTypes.REG.register(modEventBus);
+		ModBlocks.REGISTRY.register(modEventBus);
+		ModCreativeModeTabs.REGISTRY.register(modEventBus);
+		ModEffects.REGISTRY.register(modEventBus);
+		ModEntityTypes.REGISTRY.register(modEventBus);
+		ModItems.REGISTRY.register(modEventBus);
+		ModLootModifiers.REGISTRY.register(modEventBus);
+		ModParticleTypes.REGISTRY.register(modEventBus);
+		ModPotions.REGISTRY.register(modEventBus);
+		ModRecipes.REGISTRY.register(modEventBus);
+		ModSoundEvents.REGISTRY.register(modEventBus);
+		ModBiomeModifiers.REGISTRY.register(modEventBus);
+		ModStructureModifiers.REGISTRY.register(modEventBus);
+		ModDataComponentTypes.REGISTRY.register(modEventBus);
 
+        NeoForge.EVENT_BUS.register(this);
 		NeoForge.EVENT_BUS.register(new ModEvents());
 	}
 }

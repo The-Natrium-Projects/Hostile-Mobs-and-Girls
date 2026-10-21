@@ -37,12 +37,13 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems
 {
-	private static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(BuiltInRegistries.ITEM, HMaG.MODID);
+    public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(BuiltInRegistries.ITEM, HMaG.MODID);
 
 	public static final DeferredHolder<Item, Item> EVIL_CRYSTAL_BLOCK = REGISTRY.register("evil_crystal_block", () -> new BlockItem(ModBlocks.EVIL_CRYSTAL_BLOCK.get(), new Item.Properties()));
 	public static final DeferredHolder<Item, Item> SOUL_POWDER_BLOCK = REGISTRY.register("soul_powder_block", () -> new BlockItem(ModBlocks.SOUL_POWDER_BLOCK.get(), new Item.Properties()));
@@ -120,14 +121,13 @@ public class ModItems
 	public static final DeferredHolder<Item, Item> COOKED_SAVAGEFANG_MEAT = REGISTRY.register("cooked_savagefang_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationModifier(0.7F).build())));
 	public static final DeferredHolder<Item, Item> SWAMPER_TENTACLE = REGISTRY.register("swamper_tentacle", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationModifier(0.3F).effect(() -> new MobEffectInstance(MobEffects.POISON, 5 * 20, 0), 0.1F).build())));
 	public static final DeferredHolder<Item, Item> COOKED_SWAMPER_TENTACLE = REGISTRY.register("cooked_swamper_tentacle", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(6).saturationModifier(0.8F).build())));
-	public static final DeferredHolder<Item, Item> RAVAGER_MEAT = REGISTRY.register("ravager_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(2).saturationModifier(0.3F).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 30 * 20, 0), 0.6F).meat().build())));
-	public static final DeferredHolder<Item, Item> COOKED_RAVAGER_MEAT = REGISTRY.register("cooked_ravager_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationModifier(0.8F).effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 10 * 20, 0), 0.1F).meat().build())));
-	public static final DeferredHolder<Item, Item> BAT_STEW = REGISTRY.register("bat_stew", () ->
-        new BowlFoodItem(new Item.Properties()
+	public static final DeferredHolder<Item, Item> RAVAGER_MEAT = REGISTRY.register("ravager_meat", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationModifier(0.3F).effect(() -> new MobEffectInstance(MobEffects.HUNGER, 30 * 20, 0), 0.6F)..build())));
+	public static final DeferredHolder<Item, Item> COOKED_RAVAGER_MEAT = REGISTRY.register("cooked_ravager_meat", () -> new Item(new Item.Properties().food((new FoodProperties.Builder()).nutrition(8).saturationModifier(0.8F).effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 10 * 20, 0), 0.1F).build())));
+	public static final DeferredHolder<Item, Item> BAT_STEW = REGISTRY.register("bat_stew", () -> new Item(new Item.Properties()
             .food((new FoodProperties.Builder())
                 .nutrition(6)
                 .saturationModifier(0.6F)
-                .effect(() -> new MobEffectInstance(ModEffects.DARKNESS_RESISTANCE.get(), 10 * 20, 0), 0.3F)
+                .effect(() -> new MobEffectInstance(ModEffects.DARKNESS_RESISTANCE, 10 * 20, 0), 0.3F)
                 .alwaysEdible()
                 .usingConvertsTo(Items.BOWL)
                 .build())
@@ -166,7 +166,10 @@ public class ModItems
         .stacksTo(1)
         .rarity(Rarity.RARE)));
 	public static final DeferredHolder<Item, Item> INSOMNIA_FRUIT = REGISTRY.register("insomnia_fruit", () -> new InsomniaFruitItem(new Item.Properties().food((new FoodProperties.Builder()).nutrition(5).saturationModifier(0.3F).alwaysEdible().build()).stacksTo(1).rarity(Rarity.RARE)));
-	public static final DeferredHolder<Item, Item> INSOMNIA_SWORD = REGISTRY.register("insomnia_sword", () -> new InsomniaSwordItem(Tiers.DIAMOND, new Item.Properties().rarity(Rarity.RARE)));
+	public static final DeferredHolder<Item, InsomniaSwordItem> INSOMNIA_SWORD = REGISTRY.register("insomnia_sword", () ->
+        new InsomniaSwordItem(Tiers.DIAMOND, new Item.Properties()
+            .rarity(Rarity.RARE)
+            .durability(72000)));
 	public static final DeferredHolder<Item, Item> NEMESIS_BLADE = REGISTRY.register("nemesis_blade", () -> new NemesisBladeItem(Tiers.NETHERITE, new Item.Properties().rarity(Rarity.EPIC).fireResistant()));
 	public static final DeferredHolder<Item, Item> IRON_SPEAR = REGISTRY.register("iron_spear", () -> new ModSwordItem(Tiers.IRON, 2.0F, -2.4F, new Item.Properties()));
 	public static final DeferredHolder<Item, Item> GOLDEN_FORK = REGISTRY.register("golden_fork", () -> new ModSwordItem(Tiers.GOLD, 2.0F, -2.4F, new Item.Properties()));
@@ -244,15 +247,9 @@ public class ModItems
 	public static final DeferredHolder<Item, Item> NIGHTWALKER_SPAWN_EGG = createSpawnEggDeferredHolder("nightwalker", ModEntityTypes.NIGHTWALKER, 0x2F2C85, 0x0D0D0D);
 	public static final DeferredHolder<Item, Item> SWAMPER_SPAWN_EGG = createSpawnEggDeferredHolder("swamper", ModEntityTypes.SWAMPER, 0x4F532F, 0x9C9056);
 
-	@SubscribeEvent
-	public static void register(IEventBus eventBus)
-	{
-		REGISTRY.register(eventBus);
-	}
-
 	private static DeferredHolder<Item, Item> createSpawnEggDeferredHolder(String name, DeferredHolder<EntityType<?>, ? extends EntityType<? extends Mob>> entityTypeSupplier, int primaryColor, int secondaryColor)
 	{
-		return REGISTRY.register(name + "_spawn_egg", () -> new ForgeSpawnEggItem(entityTypeSupplier, primaryColor, secondaryColor, new Item.Properties()));
+		return REGISTRY.register(name + "_spawn_egg", () -> new DeferredSpawnEggItem(entityTypeSupplier, primaryColor, secondaryColor, new Item.Properties()));
 	}
 
 	public static DeferredRegister<Item> getItemRegistry()

@@ -1,0 +1,20 @@
+{
+  "description": {
+    "translate": "enchantment.hmag.anti_air"
+  },
+  "supported_items": "#minecraft:enchantable/crossbow",
+  "weight": 2,
+  "max_level": 5,
+  "min_cost": {
+    "base": 7,
+    "per_level_above_first": 5
+  },
+  "max_cost": {
+    "base": 27,
+    "per_level_above_first": 5
+  },
+  "anvil_cost": 4,
+  "slots": ["mainhand"],
+  "exclusive_set": "#hmag:incompatible_with_anti_air",
+  "effects": {}
+}
