@@ -17,11 +17,11 @@ import com.github.mechalopa.hmag.world.item.ILevelItem;
 import com.github.mechalopa.hmag.world.item.InsomniaSwordItem;
 import com.github.mechalopa.hmag.world.item.ModArmorMaterial;
 import com.github.mechalopa.hmag.world.item.NemesisBladeItem;
-import com.github.mechalopa.hmag.world.item.enchantment.HealthBoostEnchantment;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -45,7 +45,6 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.bus.api.EventPriority;
@@ -89,7 +88,8 @@ public class ModEvents
 
 					if (!stack.isEmpty())
 					{
-						final int level = EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.WATER_ASPECT.getDelegate(), stack);
+						final int level = attacker.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
+								.get(ModEnchantments.WATER_ASPECT).map(stack::getEnchantmentLevel).orElse(0);
 
 						if (level > 0)
 						{
@@ -136,7 +136,9 @@ public class ModEvents
 
 								if (!stack.isEmpty())
 								{
-									level = Math.max(level, EnchantmentHelper.getTagEnchantmentLevel(ModEnchantments.ANTI_AIR.getDelegate(), stack));
+									int handLevel = attacker.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
+											.get(ModEnchantments.ANTI_AIR).map(stack::getEnchantmentLevel).orElse(0);
+									level = Math.max(level, handLevel);
 								}
 							}
 

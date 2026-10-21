@@ -183,13 +183,6 @@ public class ModTags
 		return TagKey.create(Registries.STRUCTURE, ModUtils.createHMaGRL(name));
 	}
 
-	public static boolean checkTagContains(Enchantment enchantment, TagKey<Enchantment> tag)
-	{
-		if (enchantment == null || tag == null) return false;
-		return ModUtils.getRegistry(Registries.ENCHANTMENT)
-			.filter(reg -> reg.wrapAsHolder(enchantment).is(tag)).isPresent();
-	}
-
 	public static boolean checkTagContains(MobEffect effect, TagKey<MobEffect> tag)
 	{
 		if (effect == null || tag == null) return false;

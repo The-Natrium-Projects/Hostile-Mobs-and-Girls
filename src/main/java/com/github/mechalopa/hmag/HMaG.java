@@ -31,7 +31,6 @@ public class HMaG
 		ModBlocks.register(modEventBus);
 		ModCreativeModeTabs.register(modEventBus);
 		ModEffects.register(modEventBus);
-		ModEnchantments.register(modEventBus);
 		ModEntityTypes.register(modEventBus);
 		ModItems.register(modEventBus);
 		ModLootModifiers.register(modEventBus);

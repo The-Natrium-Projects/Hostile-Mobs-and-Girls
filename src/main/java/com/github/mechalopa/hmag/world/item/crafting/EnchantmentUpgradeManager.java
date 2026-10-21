@@ -3,7 +3,6 @@ package com.github.mechalopa.hmag.world.item.crafting;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
@@ -19,10 +18,12 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -125,13 +126,6 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 		return () -> BuiltInRegistries.ITEM.getHolder(ModUtils.createRL(name)).orElseThrow().value();
 	}
 
-	@Nullable
-	private static Enchantment getEnchantment(String name)
-	{
-		Optional<Holder<Enchantment>> optional = Registries.ENCHANTMENT.registry.get(ModUtils.createRL(name));
-		return optional.isPresent() ? optional.orElseThrow().get() : null;
-	}
-
 	public static HashMap<EnchantmentUpgradeProp, Integer> getPropMap()
 	{
 		return PROP_MAP;
@@ -142,7 +136,8 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 		private final Item addition;
 		private final Item template;
 		private final String enchantmentKey;
-		private final Enchantment enchantment;
+		@Nullable
+		private final ResourceKey<Enchantment> enchantment;
 		private final int minLevel;
 		private final int maxLevel;
 
@@ -151,9 +146,11 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 			this.addition = addition;
 			this.template = template;
 			this.enchantmentKey = enchantmentKey;
-			this.enchantment = EnchantmentUpgradeManager.getEnchantment(enchantmentKey);
-			this.minLevel = min;
-			this.maxLevel = max;
+			ResourceLocation id = ResourceLocation.tryParse(enchantmentKey);
+			this.enchantment = id == null ? null : ResourceKey.create(Registries.ENCHANTMENT, id);
+			this.minLevel = Math.max(min, 0);
+			// The upgraded level must fit the enchantment component's 0..255 range.
+			this.maxLevel = Math.min(max, 254);
 		}
 
 		public Item getAddition()
@@ -172,9 +169,10 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 		}
 
 		@Nullable
-		public Enchantment getEnchantment()
+		public Holder<Enchantment> getEnchantment(HolderLookup.Provider registries)
 		{
-			return this.enchantment;
+			return this.enchantment == null ? null : registries.lookup(Registries.ENCHANTMENT)
+					.flatMap(lookup -> lookup.get(this.enchantment)).orElse(null);
 		}
 
 		public int getMinLevel()
@@ -189,7 +187,12 @@ public class EnchantmentUpgradeManager extends SimpleJsonResourceReloadListener
 
 		public boolean isValid()
 		{
-			return this.getEnchantment() != null && this.getAddition() != Items.BARRIER && this.getTemplate() != Items.BARRIER;
+			return this.enchantment != null && this.minLevel <= this.maxLevel && this.getAddition() != Items.BARRIER && this.getTemplate() != Items.BARRIER;
+		}
+
+		public boolean isValid(HolderLookup.Provider registries)
+		{
+			return this.isValid() && this.getEnchantment(registries) != null;
 		}
 	}
 }
