@@ -12,10 +12,7 @@ public class EnderRageEffect extends MobEffect
 	}
 
 	@Override
-	public void applyEffectTick(LivingEntity livingEntity, int amplifier){}
-
-	@Override
-	public boolean isDurationEffectTick(int duration, int amplifier)
+	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier)
 	{
 		return duration > 0;
 	}

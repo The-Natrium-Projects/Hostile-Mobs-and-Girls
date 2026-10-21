@@ -12,8 +12,9 @@ public class DarknessResistanceEffect extends MobEffect
 		super(type, color);
 	}
 
+
 	@Override
-	public void applyEffectTick(LivingEntity livingEntity, int amplifier)
+	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier)
 	{
 		if (livingEntity.hasEffect(MobEffects.BLINDNESS))
 		{
@@ -24,11 +25,13 @@ public class DarknessResistanceEffect extends MobEffect
 		{
 			livingEntity.removeEffect(MobEffects.DARKNESS);
 		}
+		return true;
 	}
 
 	@Override
-	public boolean isDurationEffectTick(int duration, int amplifier)
+	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier)
 	{
 		return duration > 0;
 	}
+
 }

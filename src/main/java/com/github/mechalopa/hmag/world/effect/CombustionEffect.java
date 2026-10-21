@@ -12,17 +12,18 @@ public class CombustionEffect extends MobEffect
 	}
 
 	@Override
-	public void applyEffectTick(LivingEntity livingEntity, int amplifier)
+	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier)
 	{
 		if (!livingEntity.level().isClientSide() && !livingEntity.fireImmune() && !livingEntity.isInWaterRainOrBubble() && (!livingEntity.isOnFire() || livingEntity.getRemainingFireTicks() <= 1))
 		{
 			livingEntity.igniteForSeconds(livingEntity.getRemainingFireTicks() + 20);
 			livingEntity.igniteForSeconds(1);
 		}
+		return true;
 	}
 
 	@Override
-	public boolean isDurationEffectTick(int duration, int amplifier)
+	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier)
 	{
 		return duration > 0;
 	}
