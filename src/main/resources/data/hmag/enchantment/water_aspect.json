@@ -1,0 +1,20 @@
+{
+  "description": {
+    "translate": "enchantment.hmag.water_aspect"
+  },
+  "supported_items": "#minecraft:enchantable/sword",
+  "weight": 2,
+  "max_level": 5,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 5
+  },
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 5
+  },
+  "anvil_cost": 4,
+  "slots": ["mainhand"],
+  "exclusive_set": "#hmag:incompatible_with_water_aspect",
+  "effects": {}
+}

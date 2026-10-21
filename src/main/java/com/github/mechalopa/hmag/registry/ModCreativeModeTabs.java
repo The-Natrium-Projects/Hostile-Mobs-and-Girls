@@ -7,6 +7,7 @@ import com.github.mechalopa.hmag.world.item.ILevelItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
@@ -39,12 +40,10 @@ public class ModCreativeModeTabs
 			}
 		}
 
-		for (DeferredHolder<Enchantment, ? extends Enchantment> enchantment : ModEnchantments.getEnchantmentRegistry().getEntries())
+		for (ResourceKey<Enchantment> key : ModEnchantments.ALL)
 		{
-			if (enchantment.get().isAllowedOnBooks())
-			{
-				output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment.get(), enchantment.get().getMaxLevel())));
-			}
+			features.holders().lookupOrThrow(Registries.ENCHANTMENT).get(key).ifPresent(enchantment ->
+					output.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.value().getMaxLevel()))));
 		}
 
 		for (Item potionItem : ModUtils.POTION_ITEMS)

@@ -1,34 +1,22 @@
 package com.github.mechalopa.hmag.registry;
 
-import com.github.mechalopa.hmag.HMaG;
-import com.github.mechalopa.hmag.util.ModUtils;
-import com.github.mechalopa.hmag.world.item.enchantment.AntiAirEnchantment;
-import com.github.mechalopa.hmag.world.item.enchantment.HealthBoostEnchantment;
-import com.github.mechalopa.hmag.world.item.enchantment.WaterAspectEnchantment;
+import java.util.List;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.EquipmentSlot;
+import com.github.mechalopa.hmag.util.ModUtils;
+
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModEnchantments
 {
-	private static final DeferredRegister<Enchantment> REGISTRY = DeferredRegister.create(BuiltInRegistries.ENCHANTMENT, HMaG.MODID);
+	public static final ResourceKey<Enchantment> HEALTH_BOOST = create("health_boost");
+	public static final ResourceKey<Enchantment> WATER_ASPECT = create("water_aspect");
+	public static final ResourceKey<Enchantment> ANTI_AIR = create("anti_air");
+	public static final List<ResourceKey<Enchantment>> ALL = List.of(HEALTH_BOOST, WATER_ASPECT, ANTI_AIR);
 
-	public static final DeferredHolder<Enchantment, HealthBoostEnchantment> HEALTH_BOOST = REGISTRY.register("health_boost", () -> new HealthBoostEnchantment(Enchantment.Rarity.UNCOMMON, ModUtils.ARMOR_SLOTS));
-	public static final DeferredHolder<Enchantment, WaterAspectEnchantment> WATER_ASPECT = REGISTRY.register("water_aspect", () -> new WaterAspectEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
-	public static final DeferredHolder<Enchantment, AntiAirEnchantment> ANTI_AIR = REGISTRY.register("anti_air", () -> new AntiAirEnchantment(Enchantment.Rarity.RARE, EquipmentSlot.MAINHAND));
-
-	public static void register(IEventBus eventBus)
+	private static ResourceKey<Enchantment> create(String name)
 	{
-		REGISTRY.register(eventBus);
-	}
-
-	public static DeferredRegister<Enchantment> getEnchantmentRegistry()
-	{
-		return REGISTRY;
+		return ResourceKey.create(Registries.ENCHANTMENT, ModUtils.createHMaGRL(name));
 	}
 }
