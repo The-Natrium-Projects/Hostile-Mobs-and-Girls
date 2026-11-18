@@ -23,7 +23,7 @@ public class ModDataComponentTypes {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ITEM_LEVEL
         = REGISTRY.register("item_level", key -> DataComponentType.<Integer>builder()
-        .persistent(ExtraCodecs.intRange(1, 99))
+        .persistent(ExtraCodecs.NON_NEGATIVE_INT)
         .networkSynchronized(ByteBufCodecs.INT)
         .build());
 
