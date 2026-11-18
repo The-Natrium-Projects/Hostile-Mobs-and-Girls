@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "tag": "c:sands"
+    },
+    {
+      "item": "hmag:soul_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "minecraft:soul_sand"
+  }
+}

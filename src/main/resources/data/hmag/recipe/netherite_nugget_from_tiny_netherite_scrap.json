@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:nuggets/netherite_scrap"
+    },
+    {
+      "tag": "c:nuggets/netherite_scrap"
+    },
+    {
+      "tag": "c:nuggets/netherite_scrap"
+    },
+    {
+      "tag": "c:nuggets/netherite_scrap"
+    },
+    {
+      "tag": "c:nuggets/gold"
+    },
+    {
+      "tag": "c:nuggets/gold"
+    },
+    {
+      "tag": "c:nuggets/gold"
+    },
+    {
+      "tag": "c:nuggets/gold"
+    }
+  ],
+  "result": {
+    "id": "hmag:netherite_nugget"
+  }
+}

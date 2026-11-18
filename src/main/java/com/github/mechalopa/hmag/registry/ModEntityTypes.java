@@ -266,7 +266,7 @@ public class ModEntityTypes
         .setShouldReceiveVelocityUpdates(true)
 		.build(ModUtils.createHMaGRL("throwable_bottle").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<MagmaBulletEntity>> MAGMA_BULLET = REGISTRY.register("magma_bullet", () -> EntityType.Builder
-		.<MagmaBulletEntity>of(MagmaBulletEntity::new, MobCategory.MISC).fireImmune().sized(0.5F, 0.5F).setTrackingRange(4).setUpdateInterval(1).setShouldReceiveVelocityUpdates(true)
+		.<MagmaBulletEntity>of(MagmaBulletEntity::new, MobCategory.MISC).fireImmune().sized(0.5F, 0.5F).eyeHeight(0.15F).setTrackingRange(4).setUpdateInterval(1).setShouldReceiveVelocityUpdates(true)
 		.build(ModUtils.createHMaGRL("magma_bullet").toString()));
 	public static final DeferredHolder<EntityType<?>, EntityType<EvilArrowEntity>> EVIL_ARROW = REGISTRY.register("evil_arrow", () -> EntityType.Builder
 		.<EvilArrowEntity>of(EvilArrowEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).setTrackingRange(4).setUpdateInterval(20).setShouldReceiveVelocityUpdates(true)

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "ECW",
+    "C W",
+    "ECW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:weeping_vines"
+    },
+    "E": {
+      "item": "hmag:evil_crystal"
+    },
+    "C": {
+      "item": "hmag:crimson_cuticula"
+    }
+  },
+  "result": {
+    "id": "hmag:crimson_bow"
+  }
+}

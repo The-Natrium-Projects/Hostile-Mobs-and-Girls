@@ -1,10 +1,11 @@
 package com.github.mechalopa.hmag;
 
 import com.github.mechalopa.hmag.registry.*;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.github.mechalopa.hmag.world.item.ModArmorMaterial;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
@@ -12,7 +13,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 
 @Mod(HMaG.MODID)
-@EventBusSubscriber(modid = HMaG.MODID)
 public class HMaG
 {
 	public static final String MODID = "hmag";
@@ -33,6 +33,8 @@ public class HMaG
 		ModEffects.REGISTRY.register(modEventBus);
 		ModEntityTypes.REGISTRY.register(modEventBus);
 		ModItems.REGISTRY.register(modEventBus);
+		ModArmorMaterial.REG.register(modEventBus);
+		ModLootItemConditions.REGISTRY.register(modEventBus);
 		ModLootModifiers.REGISTRY.register(modEventBus);
 		ModParticleTypes.REGISTRY.register(modEventBus);
 		ModPotions.REGISTRY.register(modEventBus);
@@ -42,7 +44,6 @@ public class HMaG
 		ModStructureModifiers.REGISTRY.register(modEventBus);
 		ModDataComponentTypes.REGISTRY.register(modEventBus);
 
-        NeoForge.EVENT_BUS.register(this);
 		NeoForge.EVENT_BUS.register(new ModEvents());
 	}
 }

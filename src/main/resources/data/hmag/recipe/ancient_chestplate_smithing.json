@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "hmag:ancient_stone_block"
+  },
+  "base": {
+    "item": "minecraft:diamond_chestplate"
+  },
+  "result": {
+    "id": "hmag:ancient_chestplate"
+  },
+  "template": {
+    "item": "hmag:evil_crystal_upgrade_smithing_template"
+  }
+}

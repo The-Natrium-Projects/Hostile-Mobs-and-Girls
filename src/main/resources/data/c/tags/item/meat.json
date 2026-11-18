@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#c:meat/cooked",
+    "#c:meat/raw"
+  ]
+}

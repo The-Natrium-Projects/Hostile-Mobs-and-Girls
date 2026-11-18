@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:haunting",
+  "ingredients": [
+    {
+      "item": "hmag:ender_plasm"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:ghast_tear"
+    }
+  ]
+}

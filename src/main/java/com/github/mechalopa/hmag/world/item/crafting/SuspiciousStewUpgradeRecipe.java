@@ -1,21 +1,17 @@
 package com.github.mechalopa.hmag.world.item.crafting;
 
-import com.github.mechalopa.hmag.HMaG;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.github.mechalopa.hmag.registry.ModDataComponentTypes;
 import com.github.mechalopa.hmag.registry.ModRecipes;
 import com.github.mechalopa.hmag.util.ModTags;
-import com.github.mechalopa.hmag.util.ModUtils;
-import com.google.common.base.Strings;
 
-import net.minecraft.ResourceLocationException;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.SuspiciousStewEffects;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
@@ -24,14 +20,12 @@ import net.minecraft.world.level.Level;
 
 public class SuspiciousStewUpgradeRecipe extends CustomRecipe
 {
-	public static final String UPGRADED_KEY = HMaG.MODID + ".upgraded";
-
 	public SuspiciousStewUpgradeRecipe(CraftingBookCategory category)
 	{
 		super(category);
 	}
 
-    @Override
+	@Override
 	public boolean matches(CraftingInput inv, Level level)
 	{
 		boolean flag = false;
@@ -43,7 +37,7 @@ public class SuspiciousStewUpgradeRecipe extends CustomRecipe
 
 			if (!stack.isEmpty())
 			{
-				if (stack.is(Items.SUSPICIOUS_STEW) && (stack.hasTag() && !stack.getTag().getBoolean(UPGRADED_KEY)) && !flag)
+				if (stack.is(Items.SUSPICIOUS_STEW) && (stack.has(DataComponents.SUSPICIOUS_STEW_EFFECTS) && !stack.getOrDefault(ModDataComponentTypes.SUSPICIOUS_STEW_UPGRADED, false)) && !flag)
 				{
 					flag = true;
 				}
@@ -63,11 +57,11 @@ public class SuspiciousStewUpgradeRecipe extends CustomRecipe
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess)
+	public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries)
 	{
 		ItemStack stack = ItemStack.EMPTY;
 
-		for (int i = 0; i < inv.getContainerSize(); ++i)
+		for (int i = 0; i < inv.size(); ++i)
 		{
 			ItemStack stack1 = inv.getItem(i);
 
@@ -80,61 +74,26 @@ public class SuspiciousStewUpgradeRecipe extends CustomRecipe
 
 		if (!stack.isEmpty())
 		{
-			CompoundTag compoundtag = stack.getOrCreateTag();
-			compoundtag.putBoolean(UPGRADED_KEY, true);
+			stack.set(ModDataComponentTypes.SUSPICIOUS_STEW_UPGRADED, true);
+			SuspiciousStewEffects effects = stack.get(DataComponents.SUSPICIOUS_STEW_EFFECTS);
 
-			if (compoundtag.contains("Effects"))
+			if (effects != null)
 			{
-				ListTag listtag = compoundtag.getList("Effects", 10);
-				ItemStack stack2 = stack.copy();
-				CompoundTag compoundtag1 = stack2.getOrCreateTag();
-				compoundtag1.remove("Effects");
-				ListTag listtag1 = compoundtag1.getList("Effects", 9);
+				List<SuspiciousStewEffects.Entry> list = new ArrayList<>();
 
-				for (int i = 0; i < listtag.size(); ++i)
+				for (SuspiciousStewEffects.Entry entry : effects.effects())
 				{
-					int j = 0;
-					CompoundTag compoundtag2 = listtag.getCompound(i);
+					final int j = entry.duration();
 
-					if (compoundtag2.contains("EffectDuration"))
+					if (j > 0)
 					{
-						j = compoundtag2.getInt("EffectDuration");
-					}
-
-					byte b0 = compoundtag2.getByte("EffectId");
-					MobEffect mobeffect = MobEffect.byId(b0);
-					String name = compoundtag2.getString("forge:effect_id");
-
-					if (!Strings.isNullOrEmpty(name))
-					{
-						try
-						{
-							mobeffect = BuiltInRegistries.MOB_EFFECT.get(ModUtils.createRL(name));
-						}
-						catch (ResourceLocationException e){}
-					}
-
-					if (mobeffect != null && j > 0)
-					{
-						CompoundTag compoundtag3 = new CompoundTag();
-						compoundtag3.putByte("EffectId", b0);
-						ResourceLocation mobeffectid = BuiltInRegistries.MOB_EFFECT.getKey(mobeffect);
-
-						if (mobeffectid != null)
-						{
-							name = mobeffectid.toString();
-						}
-
-						compoundtag3.putString("forge:effect_id", name);
-						compoundtag3.putInt("EffectDuration", mobeffect.isInstantenous() ? j + 5 : j * 5);
-						listtag1.add(compoundtag3);
+						list.add(new SuspiciousStewEffects.Entry(entry.effect(), entry.effect().value().isInstantenous() ? j + 5 : j * 5));
 					}
 				}
 
-				if (!listtag1.isEmpty())
+				if (!list.isEmpty())
 				{
-					compoundtag1.put("Effects", listtag1);
-					return stack2;
+					stack.set(DataComponents.SUSPICIOUS_STEW_EFFECTS, new SuspiciousStewEffects(list));
 				}
 			}
 		}

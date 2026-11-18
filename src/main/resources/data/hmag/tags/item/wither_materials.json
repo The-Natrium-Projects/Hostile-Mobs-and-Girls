@@ -1,0 +1,55 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wither_rose",
+    "#c:wither_bones",
+    {
+      "id": "#c:wither_bones",
+      "required": false
+    },
+    {
+      "id": "#c:bones/wither",
+      "required": false
+    },
+    {
+      "id": "reliquary:withered_rib",
+      "required": false
+    },
+    {
+      "id": "wstweaks:fragment",
+      "required": false
+    },
+    {
+      "id": "witherproofed:withered_powder",
+      "required": false
+    },
+    {
+      "id": "eidolon:withered_heart",
+      "required": false
+    },
+    {
+      "id": "lookinsharp:withering_artifact",
+      "required": false
+    },
+    {
+      "id": "grimoireofgaia:withered_brain",
+      "required": false
+    },
+    {
+      "id": "majruszsdifficulty:cerberus_fang",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:withered_horn",
+      "required": false
+    },
+    {
+      "id": "kaleidoscope_nether:wither_rib",
+      "required": false
+    },
+    {
+      "id": "hexfortress:wither_skull_fragment",
+      "required": false
+    }
+  ]
+}

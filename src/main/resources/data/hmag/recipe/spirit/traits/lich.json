@@ -1,0 +1,21 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "sprit"
+    }
+  ],
+  "type": "spirit:mob_trait",
+  "entity": "hmag:lich",
+  "traits": [
+    {
+      "type": "spirit:potion_effect",
+      "effects": [
+        {
+          "effect": "minecraft:weakness",
+          "duration": 150
+        }
+      ]
+    }
+  ]
+}

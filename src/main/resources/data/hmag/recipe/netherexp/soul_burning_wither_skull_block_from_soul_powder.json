@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "netherexp:burning_wither_skull_block"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "netherexp:soul_burning_wither_skull_block"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "netherexp:burning_wither_skull_block"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "netherexp:soul_burning_wither_skull_block"
+  }
+}

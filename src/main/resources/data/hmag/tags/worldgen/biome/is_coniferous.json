@@ -3,11 +3,11 @@
   "values": [
     "#minecraft:is_taiga",
     {
-      "id": "#forge:is_coniferous",
+      "id": "#c:is_coniferous",
       "required": false
     },
     {
-      "id": "#forge:is_taiga",
+      "id": "#c:is_taiga",
       "required": false
     },
     {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.mechalopa.hmag.util.ModTags;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.Level;
 
 public class RandomberryItem extends Item
 {
-	private static List<MobEffect> RANDOMBERRY_EFFECTS;
+	private static List<Holder<MobEffect>> RANDOMBERRY_EFFECTS;
 
 	public RandomberryItem(Item.Properties builder)
 	{
@@ -30,7 +31,7 @@ public class RandomberryItem extends Item
 		{
 			if (RANDOMBERRY_EFFECTS != null && !RANDOMBERRY_EFFECTS.isEmpty())
 			{
-				MobEffect effect = RANDOMBERRY_EFFECTS.get(livingEntity.getRandom().nextInt(RANDOMBERRY_EFFECTS.size()));
+				Holder<MobEffect> effect = RANDOMBERRY_EFFECTS.get(livingEntity.getRandom().nextInt(RANDOMBERRY_EFFECTS.size()));
 
 				if (effect != null)
 				{
@@ -44,8 +45,8 @@ public class RandomberryItem extends Item
 
 	public static void refreshEffectList()
 	{
-		RANDOMBERRY_EFFECTS = BuiltInRegistries.MOB_EFFECT.getValues().stream().filter(p -> {
-			return ModTags.checkTagContains(p, ModTags.MobEffectTags.RANDOMBERRY_GIVES);
-		}).toList();
+		RANDOMBERRY_EFFECTS = BuiltInRegistries.MOB_EFFECT.holders().filter(p -> {
+			return p.is(ModTags.MobEffectTags.RANDOMBERRY_GIVES);
+		}).<Holder<MobEffect>>map(p -> p).toList();
 	}
 }

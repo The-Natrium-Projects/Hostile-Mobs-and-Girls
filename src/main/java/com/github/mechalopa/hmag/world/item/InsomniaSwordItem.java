@@ -1,15 +1,11 @@
 package com.github.mechalopa.hmag.world.item;
 
 import java.util.List;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
 
 import com.github.mechalopa.hmag.registry.ModDataComponentTypes;
 import com.github.mechalopa.hmag.util.ModTags;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -24,17 +20,15 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class InsomniaSwordItem extends ModSwordItem implements ILevelItem
 {
-	public static final UUID INSOMNIA_SWORD_ATTACK_DAMAGE_UUID = UUID.fromString("04C38766-C1A5-31D4-410B-C6B4BE3B7DD2");
 
 	public InsomniaSwordItem(Tier tier, Properties builder)
 	{
@@ -68,7 +62,7 @@ public class InsomniaSwordItem extends ModSwordItem implements ILevelItem
 	{
 		if (livingEntity instanceof Player)
 		{
-			if (this.getUseDuration(stack) - count < 8)
+			if (this.getUseDuration(stack, livingEntity) - count < 8)
 			{
 				return;
 			}
@@ -109,14 +103,13 @@ public class InsomniaSwordItem extends ModSwordItem implements ILevelItem
 	}
 
 	@Override
-	public int getUseDuration(ItemStack stack)
+	public int getUseDuration(ItemStack stack, LivingEntity entity)
 	{
 		return 72000;
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag)
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> list, TooltipFlag tooltipFlag)
 	{
 		final int i = ILevelItem.getItemLevel(stack);
 		list.add(Component.translatable("text." + ILevelItem.LEVEL_KEY, i + 1).withStyle(i >= 5 ? ChatFormatting.LIGHT_PURPLE : (i >= 4 ? ChatFormatting.AQUA : (i >= 2 ? ChatFormatting.YELLOW : (i <= 0 ? ChatFormatting.RED : ChatFormatting.GRAY)))));

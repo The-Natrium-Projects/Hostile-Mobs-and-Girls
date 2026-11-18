@@ -1,0 +1,29 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "cyclic"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "cyclic:crusher"
+    }
+  ],
+  "type": "cyclic:crusher",
+  "bonus": {
+    "count": 1,
+    "item": "minecraft:pink_dye"
+  },
+  "energy": {
+    "rfpertick": 10,
+    "ticks": 100
+  },
+  "input": {
+    "item": "hmag:mysterious_petal"
+  },
+  "percent": 50,
+  "result": {
+    "count": 3,
+    "item": "minecraft:pink_dye"
+  }
+}

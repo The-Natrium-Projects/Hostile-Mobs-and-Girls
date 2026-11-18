@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "spirit:soul_powder"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "spirit:soul_powder"
+    },
+    {
+      "item": "spirit:soul_powder"
+    },
+    {
+      "item": "spirit:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "hmag:soul_powder",
+    "count": 2
+  }
+}

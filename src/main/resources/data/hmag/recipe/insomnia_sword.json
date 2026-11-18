@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "EDD",
+    "YXD",
+    "BYE"
+  ],
+  "key": {
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "B": {
+      "tag": "c:bones"
+    },
+    "E": {
+      "item": "hmag:evil_crystal"
+    },
+    "X": {
+      "tag": "c:gems/emerald"
+    },
+    "Y": {
+      "item": "hmag:dyssomnia_skin"
+    }
+  },
+  "result": {
+    "id": "hmag:insomnia_sword"
+  }
+}

@@ -12,7 +12,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
@@ -24,7 +23,7 @@ public record ModAddSpawnsBiomeModifier(List<List<ModAddSpawnsBiomeModifier.Biom
 {
 	public static final Supplier<MapCodec<ModAddSpawnsBiomeModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.mapCodec(builder -> builder.group(
 			BiomeProp.CODEC.listOf().listOf().fieldOf("biomes").forGetter(ModAddSpawnsBiomeModifier::biomePropLists),
-			new ExtraCodecs.EitherCodec<>(SpawnerData.CODEC.listOf(), SpawnerData.CODEC).xmap(either -> either.map(Function.identity(), List::of), list -> list.size() == 1 ? Either.right(list.get(0)) : Either.left(list)).fieldOf("spawners").forGetter(ModAddSpawnsBiomeModifier::spawners),
+			Codec.either(SpawnerData.CODEC.listOf(), SpawnerData.CODEC).xmap(either -> either.map(Function.identity(), List::of), list -> list.size() == 1 ? Either.right(list.get(0)) : Either.left(list)).fieldOf("spawners").forGetter(ModAddSpawnsBiomeModifier::spawners),
 			Codec.DOUBLE.optionalFieldOf("energy_budget", -1.0D).forGetter(ModAddSpawnsBiomeModifier::energyBudget),
 			Codec.DOUBLE.optionalFieldOf("charge", -1.0D).forGetter(ModAddSpawnsBiomeModifier::charge))
 			.apply(builder, ModAddSpawnsBiomeModifier::new)));

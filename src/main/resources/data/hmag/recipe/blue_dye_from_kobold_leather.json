@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "blue_dye",
+  "ingredients": [
+    {
+      "item": "hmag:kobold_leather"
+    }
+  ],
+  "result": {
+    "id": "minecraft:blue_dye",
+    "count": 3
+  }
+}

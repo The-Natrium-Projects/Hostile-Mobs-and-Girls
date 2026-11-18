@@ -2,8 +2,6 @@ package com.github.mechalopa.hmag.client.renderer;
 
 import java.util.Map;
 
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
 
 import com.github.mechalopa.hmag.client.util.ModClientUtils;
 import com.github.mechalopa.hmag.world.entity.projectile.MagicBulletEntity;
@@ -62,20 +60,18 @@ public class MagicBulletRenderer extends EntityRenderer<MagicBulletEntity>
 		float f1 = 0.5F + (entity.getVariant() == MagicBulletEntity.Variant.NEMESIS ? Mth.sin(f * 0.8F) * 0.03F : Mth.sin(f * 0.4F) * 0.09F);
 		poseStack.scale(f1, f1, f1);
 		PoseStack.Pose posestack$pose = poseStack.last();
-		Matrix4f matrix4f = posestack$pose.pose();
-		Matrix3f matrix3f = posestack$pose.normal();
 		VertexConsumer vertexconsumer = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(entity)));
-		this.drawVertex(vertexconsumer, matrix4f, matrix3f, packedLight, 0.0F, 0, 0, 1);
-		this.drawVertex(vertexconsumer, matrix4f, matrix3f, packedLight, 1.0F, 0, 1, 1);
-		this.drawVertex(vertexconsumer, matrix4f, matrix3f, packedLight, 1.0F, 1, 1, 0);
-		this.drawVertex(vertexconsumer, matrix4f, matrix3f, packedLight, 0.0F, 1, 0, 0);
+		this.drawVertex(vertexconsumer, posestack$pose, packedLight, 0.0F, 0, 0, 1);
+		this.drawVertex(vertexconsumer, posestack$pose, packedLight, 1.0F, 0, 1, 1);
+		this.drawVertex(vertexconsumer, posestack$pose, packedLight, 1.0F, 1, 1, 0);
+		this.drawVertex(vertexconsumer, posestack$pose, packedLight, 0.0F, 1, 0, 0);
 		poseStack.popPose();
 		super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
 	}
 
-	private void drawVertex(VertexConsumer vertexConsumer, Matrix4f matrix, Matrix3f normals, int packedLightIn, float f, int i, int j, int k)
+	private void drawVertex(VertexConsumer vertexConsumer, PoseStack.Pose pose, int packedLightIn, float f, int i, int j, int k)
 	{
-		vertexConsumer.vertex(matrix, f - 0.5F, (float)i - 0.25F, 0.0F).color(255, 255, 255, 255).uv((float)j, (float)k).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLightIn).normal(normals, 0.0F, 1.0F, 0.0F).endVertex();
+		vertexConsumer.addVertex(pose, f - 0.5F, (float)i - 0.25F, 0.0F).setColor(255, 255, 255, 255).setUv((float)j, (float)k).setOverlay(OverlayTexture.NO_OVERLAY).setLight(packedLightIn).setNormal(pose, 0.0F, 1.0F, 0.0F);
 	}
 
 	@Override

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "hmag:evil_crystal_fragment"
+    }
+  },
+  "result": {
+    "id": "hmag:evil_crystal"
+  }
+}

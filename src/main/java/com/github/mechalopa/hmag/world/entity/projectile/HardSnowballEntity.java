@@ -44,7 +44,7 @@ public class HardSnowballEntity extends ModProjectileItemEntity
 	@OnlyIn(Dist.CLIENT)
 	private ParticleOptions getParticle()
 	{
-		ItemStack stack = this.getItemRaw();
+		ItemStack stack = this.getItem();
 		return stack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemParticleOption(ParticleTypes.ITEM, stack);
 	}
 

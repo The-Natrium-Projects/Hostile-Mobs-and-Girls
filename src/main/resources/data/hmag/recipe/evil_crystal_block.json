@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "hmag:evil_crystal"
+    }
+  },
+  "result": {
+    "id": "hmag:evil_crystal_block"
+  }
+}

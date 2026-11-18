@@ -1,0 +1,55 @@
+{
+  "replace": false,
+  "values": [
+    "#c:nuggets/nether_star",
+    "#hmag:dragon_scales",
+    {
+      "id": "#c:ingots/manyullyn",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/terrasteel",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/manyullyn",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/terrasteel",
+      "required": false
+    },
+    {
+      "id": "turtlemancy:fragment_of_bedrock",
+      "required": false
+    },
+    {
+      "id": "#c:nuggets/bedrock",
+      "required": false
+    },
+    {
+      "id": "#c:nuggets/bedrockium",
+      "required": false
+    },
+    {
+      "id": "#c:nuggets/enderite",
+      "required": false
+    },
+    {
+      "id": "#c:nuggets/bedrock",
+      "required": false
+    },
+    {
+      "id": "#c:nuggets/bedrockium",
+      "required": false
+    },
+    {
+      "id": "#c:nuggets/enderite",
+      "required": false
+    },
+    {
+      "id": "enderite:enderite_nugget",
+      "required": false
+    }
+  ]
+}

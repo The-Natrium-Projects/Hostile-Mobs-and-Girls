@@ -36,12 +36,13 @@
       "function": "minecraft:furnace_smelt"
     },
     {
+      "function": "minecraft:enchanted_count_increase",
+      "enchantment": "minecraft:looting",
       "count": {
         "max": 1,
         "min": 0,
         "type": "minecraft:uniform"
-      },
-      "function": "minecraft:looting_enchant"
+      }
     }
   ],
   "addition": "hmag:ravager_meat"

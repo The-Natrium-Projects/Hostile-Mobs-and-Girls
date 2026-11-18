@@ -26,9 +26,9 @@ public class ModFoodItem extends ModItem
 	}
 
 	@Override
-	public int getUseDuration(ItemStack stack)
+	public int getUseDuration(ItemStack stack, LivingEntity entity)
 	{
-		return this.eatDuration > 0 ? this.eatDuration : super.getUseDuration(stack);
+		return this.eatDuration > 0 ? this.eatDuration : super.getUseDuration(stack, entity);
 	}
 
 	@Override

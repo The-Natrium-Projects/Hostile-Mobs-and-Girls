@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "bonezone"
+    }
+  ],
+  "type": "bonezone:mobsanding",
+  "condition": "hmag:giant_mummy",
+  "drops": {
+    "result": "minecraft:paper",
+    "chance": 0.05
+  }
+}

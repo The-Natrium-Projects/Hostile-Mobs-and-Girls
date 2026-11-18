@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:entity_melting",
+  "damage": 4,
+  "entity": {
+    "types": [
+      "hmag:glaryad",
+      "hmag:alraune"
+    ]
+  },
+  "result": {
+    "amount": 50,
+    "fluid": "tconstruct:molten_glass"
+  }
+}

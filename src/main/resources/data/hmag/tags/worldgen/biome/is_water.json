@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "#forge:is_water",
+      "id": "#c:is_water",
       "required": false
     },
     {

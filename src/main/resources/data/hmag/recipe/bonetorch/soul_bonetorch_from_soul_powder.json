@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "bonetorch:bonetorch"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "bonetorch:soul_bonetorch"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bonetorch:bonetorch"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "bonetorch:soul_bonetorch"
+  }
+}

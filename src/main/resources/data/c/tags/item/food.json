@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#c:food/golden",
+    "#c:food/meat",
+    "#c:food/pie",
+    "#c:food/seafood"
+  ]
+}

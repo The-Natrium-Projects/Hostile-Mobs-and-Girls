@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:heart_of_the_sea"
+    }
+  },
+  "result": {
+    "id": "hmag:heart_of_the_sea_block"
+  }
+}

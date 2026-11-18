@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:severing",
+  "entity": {
+    "types": [
+      "hmag:slime_girl",
+      "hmag:magical_slime"
+    ]
+  },
+  "looting_bonus": 0.01,
+  "per_level_chance": 0.05,
+  "result": "minecraft:slime_ball"
+}

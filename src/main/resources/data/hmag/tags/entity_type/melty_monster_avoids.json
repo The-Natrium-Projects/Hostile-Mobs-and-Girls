@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:strider",
+    {
+      "id": "#c:striders",
+      "required": false
+    },
+    {
+      "id": "#c:striders",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:straddler",
+      "required": false
+    }
+  ]
+}

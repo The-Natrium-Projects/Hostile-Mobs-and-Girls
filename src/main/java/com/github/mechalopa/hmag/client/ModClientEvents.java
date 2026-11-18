@@ -1,9 +1,7 @@
 package com.github.mechalopa.hmag.client;
 
-import com.github.mechalopa.hmag.HMaG;
 import com.github.mechalopa.hmag.registry.ModDataComponentTypes;
 import com.github.mechalopa.hmag.world.item.ModBowItem;
-import com.github.mechalopa.hmag.world.item.crafting.SuspiciousStewUpgradeRecipe;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -12,12 +10,9 @@ import net.minecraft.world.item.Items;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
-@EventBusSubscriber(modid = HMaG.MODID, value = Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)
 public class ModClientEvents
 {
@@ -56,10 +51,9 @@ public class ModClientEvents
 	public void addItemTooltip(final ItemTooltipEvent event)
 	{
 		if (!event.getToolTip().isEmpty()
-            && event.getItemStack() != null
-            && event.getItemStack().is(Items.SUSPICIOUS_STEW)
-            && !event.getItemStack().getComponents().isEmpty()
-            && event.getItemStack().getComponents().getOrDefault(ModDataComponentTypes.SUSPICIOUS_STEW_UPGRADE_KEY.value(), false))
+			&& event.getItemStack() != null
+			&& event.getItemStack().is(Items.SUSPICIOUS_STEW)
+			&& event.getItemStack().getOrDefault(ModDataComponentTypes.SUSPICIOUS_STEW_UPGRADED, false))
 		{
 			event.getToolTip().add(UPGRADED_SUSPICIOUS_STEW_TOOLTIP);
 		}

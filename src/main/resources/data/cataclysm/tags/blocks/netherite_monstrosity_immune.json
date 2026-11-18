@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#forge:storage_blocks/netherite_scrap",
-    "#hmag:reinforced_blocks",
-    "hmag:nether_star_block"
-  ]
-}

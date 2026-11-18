@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "LNN",
+    "AXN",
+    "CAL"
+  ],
+  "key": {
+    "N": {
+      "tag": "c:ingots/netherite"
+    },
+    "X": {
+      "tag": "c:nether_stars"
+    },
+    "A": {
+      "item": "hmag:ancient_stone_block"
+    },
+    "L": {
+      "item": "hmag:lightning_particle"
+    },
+    "C": {
+      "item": "hmag:crimson_cuticula"
+    }
+  },
+  "result": {
+    "id": "hmag:nemesis_blade"
+  }
+}

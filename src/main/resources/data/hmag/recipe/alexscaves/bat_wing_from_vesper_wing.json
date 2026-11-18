@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "alexscaves:vesper_wing"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "alexscaves:vesper_wing"
+    },
+    {
+      "item": "alexscaves:vesper_wing"
+    }
+  ],
+  "result": {
+    "id": "hmag:bat_wing",
+    "count": 3
+  }
+}

@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "#forge:is_cold",
+      "id": "#c:is_cold",
       "required": false
     },
     {

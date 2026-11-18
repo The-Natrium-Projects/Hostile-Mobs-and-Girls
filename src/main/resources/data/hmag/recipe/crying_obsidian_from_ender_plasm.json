@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " # ",
+    "#X#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "tag": "c:obsidians"
+    },
+    "X": {
+      "item": "hmag:ender_plasm"
+    }
+  },
+  "result": {
+    "id": "minecraft:crying_obsidian",
+    "count": 4
+  }
+}

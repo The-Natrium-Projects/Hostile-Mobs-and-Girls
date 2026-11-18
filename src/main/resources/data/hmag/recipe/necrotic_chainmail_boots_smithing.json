@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "hmag:necrofiber"
+  },
+  "base": {
+    "item": "minecraft:chainmail_boots"
+  },
+  "result": {
+    "id": "hmag:necrotic_chainmail_boots"
+  },
+  "template": {
+    "item": "hmag:evil_crystal_upgrade_smithing_template"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:entity_melting",
+  "damage": 4,
+  "entity": {
+    "type": "hmag:slime_girl"
+  },
+  "result": {
+    "amount": 25,
+    "tag": "c:slime"
+  }
+}

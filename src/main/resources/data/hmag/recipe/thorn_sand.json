@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "X#X",
+    "#Y#",
+    "X#X"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:soul_sand"
+    },
+    "X": {
+      "tag": "c:cactus"
+    },
+    "Y": {
+      "item": "minecraft:golden_sword"
+    }
+  },
+  "result": {
+    "id": "hmag:thorn_sand",
+    "count": 4
+  }
+}

@@ -2,13 +2,7 @@ package com.github.mechalopa.hmag.world.item;
 
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.ImmutableMultimap.Builder;
-import com.google.common.collect.Multimap;
-
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
@@ -16,15 +10,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.neoforged.neoforge.common.SimpleTier;
 
 public class ModSwordItem extends SwordItem
 {
-	private final float attackDamage;
-	private final float attackSpeed;
-	private final int maxDamage;
-	private final int enchantability;
-	private final Multimap<Attribute, AttributeModifier> attributeModifiers;
+	private final Tier baseTier;
 
 	public ModSwordItem(Tier tier, Item.Properties builder)
 	{
@@ -38,44 +30,31 @@ public class ModSwordItem extends SwordItem
 
 	public ModSwordItem(Tier tier, float attackDamage, float attackSpeed, int maxDamage, int enchantability, Item.Properties builder)
 	{
-		super(tier, Mth.floor(attackDamage), attackSpeed, builder);
-		this.attackDamage = attackDamage + tier.getAttackDamageBonus();
-		this.attackSpeed = attackSpeed;
-		Builder<Attribute, AttributeModifier> builder1 = ImmutableMultimap.builder();
-		builder1.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
-		builder1.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", this.attackSpeed, AttributeModifier.Operation.ADDITION));
-		this.attributeModifiers = builder1.build();
-		this.maxDamage = maxDamage;
-		this.enchantability = enchantability;
+		super(createTier(tier, maxDamage, enchantability), builder.attributes(createAttributes(tier, attackDamage, attackSpeed)));
+		this.baseTier = tier;
 	}
 
-	@Override
-	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot)
+	private static Tier createTier(Tier tier, int maxDamage, int enchantability)
 	{
-		return equipmentSlot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
+		if (tier.getUses() == maxDamage && tier.getEnchantmentValue() == enchantability)
+		{
+			return tier;
+		}
+
+		return new SimpleTier(tier.getIncorrectBlocksForDrops(), maxDamage, tier.getSpeed(), tier.getAttackDamageBonus(), enchantability, tier::getRepairIngredient);
 	}
 
-	@Override
-	public float getDamage()
+	public static ItemAttributeModifiers createAttributes(Tier tier, float attackDamage, float attackSpeed)
 	{
-		return this.attackDamage;
-	}
-
-	@Override
-	public int getMaxDamage(ItemStack stack)
-	{
-		return this.maxDamage;
-	}
-
-	@Override
-	public int getEnchantmentValue()
-	{
-		return this.enchantability;
+		return ItemAttributeModifiers.builder()
+				.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, attackDamage + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+				.add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, attackSpeed, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+				.build();
 	}
 
 	@Override
 	public int getBurnTime(ItemStack stack, @Nullable RecipeType<?> recipeType)
 	{
-		return this.getTier() == Tiers.WOOD ? 200 : super.getBurnTime(stack, recipeType);
+		return this.baseTier == Tiers.WOOD ? 200 : super.getBurnTime(stack, recipeType);
 	}
 }

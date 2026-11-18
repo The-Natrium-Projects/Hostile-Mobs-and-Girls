@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:shulker_shell"
+    }
+  },
+  "result": {
+    "id": "hmag:shulker_shell_block"
+  }
+}

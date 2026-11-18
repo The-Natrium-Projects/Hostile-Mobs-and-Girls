@@ -1,0 +1,18 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:melting",
+  "ingredient": {
+    "item": "hmag:burning_core"
+  },
+  "result": {
+    "amount": 1000,
+    "tag": "c:magma"
+  },
+  "temperature": 300,
+  "time": 127
+}

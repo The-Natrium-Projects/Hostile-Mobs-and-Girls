@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:fruits/apple",
+    "#c:fruits/lemon",
+    "hmag:cureberry",
+    "hmag:randomberry",
+    "hmag:exp_berry"
+  ]
+}

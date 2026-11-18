@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "C": {
+      "tag": "minecraft:coals"
+    },
+    "S": {
+      "item": "hmag:evil_crystal_fragment"
+    }
+  },
+  "pattern": [
+    "#S#",
+    "#C#",
+    "###"
+  ],
+  "result": {
+    "id": "hmag:evil_crystal_upgrade_smithing_template",
+    "count": 4
+  },
+  "show_notification": true
+}

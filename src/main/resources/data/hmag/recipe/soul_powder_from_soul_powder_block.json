@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hmag:soul_powder_block"
+    }
+  ],
+  "result": {
+    "id": "hmag:soul_powder",
+    "count": 9
+  }
+}

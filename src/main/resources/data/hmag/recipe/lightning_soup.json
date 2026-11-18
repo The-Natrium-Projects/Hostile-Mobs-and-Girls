@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hmag:spectral_soup"
+    },
+    {
+      "item": "minecraft:glow_ink_sac"
+    },
+    {
+      "tag": "c:dusts/blaze"
+    },
+    {
+      "tag": "c:gunpowders"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "item": "hmag:lightning_particle"
+    },
+    {
+      "item": "hmag:lightning_particle"
+    }
+  ],
+  "result": {
+    "id": "hmag:lightning_soup"
+  }
+}

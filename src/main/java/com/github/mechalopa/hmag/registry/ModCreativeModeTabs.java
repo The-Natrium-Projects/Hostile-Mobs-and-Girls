@@ -5,7 +5,6 @@ import com.github.mechalopa.hmag.util.ModUtils;
 import com.github.mechalopa.hmag.world.item.ILevelItem;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -15,8 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -30,8 +27,7 @@ public class ModCreativeModeTabs
 			if (item.get() instanceof ILevelItem)
 			{
 				ItemStack stack = new ItemStack(item.get());
-				CompoundTag compoundnbt = stack.getOrCreateTag();
-				compoundnbt.putByte(ILevelItem.LEVEL_KEY, (byte)((ILevelItem)item.get()).getMaxLevel());
+				stack.set(ModDataComponentTypes.ITEM_LEVEL, ((ILevelItem)item.get()).getMaxLevel());
 				output.accept(stack);
 			}
 			else
@@ -50,14 +46,8 @@ public class ModCreativeModeTabs
 		{
 			for (DeferredHolder<Potion, ? extends Potion> potion : ModPotions.getPotionRegistry().getEntries())
 			{
-				output.accept(ModUtils.getPotionStack(potion.get(), potionItem));
+				output.accept(ModUtils.getPotionStack(potion, potionItem));
 			}
 		}
 	}).build());
-
-	@SubscribeEvent
-	public static void register(IEventBus eventBus)
-	{
-		REGISTRY.register(eventBus);
-	}
 }

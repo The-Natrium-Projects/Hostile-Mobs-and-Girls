@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#c:nuggets/copper",
+    "#c:nuggets/diamond",
+    "#c:nuggets/emerald",
+    "#c:nuggets/netherite_scrap",
+    "#c:nuggets/netherite",
+    "#c:nuggets/nether_star"
+  ]
+}

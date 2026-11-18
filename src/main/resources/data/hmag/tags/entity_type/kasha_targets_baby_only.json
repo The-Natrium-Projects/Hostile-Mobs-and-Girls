@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:hoglin",
+    {
+      "id": "#c:hoglins",
+      "required": false
+    },
+    {
+      "id": "#c:hoglins",
+      "required": false
+    },
+    {
+      "id": "species:wraptor",
+      "required": false
+    },
+    {
+      "id": "bagusmob:hunter_boar",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:severing",
+  "entity": {
+    "types": [
+      "hmag:ghost",
+      "hmag:wither_ghost",
+      "hmag:banshee"
+    ]
+  },
+  "looting_bonus": 0.01,
+  "per_level_chance": 0.05,
+  "result": "hmag:soul_powder"
+}

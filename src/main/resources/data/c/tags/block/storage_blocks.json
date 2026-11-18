@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "#c:storage_blocks/blaze",
+    "#c:storage_blocks/blaze_powder",
+    "#c:storage_blocks/ender_eye",
+    "#c:storage_blocks/ghast_tear",
+    "#c:storage_blocks/prismarine",
+    "#c:storage_blocks/scute",
+    "#c:storage_blocks/netherite_scrap",
+    "#c:storage_blocks/nether_star",
+    "#c:storage_blocks/shulker_shell",
+    "#c:storage_blocks/nautilus_shell",
+    "#c:storage_blocks/heart_of_the_sea",
+    "#c:storage_blocks/echo_shard"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "ingredient": {
+    "item": "hmag:savagefang_meat"
+  },
+  "result": {
+    "id": "hmag:cooked_savagefang_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

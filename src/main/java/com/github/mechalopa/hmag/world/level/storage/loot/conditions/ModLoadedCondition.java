@@ -1,5 +1,6 @@
 package com.github.mechalopa.hmag.world.level.storage.loot.conditions;
 
+import com.github.mechalopa.hmag.registry.ModLootItemConditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -15,11 +16,6 @@ public class ModLoadedCondition implements LootItemCondition
             Codec.STRING.fieldOf("modid")
                 .forGetter(condition -> condition.modid)
         ).apply(instance, ModLoadedCondition::new));
-
-    // Replace the old TYPE declaration too.
-// Declare this AFTER CODEC.
-    public static final LootItemConditionType TYPE =
-        new LootItemConditionType(CODEC);
 	private final String modid;
 
 	private ModLoadedCondition(String modid)
@@ -30,7 +26,7 @@ public class ModLoadedCondition implements LootItemCondition
 	@Override
 	public LootItemConditionType getType()
 	{
-		return TYPE;
+		return ModLootItemConditions.MOD_LOADED.get();
 	}
 
 	@Override

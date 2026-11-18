@@ -5,7 +5,7 @@
     "minecraft:deep_dark",
     "minecraft:the_void",
     {
-      "id": "#forge:no_default_monsters",
+      "id": "#c:no_default_monsters",
       "required": false
     },
     {
