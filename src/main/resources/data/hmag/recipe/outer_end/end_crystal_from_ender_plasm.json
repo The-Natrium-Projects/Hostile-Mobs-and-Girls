@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "outer_end"
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "outer_end:crystal_blocks"
+      }
+    }
+  ],
+  "category": "misc",
+  "pattern": [
+    "GGG",
+    "GXG",
+    "GYG"
+  ],
+  "key": {
+    "X": {
+      "tag": "outer_end:crystal_blocks"
+    },
+    "Y": [
+      {
+        "item": "minecraft:ghast_tear"
+      },
+      {
+        "item": "hmag:ender_plasm"
+      }
+    ],
+    "G": {
+      "tag": "c:glass_blocks/colorless"
+    }
+  },
+  "result": {
+    "id": "minecraft:end_crystal"
+  }
+}

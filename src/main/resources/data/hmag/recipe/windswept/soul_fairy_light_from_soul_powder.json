@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "windswept:fairy_light"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "windswept:soul_fairy_light"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "windswept:fairy_light"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "windswept:soul_fairy_light"
+  }
+}

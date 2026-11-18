@@ -13,10 +13,8 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -195,11 +193,5 @@ public class MagmaBulletEntity extends ModDamagingProjectileEntity
 	protected ParticleOptions getTrailParticle()
 	{
 		return ParticleTypes.SMOKE;
-	}
-
-	@Override
-	protected float getEyeHeight(Pose pose, EntityDimensions size)
-	{
-		return 0.15F;
 	}
 }

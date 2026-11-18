@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#c:foods/apples",
+    "#c:foods/citrus_fruits",
+    "#c:foods/small_berries"
+  ]
+}

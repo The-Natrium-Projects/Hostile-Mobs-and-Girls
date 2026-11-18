@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "dungeonnowloading:soul_cloth"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "dungeonnowloading:soul_cloth"
+    },
+    {
+      "item": "dungeonnowloading:soul_cloth"
+    }
+  ],
+  "result": {
+    "id": "hmag:soul_powder",
+    "count": 2
+  }
+}

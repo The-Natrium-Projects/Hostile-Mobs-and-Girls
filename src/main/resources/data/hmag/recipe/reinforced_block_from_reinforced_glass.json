@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    [
+      {
+        "item": "hmag:reinforced_glass"
+      },
+      {
+        "item": "hmag:tinted_reinforced_glass"
+      }
+    ],
+    {
+      "tag": "c:stones"
+    }
+  ],
+  "result": {
+    "id": "hmag:reinforced_block"
+  }
+}

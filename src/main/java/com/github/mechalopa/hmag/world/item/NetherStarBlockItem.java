@@ -4,6 +4,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 public class NetherStarBlockItem extends BlockItem
@@ -14,8 +15,8 @@ public class NetherStarBlockItem extends BlockItem
 	}
 
 	@Override
-	public boolean canBeHurtBy(DamageSource damageSource)
+	public boolean canBeHurtBy(ItemStack stack, DamageSource damageSource)
 	{
-		return damageSource.is(DamageTypeTags.IS_EXPLOSION) ? false : super.canBeHurtBy(damageSource);
+		return damageSource.is(DamageTypeTags.IS_EXPLOSION) ? false : super.canBeHurtBy(stack, damageSource);
 	}
 }

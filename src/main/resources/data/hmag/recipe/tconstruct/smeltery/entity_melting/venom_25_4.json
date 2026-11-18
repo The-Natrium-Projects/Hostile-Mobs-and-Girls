@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:entity_melting",
+  "damage": 4,
+  "entity": {
+    "types": [
+      "hmag:spider_nest",
+      "hmag:scorpion"
+    ]
+  },
+  "result": {
+    "amount": 25,
+    "fluid": "tconstruct:venom"
+  }
+}

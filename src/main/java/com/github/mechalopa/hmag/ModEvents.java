@@ -1,7 +1,6 @@
 package com.github.mechalopa.hmag;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -14,9 +13,7 @@ import com.github.mechalopa.hmag.util.ModTags;
 import com.github.mechalopa.hmag.util.ModUtils;
 import com.github.mechalopa.hmag.world.item.AncientShieldItem;
 import com.github.mechalopa.hmag.world.item.ILevelItem;
-import com.github.mechalopa.hmag.world.item.InsomniaSwordItem;
 import com.github.mechalopa.hmag.world.item.ModArmorMaterial;
-import com.github.mechalopa.hmag.world.item.NemesisBladeItem;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
@@ -24,6 +21,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
@@ -49,8 +47,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.BasicItemListing;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -61,10 +57,12 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
-@EventBusSubscriber(modid = HMaG.MODID)
 public class ModEvents
 {
-	private static final UUID[] NECROTIC_CHAINMAIL_ARMOR_ATTACK_SPEED_UUIDS = new UUID[]{UUID.fromString("81D1E394-8B33-AC3D-325A-C8A03E757B51"), UUID.fromString("B4EFB0CA-2180-0043-0FF9-BE033CC510D5"), UUID.fromString("7FD9FBE7-0438-BF0F-F901-F961384F9591"), UUID.fromString("28E5C0B5-109B-339B-BE83-610B5B399256")};
+	private static final ResourceLocation INSOMNIA_SWORD_ATTACK_DAMAGE_ID = ModUtils.createHMaGRL("insomnia_sword.attack_damage");
+	private static final ResourceLocation NEMESIS_BLADE_ATTACK_DAMAGE_ID = ModUtils.createHMaGRL("nemesis_blade.attack_damage");
+	private static final ResourceLocation NEMESIS_BLADE_ATTACK_SPEED_ID = ModUtils.createHMaGRL("nemesis_blade.attack_speed");
+	private static final AttributeModifier NEMESIS_BLADE_MOVEMENT_SPEED_MODIFIER = new AttributeModifier(ModUtils.createHMaGRL("nemesis_blade.movement_speed"), -0.5F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
 	private static final Component INSOMNIA_ITEM_MESSAGE = Component.translatable("message.hmag.insomnia_item");
 
 	@SubscribeEvent
@@ -223,7 +221,7 @@ public class ModEvents
 	}
 
 	@SubscribeEvent(receiveCanceled = true)
-	public void onLivingTick(EntityTickEvent event)
+	public void onLivingTick(EntityTickEvent.Pre event)
 	{
 		if (event.getEntity() == null)
 		{
@@ -439,61 +437,111 @@ public class ModEvents
 			LivingEntity livingentity = event.getEntity();
 			MobEffect effect = event.getEffectInstance().getEffect().value();
 
-            if (effect == MobEffects.MOVEMENT_SLOWDOWN || effect == MobEffects.DIG_SLOWDOWN || effect == MobEffects.WEAKNESS) {
-                int i = 0;
+			if (effect == MobEffects.MOVEMENT_SLOWDOWN.value() || effect == MobEffects.DIG_SLOWDOWN.value() || effect == MobEffects.WEAKNESS.value())
+			{
+				int i = 0;
 
-                for (ItemStack stack : livingentity.getArmorSlots()) {
-                    if (!stack.isEmpty()) {
-                        Item item = stack.getItem();
+				for (ItemStack stack : livingentity.getArmorSlots())
+				{
+					if (!stack.isEmpty())
+					{
+						Item item = stack.getItem();
 
-						if (item instanceof ArmorItem armorItem && armorItem.getMaterial().value().equals(ModArmorMaterial.ANCIENT.get()))
+						if (item instanceof ArmorItem armorItem && armorItem.getMaterial().value() == ModArmorMaterial.ANCIENT.get())
 						{
 							++i;
 						}
 					}
 				}
 
-                if (!ModUtils.getHeldItem(livingentity, ModItems.ANCIENT_SHIELD.get()).isEmpty()) {
-                    ++i;
-                }
+				if (!ModUtils.getHeldItem(livingentity, ModItems.ANCIENT_SHIELD.get()).isEmpty())
+				{
+					++i;
+				}
 
-                if (i >= 4 || i > event.getEffectInstance().getAmplifier() + 1) {
-                    event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
-                }
-            } else if (effect == MobEffects.BLINDNESS) {
-                if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.getDelegate())) {
-                    event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
-                } else if (livingentity instanceof Player) {
-                    ItemStack stack1 = livingentity.getMainHandItem();
+				if (i >= 4 || i > event.getEffectInstance().getAmplifier() + 1)
+				{
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+				}
+			}
+			else if (effect == MobEffects.BLINDNESS.value())
+			{
+				if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE))
+				{
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+				}
+				else if (livingentity instanceof Player)
+				{
+					ItemStack stack1 = livingentity.getMainHandItem();
 
-                    if (!stack1.isEmpty() && stack1.getItem() == ModItems.INSOMNIA_SWORD.get() && ILevelItem.getItemLevel(stack1) > 0) {
-                        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
-                    }
-                } else if (effect == MobEffects.DARKNESS) {
-                    if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE.getDelegate())) {
-                        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
-                    }
-                } else if (effect == ModEffects.COMBUSTION.get()) {
-                    if (livingentity.fireImmune() || !ModUtils.getHeldItem(livingentity, ModItems.FORTRESS_SHIELD.get()).isEmpty()) {
-                        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
-                    }
-                } else if (effect == ModEffects.ENDER_RAGE.get()) {
-                    if (!livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_BLACKLIST) && (livingentity instanceof EnderMan || livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_WHITELIST))) {
-                        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
-                    }
-                }
-            }
-        }
-    }
+					if (!stack1.isEmpty() && stack1.getItem() == ModItems.INSOMNIA_SWORD.get() && ILevelItem.getItemLevel(stack1) > 0)
+					{
+						event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+					}
+				}
+			}
+			else if (effect == MobEffects.DARKNESS.value())
+			{
+				if (livingentity.hasEffect(ModEffects.DARKNESS_RESISTANCE))
+				{
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+				}
+			}
+			else if (effect == ModEffects.COMBUSTION.get())
+			{
+				if (livingentity.fireImmune() || !ModUtils.getHeldItem(livingentity, ModItems.FORTRESS_SHIELD.get()).isEmpty())
+				{
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+				}
+			}
+			else if (effect == ModEffects.ENDER_RAGE.get())
+			{
+				if (!livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_BLACKLIST) && (livingentity instanceof EnderMan || livingentity.getType().is(ModTags.EntityTypeTags.ENDER_RAGE_IMMUNE_WHITELIST)))
+				{
+					event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+				}
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void onItemAttributeModifier(ItemAttributeModifierEvent event)
 	{
-		if (!event.getItemStack().isEmpty())
+		ItemStack stack = event.getItemStack();
+
+		if (!stack.isEmpty())
 		{
-			if (event.getItemStack().getItem().equals(ModItems.ANCIENT_SHIELD.get()))
+			if (stack.getItem() instanceof ArmorItem armorItem && armorItem.getMaterial().value() == ModArmorMaterial.NECROTIC_CHAIN.get())
 			{
-				event.addModifier(Attributes.KNOCKBACK_RESISTANCE, AncientShieldItem.ANCIENT_SHIELD_KNOCKBACK_RESISTANCE_MODIFIER, EquipmentSlotGroup.OFFHAND);
+				EquipmentSlot slot = armorItem.getEquipmentSlot();
+				event.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(ModUtils.createHMaGRL("necrotic_chainmail_armor.attack_speed." + slot.getName()), 0.1F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), EquipmentSlotGroup.bySlot(slot));
+			}
+			else if (stack.getItem() == ModItems.INSOMNIA_SWORD.get())
+			{
+				final int level1 = ILevelItem.getItemLevel(stack);
+
+				if (level1 > 0)
+				{
+					event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(INSOMNIA_SWORD_ATTACK_DAMAGE_ID, level1 * 1.0F + 1.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+				}
+			}
+			else if (stack.getItem() == ModItems.NEMESIS_BLADE.get())
+			{
+				final int level2 = ILevelItem.getItemLevel(stack);
+
+				if (level2 > 0)
+				{
+					event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(NEMESIS_BLADE_ATTACK_DAMAGE_ID, level2 * 1.0F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+					event.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(NEMESIS_BLADE_ATTACK_SPEED_ID, level2 * 0.25F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+				}
+				else
+				{
+					event.addModifier(Attributes.MOVEMENT_SPEED, NEMESIS_BLADE_MOVEMENT_SPEED_MODIFIER, EquipmentSlotGroup.MAINHAND);
+				}
+			}
+			else if (stack.getItem() == ModItems.ANCIENT_SHIELD.get())
+			{
+				event.addModifier(Attributes.KNOCKBACK_RESISTANCE, AncientShieldItem.ANCIENT_SHIELD_KNOCKBACK_RESISTANCE_MODIFIER, EquipmentSlotGroup.HAND);
 			}
 		}
 	}

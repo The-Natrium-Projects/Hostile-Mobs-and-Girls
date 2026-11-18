@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "hmag:ancient_stone"
+    }
+  },
+  "result": {
+    "id": "hmag:ancient_stone_block"
+  }
+}

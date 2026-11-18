@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "autumnity:large_jack_o_lantern_slice"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "autumnity:large_soul_jack_o_lantern_slice"
+    }
+  ],
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "autumnity:large_jack_o_lantern_slice"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "autumnity:large_soul_jack_o_lantern_slice"
+  }
+}

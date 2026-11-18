@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:gems/prismarine"
+    }
+  },
+  "result": {
+    "id": "hmag:prismarine_crystal_block"
+  }
+}

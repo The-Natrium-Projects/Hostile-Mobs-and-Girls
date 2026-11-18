@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "hauntfurnace"
+    }
+  ],
+  "type": "hauntfurnace:haunting",
+  "ingredient": {
+    "item": "hmag:ender_plasm"
+  },
+  "result": "minecraft:ghast_tear",
+  "experience": 0.1
+}

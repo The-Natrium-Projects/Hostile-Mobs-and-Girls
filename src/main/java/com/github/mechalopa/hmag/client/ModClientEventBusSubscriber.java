@@ -77,6 +77,7 @@ import com.github.mechalopa.hmag.client.renderer.KashaRenderer;
 import com.github.mechalopa.hmag.client.renderer.KoboldRenderer;
 import com.github.mechalopa.hmag.client.renderer.LichRenderer;
 import com.github.mechalopa.hmag.client.renderer.MagicBulletRenderer;
+import com.github.mechalopa.hmag.client.renderer.ModBlockEntityWithoutLevelRenderer;
 import com.github.mechalopa.hmag.client.renderer.MagicalSlimeRenderer;
 import com.github.mechalopa.hmag.client.renderer.MagmaBulletRenderer;
 import com.github.mechalopa.hmag.client.renderer.MeltyMonsterRenderer;
@@ -103,25 +104,31 @@ import com.github.mechalopa.hmag.registry.ModItems;
 import com.github.mechalopa.hmag.registry.ModParticleTypes;
 import com.github.mechalopa.hmag.util.ModUtils;
 import com.github.mechalopa.hmag.world.item.ILevelItem;
+import com.github.mechalopa.hmag.world.item.ModShieldItem;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.particle.FlameParticle;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
-@EventBusSubscriber(modid = HMaG.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = HMaG.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)
 public class ModClientEventBusSubscriber
 {
@@ -297,5 +304,27 @@ public class ModClientEventBusSubscriber
 		event.registerSpriteSet(ModParticleTypes.NEMESIS_FLAME.get(), FlameParticle.Provider::new);
 		event.registerSpriteSet(ModParticleTypes.NIGHTWALKER.get(), SuspendedTownParticle2.NightwalkerParticleProvider::new);
 		event.registerSpriteSet(ModParticleTypes.NIGHTWALKER_BULLET.get(), NightwalkerBulletParticle.Provider::new);
+	}
+
+	@SubscribeEvent
+	public static void registerClientExtensions(final RegisterClientExtensionsEvent event)
+	{
+		IClientItemExtensions shieldExtensions = new IClientItemExtensions()
+		{
+			private BlockEntityWithoutLevelRenderer renderer;
+
+			@Override
+			public BlockEntityWithoutLevelRenderer getCustomRenderer()
+			{
+				if (Minecraft.getInstance().getBlockEntityRenderDispatcher() != null && this.renderer == null)
+				{
+					this.renderer = new ModBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+				}
+
+				return this.renderer;
+			}
+		};
+
+		event.registerItem(shieldExtensions, ModItems.getItemRegistry().getEntries().stream().map(DeferredHolder::get).filter(ModShieldItem.class::isInstance).toArray(Item[]::new));
 	}
 }

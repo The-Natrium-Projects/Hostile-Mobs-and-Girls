@@ -1,0 +1,14 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "refurbished_furniture"
+    }
+  ],
+  "type": "refurbished_furniture:cutting_board_slicing",
+  "count": 4,
+  "ingredient": {
+    "item": "hmag:kobold_leather"
+  },
+  "result": "minecraft:blue_dye"
+}

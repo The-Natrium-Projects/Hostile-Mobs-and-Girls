@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:netherite_scrap"
+    }
+  },
+  "result": {
+    "id": "hmag:netherite_scrap_block"
+  }
+}

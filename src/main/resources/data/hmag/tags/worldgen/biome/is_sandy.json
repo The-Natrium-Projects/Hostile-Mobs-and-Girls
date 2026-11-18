@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "#forge:is_sandy",
+      "id": "#c:is_sandy",
       "required": false
     },
     {

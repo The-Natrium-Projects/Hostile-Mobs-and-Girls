@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "hmag:soul_powder"
+    },
+    "X": {
+      "tag": "hmag:apples"
+    }
+  },
+  "result": {
+    "id": "hmag:soul_apple"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#hmag:spawns_crimson_slaughterers",
+  "spawners": {
+    "type": "hmag:crimson_slaughterer",
+    "weight": 2,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

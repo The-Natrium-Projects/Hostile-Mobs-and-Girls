@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "immersiveweapons:raw_cobalt"
+    }
+  ],
+  "category": "misc",
+  "pattern": [
+    " # ",
+    "#I#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "hmag:kobold_leather"
+    },
+    "I": {
+      "tag": "c:raw_materials/iron"
+    }
+  },
+  "result": {
+    "id": "immersiveweapons:raw_cobalt"
+  }
+}

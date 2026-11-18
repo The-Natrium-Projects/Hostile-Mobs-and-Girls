@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "id": "hmag:ender_eye_block"
+  }
+}

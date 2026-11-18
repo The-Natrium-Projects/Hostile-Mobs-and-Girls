@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     {
-      "id": "#forge:is_dense",
+      "id": "#c:is_dense",
       "required": false
     },
     {

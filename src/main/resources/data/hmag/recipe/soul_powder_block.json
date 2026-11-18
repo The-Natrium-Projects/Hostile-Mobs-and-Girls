@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "hmag:soul_powder"
+    }
+  },
+  "result": {
+    "id": "hmag:soul_powder_block"
+  }
+}

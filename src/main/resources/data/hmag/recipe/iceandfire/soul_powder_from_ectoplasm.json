@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "iceandfire:ectoplasm"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "iceandfire:ectoplasm"
+    },
+    {
+      "item": "iceandfire:ectoplasm"
+    }
+  ],
+  "result": {
+    "id": "hmag:soul_powder",
+    "count": 4
+  }
+}

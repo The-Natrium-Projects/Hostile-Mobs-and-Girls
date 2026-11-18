@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smoking",
+  "category": "food",
+  "ingredient": {
+    "item": "hmag:ravager_meat"
+  },
+  "result": {
+    "id": "hmag:cooked_ravager_meat"
+  },
+  "experience": 0.35,
+  "cookingtime": 100
+}

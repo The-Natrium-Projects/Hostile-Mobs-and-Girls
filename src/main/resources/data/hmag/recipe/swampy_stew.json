@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hmag:cooked_swamper_tentacle"
+    },
+    {
+      "item": "hmag:cooked_savagefang_meat"
+    },
+    {
+      "tag": "c:mushrooms"
+    },
+    {
+      "tag": "hmag:swampy_stew_crafting_plants"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "id": "hmag:swampy_stew"
+  }
+}

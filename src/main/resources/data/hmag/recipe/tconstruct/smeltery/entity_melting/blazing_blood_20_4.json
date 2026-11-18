@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:entity_melting",
+  "damage": 4,
+  "entity": {
+    "type": "hmag:kasha"
+  },
+  "result": {
+    "amount": 20,
+    "fluid": "tconstruct:blazing_blood"
+  }
+}

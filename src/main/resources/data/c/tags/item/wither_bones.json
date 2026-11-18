@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:bones/wither",
+      "required": false
+    },
+    {
+      "id": "iceandfire:witherbone",
+      "required": false
+    },
+    {
+      "id": "mna:witherbone",
+      "required": false
+    },
+    {
+      "id": "legendary_monsters:withered_bone",
+      "required": false
+    },
+    {
+      "id": "eternalnether:withered_bone",
+      "required": false
+    },
+    {
+      "id": "netherex:wither_bone",
+      "required": false
+    }
+  ]
+}

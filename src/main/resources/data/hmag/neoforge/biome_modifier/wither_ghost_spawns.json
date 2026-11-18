@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#hmag:spawns_wither_ghosts_normal",
+  "spawners": {
+    "type": "hmag:wither_ghost",
+    "weight": 12,
+    "minCount": 2,
+    "maxCount": 4
+  }
+}

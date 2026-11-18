@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:entity_melting",
+  "damage": 2,
+  "entity": {
+    "type": "hmag:savagefang"
+  },
+  "result": {
+    "amount": 50,
+    "fluid": "tconstruct:meat_soup"
+  }
+}

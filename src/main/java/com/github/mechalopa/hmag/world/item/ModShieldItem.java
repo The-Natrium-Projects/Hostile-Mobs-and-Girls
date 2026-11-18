@@ -1,17 +1,8 @@
 package com.github.mechalopa.hmag.world.item;
 
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-
-import com.github.mechalopa.hmag.client.renderer.ModBlockEntityWithoutLevelRenderer;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 public abstract class ModShieldItem extends ShieldItem
 {
@@ -30,25 +21,5 @@ public abstract class ModShieldItem extends ShieldItem
 	public int getEnchantmentValue()
 	{
 		return 1;
-	}
-
-	@Override
-	public void initializeClient(@Nonnull Consumer<IClientItemExtensions> consumer)
-	{
-		consumer.accept(new IClientItemExtensions()
-		{
-			private BlockEntityWithoutLevelRenderer renderer;
-
-			@Override
-			public BlockEntityWithoutLevelRenderer getCustomRenderer()
-			{
-				if (Minecraft.getInstance().getBlockEntityRenderDispatcher() != null && this.renderer == null)
-				{
-					this.renderer = new ModBlockEntityWithoutLevelRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
-				}
-
-				return this.renderer;
-			}
-		});
 	}
 }

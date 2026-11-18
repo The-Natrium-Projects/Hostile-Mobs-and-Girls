@@ -4,6 +4,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 public class InvincibleBlockItem extends BlockItem
@@ -14,8 +15,8 @@ public class InvincibleBlockItem extends BlockItem
 	}
 
 	@Override
-	public boolean canBeHurtBy(DamageSource damageSource)
+	public boolean canBeHurtBy(ItemStack stack, DamageSource damageSource)
 	{
-		return !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY) ? false : super.canBeHurtBy(damageSource);
+		return !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY) ? false : super.canBeHurtBy(stack, damageSource);
 	}
 }

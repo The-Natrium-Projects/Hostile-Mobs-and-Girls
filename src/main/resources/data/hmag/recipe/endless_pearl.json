@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "ZYZ",
+    "YXY",
+    "ZYZ"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:end_crystal"
+    },
+    "Y": {
+      "item": "minecraft:ender_pearl"
+    },
+    "Z": {
+      "item": "hmag:ender_plasm"
+    }
+  },
+  "result": {
+    "id": "hmag:endless_pearl"
+  }
+}

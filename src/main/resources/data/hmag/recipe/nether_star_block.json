@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "id": "hmag:nether_star_block"
+  }
+}

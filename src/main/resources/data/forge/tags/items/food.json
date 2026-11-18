@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#forge:food/golden",
-    "#forge:food/meat",
-    "#forge:food/pie",
-    "#forge:food/seafood"
-  ]
-}

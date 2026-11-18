@@ -1,15 +1,12 @@
 package com.github.mechalopa.hmag.world.item;
 
 import java.util.List;
-import java.util.UUID;
 
-import javax.annotation.Nullable;
-
+import com.github.mechalopa.hmag.registry.ModDataComponentTypes;
 import com.github.mechalopa.hmag.util.ModTags;
 import com.github.mechalopa.hmag.world.entity.projectile.MagicBulletEntity;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,22 +20,16 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
 public class NemesisBladeItem extends ModSwordItem implements ILevelItem
 {
-	public static final UUID NEMESIS_BLADE_ATTACK_DAMAGE_UUID = UUID.fromString("FD835C41-1211-AC72-0CD4-66F3061FB156");
-	public static final UUID NEMESIS_BLADE_ATTACK_SPEED_UUID = UUID.fromString("1911699B-779B-820E-064A-112D1EB232F7");
-	public static final UUID NEMESIS_BLADE_MOVEMENT_SPEED_UUID = UUID.fromString("C80A68DD-F985-4245-4EC4-64884C8EBA4C");
-	public static final AttributeModifier NEMESIS_BLADE_MOVEMENT_SPEED_MODIFIER = new AttributeModifier(NEMESIS_BLADE_MOVEMENT_SPEED_UUID, "Nemesis blade move speed penalty", -0.5F, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
 	public NemesisBladeItem(Tier tier, Properties builder)
 	{
@@ -52,8 +43,7 @@ public class NemesisBladeItem extends ModSwordItem implements ILevelItem
 		{
 			if (entity instanceof Player)
 			{
-				CompoundTag compoundnbt = stack.getOrCreateTag();
-				int itemLevel = !compoundnbt.contains(ILevelItem.LEVEL_KEY) ? 0 : (int)compoundnbt.getByte(ILevelItem.LEVEL_KEY);
+				int itemLevel = ILevelItem.getItemLevel(stack);
 				final int i = Math.max(((Player)entity).experienceLevel, 0);
 				int j = 0;
 
@@ -64,7 +54,7 @@ public class NemesisBladeItem extends ModSwordItem implements ILevelItem
 
 				if (itemLevel != j)
 				{
-					compoundnbt.putByte(ILevelItem.LEVEL_KEY, (byte)j);
+					stack.set(ModDataComponentTypes.ITEM_LEVEL, j);
 				}
 			}
 		}
@@ -98,7 +88,7 @@ public class NemesisBladeItem extends ModSwordItem implements ILevelItem
 		{
 			final int i = ILevelItem.getItemLevel(stack);
 
-			if (this.getUseDuration(stack) - count < 8 || !((player.experienceLevel > 0 && i > 0) || player.isCreative()))
+			if (this.getUseDuration(stack, livingEntity) - count < 8 || !((player.experienceLevel > 0 && i > 0) || player.isCreative()))
 			{
 				return;
 			}
@@ -113,9 +103,7 @@ public class NemesisBladeItem extends ModSwordItem implements ILevelItem
 				bullet.setEffectLevel((byte)Mth.clamp(i, 0, 255));
 				bullet.setVariant(MagicBulletEntity.Variant.NEMESIS);
 
-				stack.hurtAndBreak(1, player, (p) -> {
-					p.broadcastBreakEvent(player.getUsedItemHand());
-				});
+				stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
 
 				level.addFreshEntity(bullet);
 
@@ -136,7 +124,7 @@ public class NemesisBladeItem extends ModSwordItem implements ILevelItem
 	{
 		if (livingEntity instanceof Player player)
 		{
-			if (this.getUseDuration(stack) - count != 8 || !((player.experienceLevel > 0 && ILevelItem.getItemLevel(stack) > 0) || player.isCreative()))
+			if (this.getUseDuration(stack, livingEntity) - count != 8 || !((player.experienceLevel > 0 && ILevelItem.getItemLevel(stack) > 0) || player.isCreative()))
 			{
 				return;
 			}
@@ -169,23 +157,22 @@ public class NemesisBladeItem extends ModSwordItem implements ILevelItem
 	}
 
 	@Override
-	public int getUseDuration(ItemStack stack)
+	public int getUseDuration(ItemStack stack, LivingEntity entity)
 	{
 		return 72000;
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag)
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> list, TooltipFlag tooltipFlag)
 	{
 		final int i = ILevelItem.getItemLevel(stack);
 		list.add(Component.translatable("text." + ILevelItem.LEVEL_KEY, i + 1).withStyle(i >= 6 ? ChatFormatting.LIGHT_PURPLE : (i >= 5 ? ChatFormatting.AQUA : (i >= 3 ? ChatFormatting.YELLOW : (i <= 0 ? ChatFormatting.RED : ChatFormatting.GRAY)))));
 	}
 
 	@Override
-	public boolean canBeHurtBy(DamageSource damageSource)
+	public boolean canBeHurtBy(ItemStack stack, DamageSource damageSource)
 	{
-		return !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY) ? false : super.canBeHurtBy(damageSource);
+		return !damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY) ? false : super.canBeHurtBy(stack, damageSource);
 	}
 
 	@Override

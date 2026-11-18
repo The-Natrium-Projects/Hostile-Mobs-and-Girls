@@ -1,0 +1,20 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:entity_melting",
+  "damage": 4,
+  "entity": {
+    "type": "hmag:dyssomnia"
+  },
+  "result": {
+    "amount": 50,
+    "nbt": {
+      "Potion": "minecraft:slow_falling"
+    },
+    "tag": "c:potion"
+  }
+}

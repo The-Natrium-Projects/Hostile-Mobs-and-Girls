@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:storage_blocks/netherite_scrap"
+    }
+  ],
+  "result": {
+    "id": "minecraft:netherite_scrap",
+    "count": 9
+  }
+}

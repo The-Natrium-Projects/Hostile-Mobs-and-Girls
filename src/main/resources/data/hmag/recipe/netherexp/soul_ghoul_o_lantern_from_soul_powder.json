@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "netherexp:ghoul_o_lantern"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "netherexp:soul_ghoul_o_lantern"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "netherexp:ghoul_o_lantern"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "netherexp:soul_ghoul_o_lantern"
+  }
+}

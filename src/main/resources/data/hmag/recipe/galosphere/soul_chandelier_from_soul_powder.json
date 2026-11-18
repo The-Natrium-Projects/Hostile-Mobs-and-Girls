@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "galosphere:chandelier"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "galosphere:soul_chandelier"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "galosphere:chandelier"
+    },
+    {
+      "item": "hmag:soul_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "galosphere:soul_chandelier"
+  }
+}

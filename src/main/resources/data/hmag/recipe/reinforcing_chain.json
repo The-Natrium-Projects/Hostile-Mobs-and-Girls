@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " ZY",
+    "Z#Z",
+    "XZ "
+  ],
+  "key": {
+    "#": {
+      "tag": "hmag:reinforcing_chain_crafting_materials"
+    },
+    "X": {
+      "tag": "c:obsidians"
+    },
+    "Y": {
+      "item": "hmag:evil_crystal_fragment"
+    },
+    "Z": {
+      "item": "minecraft:chain"
+    }
+  },
+  "result": {
+    "id": "hmag:reinforcing_chain",
+    "count": 2
+  }
+}

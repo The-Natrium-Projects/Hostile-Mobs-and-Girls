@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "#c:foods/berry",
+    "#c:foods/fish",
+    "#c:foods/fruit",
+    "#c:foods/golden",
+    "#c:foods/meat",
+    "#c:foods/pie",
+    "#c:foods/seafood",
+    "#c:foods/soup"
+  ]
+}

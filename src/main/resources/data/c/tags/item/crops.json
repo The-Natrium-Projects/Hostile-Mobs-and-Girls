@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#c:crops/apple",
+    "#c:crops/lemon",
+    "#c:crops/cureberry",
+    "#c:crops/randomberry",
+    "#c:crops/exp_berry"
+  ]
+}

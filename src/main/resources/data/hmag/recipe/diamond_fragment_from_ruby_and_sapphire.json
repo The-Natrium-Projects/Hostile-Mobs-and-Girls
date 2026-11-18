@@ -1,0 +1,49 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:gems/ruby"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:gems/sapphire"
+      }
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:gems/emerald"
+    },
+    {
+      "tag": "c:gems/ruby"
+    },
+    {
+      "tag": "c:gems/sapphire"
+    },
+    {
+      "tag": "c:storage_blocks/coal"
+    },
+    [
+      {
+        "item": "hmag:kobold_leather"
+      },
+      {
+        "item": "hmag:ogre_horn"
+      }
+    ],
+    {
+      "item": "hmag:evil_crystal_fragment"
+    }
+  ],
+  "result": {
+    "id": "hmag:diamond_fragment",
+    "count": 12
+  }
+}

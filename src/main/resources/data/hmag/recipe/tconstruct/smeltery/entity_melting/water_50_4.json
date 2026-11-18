@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "tconstruct"
+    }
+  ],
+  "type": "tconstruct:entity_melting",
+  "damage": 4,
+  "entity": {
+    "type": "hmag:jack_frost"
+  },
+  "result": {
+    "amount": 50,
+    "fluid": "minecraft:water"
+  }
+}

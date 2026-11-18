@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "piglinproliferation:blackstone_fire_ring"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "piglinproliferation:blackstone_soul_fire_ring"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "piglinproliferation:blackstone_fire_ring"
+    },
+    {
+      "item": "hmag:soul_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "piglinproliferation:blackstone_soul_fire_ring"
+  }
+}

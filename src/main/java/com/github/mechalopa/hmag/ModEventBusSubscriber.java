@@ -50,10 +50,8 @@ import com.github.mechalopa.hmag.world.entity.SwamperEntity;
 import com.github.mechalopa.hmag.world.entity.WitherGhostEntity;
 import com.github.mechalopa.hmag.world.entity.WitherSkeletonGirlEntity;
 import com.github.mechalopa.hmag.world.entity.ZombieGirlEntity;
-import com.github.mechalopa.hmag.world.level.storage.loot.conditions.ModLoadedCondition;
 
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
@@ -68,9 +66,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.brewing.BrewingRecipeRegistry;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
@@ -84,15 +80,10 @@ public class ModEventBusSubscriber
 
 		event.enqueueWork(() -> {
 			registerCompostables();
-			registerBrewingRecipes();
+			DispenserBlock.registerProjectileBehavior(ModItems.FIRE_BOTTLE.get());
+			DispenserBlock.registerProjectileBehavior(ModItems.BLASTING_BOTTLE.get());
+			DispenserBlock.registerProjectileBehavior(ModItems.LIGHTNING_BOTTLE.get());
 		});
-
-		Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, ModUtils.createHMaGRL("mod_loaded"), ModLoadedCondition.TYPE);
-
-        DispenserBlock.registerProjectileBehavior(ModItems.FIRE_BOTTLE.get());
-        DispenserBlock.registerProjectileBehavior(ModItems.BLASTING_BOTTLE.get());
-        DispenserBlock.registerProjectileBehavior(ModItems.LIGHTNING_BOTTLE.get());
-
 	}
 
 //	@SubscribeEvent
@@ -114,55 +105,6 @@ public class ModEventBusSubscriber
 		ComposterBlock.COMPOSTABLES.put(ModItems.HONEYED_LEMON.get(), 0.5F);
 		ComposterBlock.COMPOSTABLES.put(ModItems.LEMON_PIE.get(), 1.0F);
 		ComposterBlock.COMPOSTABLES.put(ModItems.CUBIC_NUCLEUS.get(), 0.65F);
-	}
-
-	public static void registerBrewingRecipes()
-	{
-		if (ModConfigs.cachedServer.KOBOLD_POTION_BREWING_RECIPES)
-		{
-			registerBrewingRecipe(Potions.AWKWARD, ModItems.KOBOLD_LEATHER.get(), ModPotions.KOBOLD.get());
-			registerBrewingRecipe(ModPotions.KOBOLD.get(), Items.GLOWSTONE_DUST, ModPotions.KOBOLD_STRONG.get());
-		}
-
-		if (ModConfigs.cachedServer.HEALING_III_POTION_BREWING_RECIPES)
-			registerBrewingRecipe(Potions.STRONG_HEALING, ModItems.LICH_CLOTH.get(), ModPotions.HEALING_III.get());
-
-		if (ModConfigs.cachedServer.HARMING_III_POTION_BREWING_RECIPES)
-		{
-			registerBrewingRecipe(Potions.STRONG_HARMING, ModItems.LICH_CLOTH.get(), ModPotions.HARMING_III.get());
-			registerBrewingRecipe(ModPotions.HEALING_III.get(), Items.FERMENTED_SPIDER_EYE, ModPotions.HARMING_III.get());
-		}
-
-		if (ModConfigs.cachedServer.REGENERATION_III_POTION_BREWING_RECIPES)
-			registerBrewingRecipe(Potions.STRONG_REGENERATION, ModItems.CUBIC_NUCLEUS.get(), ModPotions.REGENERATION_III.get());
-		if (ModConfigs.cachedServer.OGRE_POTION_BREWING_RECIPES)
-			registerBrewingRecipe(Potions.STRENGTH, ModItems.OGRE_HORN.get(), ModPotions.OGRE.get());
-		if (ModConfigs.cachedServer.VORACITY_POTION_BREWING_RECIPES)
-			registerBrewingRecipe(Potions.STRONG_STRENGTH, ModItems.CRIMSON_CUTICULA.get(), ModPotions.VORACITY.get());
-
-		if (ModConfigs.cachedServer.ENDER_RAGE_POTION_BREWING_RECIPES)
-		{
-			registerBrewingRecipe(Potions.AWKWARD, ModItems.ENDER_PLASM.get(), ModPotions.ENDER_RAGE.get());
-			registerBrewingRecipe(ModPotions.ENDER_RAGE.get(), Items.REDSTONE, ModPotions.ENDER_RAGE_LONG.get());
-			registerBrewingRecipe(ModPotions.ENDER_RAGE.get(), Items.GLOWSTONE_DUST, ModPotions.ENDER_RAGE_STRONG.get());
-		}
-
-		if (ModConfigs.cachedServer.COMBUSTION_POTION_BREWING_RECIPES)
-		{
-			registerBrewingRecipe(Potions.AWKWARD, ModItems.BURNING_CORE.get(), ModPotions.COMBUSTION.get());
-			registerBrewingRecipe(ModPotions.COMBUSTION.get(), Items.REDSTONE, ModPotions.COMBUSTION_LONG.get());
-			registerBrewingRecipe(ModPotions.COMBUSTION.get(), Items.FERMENTED_SPIDER_EYE, Potions.FIRE_RESISTANCE);
-			registerBrewingRecipe(ModPotions.COMBUSTION_LONG.get(), Items.FERMENTED_SPIDER_EYE, Potions.LONG_FIRE_RESISTANCE);
-		}
-
-		if (ModConfigs.cachedServer.SLOWNESS_POTION_BREWING_RECIPES)
-			registerBrewingRecipe(Potions.AWKWARD, ModItems.NECROFIBER.get(), Potions.SLOWNESS);
-		if (ModConfigs.cachedServer.INVISIBILITY_POTION_BREWING_RECIPES)
-			registerBrewingRecipe(Potions.AWKWARD, ModItems.SOUL_APPLE.get(), Potions.INVISIBILITY);
-		if (ModConfigs.cachedServer.BLASTING_BOTTLE_BREWING_RECIPE)
-			BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(Ingredient.of(ModItems.FIRE_BOTTLE.get()), Ingredient.of(ModItems.BURNING_CORE.get()), new ItemStack(ModItems.BLASTING_BOTTLE.get(), 1)));
-		if (ModConfigs.cachedServer.LIGHTNING_BOTTLE_BREWING_RECIPE)
-			BrewingRecipeRegistry.addRecipe(new ModBrewingRecipe(Ingredient.of(ModItems.FIRE_BOTTLE.get()), Ingredient.of(ModItems.LIGHTNING_PARTICLE.get()), new ItemStack(ModItems.LIGHTNING_BOTTLE.get(), 1)));
 	}
 
 	@SubscribeEvent
@@ -263,10 +205,64 @@ public class ModEventBusSubscriber
 		event.put(ModEntityTypes.SWAMPER.get(), SwamperEntity.createAttributes().build());
 	}
 
-	private static void registerBrewingRecipe(RegisterBrewingRecipesEvent event, Potion inputPotion, Item item, Potion outputPotion)
+	private static void registerBrewingRecipe(RegisterBrewingRecipesEvent event, Holder<Potion> inputPotion, Item item, Holder<Potion> outputPotion)
 	{
 		event.getBuilder().addRecipe(new ModBrewingRecipe(Ingredient.of(ModUtils.getPotionStack(inputPotion)), Ingredient.of(item), ModUtils.getPotionStack(outputPotion)));
 		event.getBuilder().addRecipe(new ModBrewingRecipe(Ingredient.of(ModUtils.getPotionStack(inputPotion, Items.SPLASH_POTION)), Ingredient.of(item), ModUtils.getPotionStack(outputPotion, Items.SPLASH_POTION)));
 		event.getBuilder().addRecipe(new ModBrewingRecipe(Ingredient.of(ModUtils.getPotionStack(inputPotion, Items.LINGERING_POTION)), Ingredient.of(item), ModUtils.getPotionStack(outputPotion, Items.LINGERING_POTION)));
+	}
+
+	@EventBusSubscriber(modid = HMaG.MODID, bus = EventBusSubscriber.Bus.GAME)
+	public static class GameEvents
+	{
+		@SubscribeEvent
+		public static void registerBrewingRecipes(final RegisterBrewingRecipesEvent event)
+		{
+			if (ModConfigs.cachedServer.KOBOLD_POTION_BREWING_RECIPES)
+			{
+				registerBrewingRecipe(event, Potions.AWKWARD, ModItems.KOBOLD_LEATHER.get(), ModPotions.KOBOLD);
+				registerBrewingRecipe(event, ModPotions.KOBOLD, Items.GLOWSTONE_DUST, ModPotions.KOBOLD_STRONG);
+			}
+
+			if (ModConfigs.cachedServer.HEALING_III_POTION_BREWING_RECIPES)
+				registerBrewingRecipe(event, Potions.STRONG_HEALING, ModItems.LICH_CLOTH.get(), ModPotions.HEALING_III);
+
+			if (ModConfigs.cachedServer.HARMING_III_POTION_BREWING_RECIPES)
+			{
+				registerBrewingRecipe(event, Potions.STRONG_HARMING, ModItems.LICH_CLOTH.get(), ModPotions.HARMING_III);
+				registerBrewingRecipe(event, ModPotions.HEALING_III, Items.FERMENTED_SPIDER_EYE, ModPotions.HARMING_III);
+			}
+
+			if (ModConfigs.cachedServer.REGENERATION_III_POTION_BREWING_RECIPES)
+				registerBrewingRecipe(event, Potions.STRONG_REGENERATION, ModItems.CUBIC_NUCLEUS.get(), ModPotions.REGENERATION_III);
+			if (ModConfigs.cachedServer.OGRE_POTION_BREWING_RECIPES)
+				registerBrewingRecipe(event, Potions.STRENGTH, ModItems.OGRE_HORN.get(), ModPotions.OGRE);
+			if (ModConfigs.cachedServer.VORACITY_POTION_BREWING_RECIPES)
+				registerBrewingRecipe(event, Potions.STRONG_STRENGTH, ModItems.CRIMSON_CUTICULA.get(), ModPotions.VORACITY);
+
+			if (ModConfigs.cachedServer.ENDER_RAGE_POTION_BREWING_RECIPES)
+			{
+				registerBrewingRecipe(event, Potions.AWKWARD, ModItems.ENDER_PLASM.get(), ModPotions.ENDER_RAGE);
+				registerBrewingRecipe(event, ModPotions.ENDER_RAGE, Items.REDSTONE, ModPotions.ENDER_RAGE_LONG);
+				registerBrewingRecipe(event, ModPotions.ENDER_RAGE, Items.GLOWSTONE_DUST, ModPotions.ENDER_RAGE_STRONG);
+			}
+
+			if (ModConfigs.cachedServer.COMBUSTION_POTION_BREWING_RECIPES)
+			{
+				registerBrewingRecipe(event, Potions.AWKWARD, ModItems.BURNING_CORE.get(), ModPotions.COMBUSTION);
+				registerBrewingRecipe(event, ModPotions.COMBUSTION, Items.REDSTONE, ModPotions.COMBUSTION_LONG);
+				registerBrewingRecipe(event, ModPotions.COMBUSTION, Items.FERMENTED_SPIDER_EYE, Potions.FIRE_RESISTANCE);
+				registerBrewingRecipe(event, ModPotions.COMBUSTION_LONG, Items.FERMENTED_SPIDER_EYE, Potions.LONG_FIRE_RESISTANCE);
+			}
+
+			if (ModConfigs.cachedServer.SLOWNESS_POTION_BREWING_RECIPES)
+				registerBrewingRecipe(event, Potions.AWKWARD, ModItems.NECROFIBER.get(), Potions.SLOWNESS);
+			if (ModConfigs.cachedServer.INVISIBILITY_POTION_BREWING_RECIPES)
+				registerBrewingRecipe(event, Potions.AWKWARD, ModItems.SOUL_APPLE.get(), Potions.INVISIBILITY);
+			if (ModConfigs.cachedServer.BLASTING_BOTTLE_BREWING_RECIPE)
+				event.getBuilder().addRecipe(new ModBrewingRecipe(Ingredient.of(ModItems.FIRE_BOTTLE.get()), Ingredient.of(ModItems.BURNING_CORE.get()), new ItemStack(ModItems.BLASTING_BOTTLE.get(), 1)));
+			if (ModConfigs.cachedServer.LIGHTNING_BOTTLE_BREWING_RECIPE)
+				event.getBuilder().addRecipe(new ModBrewingRecipe(Ingredient.of(ModItems.FIRE_BOTTLE.get()), Ingredient.of(ModItems.LIGHTNING_PARTICLE.get()), new ItemStack(ModItems.LIGHTNING_BOTTLE.get(), 1)));
+		}
 	}
 }

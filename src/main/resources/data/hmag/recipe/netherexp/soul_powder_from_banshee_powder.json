@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "netherexp:banshee_powder"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "netherexp:banshee_powder"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "hmag:soul_powder",
+    "count": 2
+  }
+}

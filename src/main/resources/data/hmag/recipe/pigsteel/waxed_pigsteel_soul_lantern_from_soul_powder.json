@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "pigsteel:waxed_pigsteel_lantern"
+    },
+    {
+      "type": "neoforge:item_exists",
+      "item": "pigsteel:waxed_pigsteel_soul_lantern"
+    }
+  ],
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "pigsteel:waxed_pigsteel_lantern"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "pigsteel:waxed_pigsteel_soul_lantern"
+  }
+}

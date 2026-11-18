@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": [
+    {
+      "item": "hmag:evil_prismarine"
+    }
+  ],
+  "result": {
+    "id": "minecraft:prismarine_shard"
+  },
+  "experience": 0.1,
+  "cookingtime": 100
+}

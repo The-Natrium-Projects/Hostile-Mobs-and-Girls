@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "quark:soul_bead"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "quark:soul_bead"
+    },
+    {
+      "item": "quark:soul_bead"
+    }
+  ],
+  "result": {
+    "id": "hmag:soul_powder",
+    "count": 4
+  }
+}

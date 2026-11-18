@@ -1,0 +1,138 @@
+{
+  "replace": false,
+  "values": [
+    "#c:crops/carrot",
+    {
+      "id": "#c:vegetables/carrot",
+      "required": false
+    },
+    {
+      "id": "#c:crops/carrot",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/carrot",
+      "required": false
+    },
+    {
+      "id": "#c:crops/parsnip",
+      "required": false
+    },
+    {
+      "id": "#c:crops/spinach",
+      "required": false
+    },
+    {
+      "id": "#c:crops/turnip",
+      "required": false
+    },
+    {
+      "id": "#c:crops/white_turnip",
+      "required": false
+    },
+    {
+      "id": "#c:crops/radish",
+      "required": false
+    },
+    {
+      "id": "#c:crops/rutabaga",
+      "required": false
+    },
+    {
+      "id": "#c:crops/swede",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/parsnip",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/spinach",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/turnip",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/white_turnip",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/radish",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/rutabaga",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/swede",
+      "required": false
+    },
+    {
+      "id": "#c:crops/parsnip",
+      "required": false
+    },
+    {
+      "id": "#c:crops/spinach",
+      "required": false
+    },
+    {
+      "id": "#c:crops/turnip",
+      "required": false
+    },
+    {
+      "id": "#c:crops/radish",
+      "required": false
+    },
+    {
+      "id": "#c:crops/white_turnip",
+      "required": false
+    },
+    {
+      "id": "#c:crops/rutabaga",
+      "required": false
+    },
+    {
+      "id": "#c:crops/swede",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/parsnip",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/spinach",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/turnip",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/white_turnip",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/radish",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/rutabaga",
+      "required": false
+    },
+    {
+      "id": "#c:vegetables/swede",
+      "required": false
+    },
+    {
+      "id": "miners_delight:cave_carrot",
+      "required": false
+    },
+    {
+      "id": "abundant_atmosphere:cave_parsnip",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:bat_wings"
+    }
+  },
+  "result": {
+    "id": "minecraft:leather"
+  }
+}

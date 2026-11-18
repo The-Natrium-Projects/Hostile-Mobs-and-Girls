@@ -3,15 +3,15 @@
   "values": [
     "#minecraft:is_badlands",
     {
-      "id": "#forge:is_badlands",
+      "id": "#c:is_badlands",
       "required": false
     },
     {
-      "id": "#forge:is_badland",
+      "id": "#c:is_badland",
       "required": false
     },
     {
-      "id": "#forge:is_mesa",
+      "id": "#c:is_mesa",
       "required": false
     },
     {

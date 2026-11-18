@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "X",
+    "#",
+    "Y"
+  ],
+  "key": {
+    "#": {
+      "tag": "c:rods/wooden"
+    },
+    "X": [
+      {
+        "item": "hmag:sharp_fang"
+      },
+      {
+        "tag": "c:flint"
+      }
+    ],
+    "Y": [
+      {
+        "tag": "c:bat_wings"
+      },
+      {
+        "tag": "c:feathers"
+      }
+    ]
+  },
+  "result": {
+    "id": "minecraft:arrow",
+    "count": 4
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "YEY",
+    "ASA",
+    "YXY"
+  ],
+  "key": {
+    "S": {
+      "item": "hmag:soul_apple"
+    },
+    "A": {
+      "tag": "c:storage_blocks/amethyst"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "X": {
+      "item": "hmag:evil_crystal_block"
+    },
+    "Y": {
+      "item": "hmag:dyssomnia_skin"
+    }
+  },
+  "result": {
+    "id": "hmag:insomnia_fruit"
+  }
+}

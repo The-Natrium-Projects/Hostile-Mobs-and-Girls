@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "Y#Y",
+    "#X#",
+    "Y#Y"
+  ],
+  "key": {
+    "#": {
+      "item": "hmag:reinforcing_chain"
+    },
+    "X": {
+      "tag": "hmag:reinforced_block_crafting_materials"
+    },
+    "Y": {
+      "tag": "c:nuggets/netherite"
+    }
+  },
+  "result": {
+    "id": "hmag:reinforced_block",
+    "count": 16
+  }
+}

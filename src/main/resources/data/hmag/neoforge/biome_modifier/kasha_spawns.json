@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#hmag:spawns_kasha_normal",
+  "spawners": {
+    "type": "hmag:kasha",
+    "weight": 5,
+    "minCount": 1,
+    "maxCount": 2
+  }
+}

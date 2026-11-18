@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "alexsmobs:soul_heart"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "alexsmobs:soul_heart"
+    }
+  ],
+  "result": {
+    "id": "hmag:soul_powder",
+    "count": 4
+  }
+}

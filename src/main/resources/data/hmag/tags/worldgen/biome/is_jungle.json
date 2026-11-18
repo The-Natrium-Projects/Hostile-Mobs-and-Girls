@@ -3,7 +3,7 @@
   "values": [
     "#minecraft:is_jungle",
     {
-      "id": "#forge:is_jungle",
+      "id": "#c:is_jungle",
       "required": false
     },
     {
@@ -15,7 +15,7 @@
       "required": false
     },
     {
-      "id": "#forge:is_rainforest",
+      "id": "#c:is_rainforest",
       "required": false
     },
     {

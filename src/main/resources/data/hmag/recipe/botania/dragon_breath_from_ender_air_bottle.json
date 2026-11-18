@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "botania:ender_air_bottle"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "botania:ender_air_bottle"
+    },
+    {
+      "item": "hmag:ender_plasm"
+    },
+    {
+      "tag": "c:dusts/blaze"
+    },
+    {
+      "tag": "c:gunpowders"
+    }
+  ],
+  "result": {
+    "id": "minecraft:dragon_breath"
+  }
+}

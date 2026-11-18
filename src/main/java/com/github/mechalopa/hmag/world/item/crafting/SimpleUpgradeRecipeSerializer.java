@@ -16,7 +16,7 @@ public class SimpleUpgradeRecipeSerializer<T extends AbstractUpgradeRecipe> impl
 	public SimpleUpgradeRecipeSerializer(Supplier<T> constructor)
 	{
 		this.codec = MapCodec.unit(constructor);
-		this.streamCodec = StreamCodec.unit(constructor.get());
+		this.streamCodec = StreamCodec.of((buf, recipe) -> {}, buf -> constructor.get());
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -24,13 +25,13 @@ public abstract class ModDamagingProjectileEntity extends AbstractHurtingProject
 
 	public ModDamagingProjectileEntity(EntityType<? extends ModDamagingProjectileEntity> type, LivingEntity shooter, double accelX, double accelY, double accelZ, Level level)
 	{
-		super(type, shooter, accelX, accelY, accelZ, level);
+		super(type, shooter, new Vec3(accelX, accelY, accelZ), level);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public ModDamagingProjectileEntity(EntityType<? extends ModDamagingProjectileEntity> type, double x, double y, double z, double accelX, double accelY, double accelZ, Level level)
 	{
-		super(type, x, y, z, accelX, accelY, accelZ, level);
+		super(type, x, y, z, new Vec3(accelX, accelY, accelZ), level);
 	}
 
 	@Override

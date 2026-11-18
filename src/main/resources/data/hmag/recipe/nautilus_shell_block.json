@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:nautilus_shell"
+    }
+  },
+  "result": {
+    "id": "hmag:nautilus_shell_block"
+  }
+}

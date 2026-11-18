@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "autumnity:soul_jack_o_lantern"
+    }
+  ],
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:jack_o_lantern"
+    },
+    {
+      "item": "hmag:soul_powder"
+    }
+  ],
+  "result": {
+    "id": "autumnity:soul_jack_o_lantern"
+  }
+}
